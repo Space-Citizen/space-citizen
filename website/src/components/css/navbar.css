@@ -1,0 +1,47 @@
+.navbar-container
+{
+    background-color: rgb(80,80,80);
+    height: 63px;
+}
+
+.navbar-element-btn
+{
+    visibility: hidden;
+    position: absolute;
+}
+
+.navbar-element:hover .navbar-element-btn
+{
+    visibility: visible;
+    position: relative;
+}
+
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.game-title-container
+{
+    display: table;
+    height: 63px;
+    overflow: hidden;
+}
+
+.game-title
+{
+    color:white;
+    display: table-cell; vertical-align: middle;
+}
+
+.game-title-link
+{
+    color:white;
+    text-decoration: none;
+}
+
+.game-title-link:hover
+{
+    color:white;
+    text-decoration: none;
+}

@@ -1,0 +1,60 @@
+.button-menu-image
+{
+    width:100%;
+    height:100%;
+}
+
+.button-menu-selected
+{
+    position: relative;
+    opacity: 1;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+@keyframes blink { 
+    0% { border-color:#1df500; }
+    50% { border-color: #0787ff; }
+    100% { border-color:#1df500; }
+ }
+
+ .button-menu-selected .button-menu-image
+{
+    border-width:3px;
+    border-style:solid;
+    animation: blink 3s ease alternate infinite;
+}
+
+.button-menu
+{
+    position: relative;
+    opacity: 0.5;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.button-menu:hover
+{
+    opacity: 1;
+
+    /** default is 1, scale it to 1.5 */
+    transform: scale(1.5, 1.5);
+}
+
+.button-menu-text
+ {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:white;
+    font-size: 30px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.play-btn
+{
+    width: 100%;
+    background-color: green;
+}
