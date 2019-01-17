@@ -1,32 +1,33 @@
 
-class World {
-  constructor() {
-    this.width = 1000;
-    this.height = 1000;
-    this.entities = [];
-  }
-  addEntity(entity) {
-    this.entities.push(entity);
-  }
-  removeEntity(id) {
-    this.entities = this.entities.filter(function (value, index, arr) {
-      return value.id != id;
-    });
-  }
-}
-
 class Position {
   constructor(x, y) {
+    this.set(x, y);
+  }
+  set(x, y) {
     this.x = x;
     this.y = y;
   }
 }
 
 class Entity {
-  constructor(id) {
+  constructor(id, x, y) {
     this.id = id;
     this.bearing = 0;
-    this.pos = new Position(0, 0);
+    this.pos = new Position(x, y);
+  }
+
+  _sharedVars() {
+    return ['bearing', 'pos', 'id'];
+  }
+
+  getSharedVars() {
+    var res = {};
+    var sharedVars = this._sharedVars();
+    for (var x in sharedVars) {
+      var sharedVar = sharedVars[x];
+      res[sharedVar] = this[sharedVar];
+    }
+    return res;
   }
 }
 
@@ -50,9 +51,8 @@ class GameLoop {
 
 if (typeof module != 'undefined') {
   module.exports = {
-    World,
     Position,
-    Entity,
-    GameLoop
+    GameLoop,
+    Entity
   };
 }
