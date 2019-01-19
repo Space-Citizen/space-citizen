@@ -8,14 +8,15 @@ var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
-var objects = require('../common/objects');
-var Constants = require('../common/constants').default;
-var WorldManager = require('./WorldManager').default;
+var objects = require('../common');
+var Constants = objects.Constants;
+
+var WorldManager = require('./WorldManager');
 
 //app.set('port', port);
 app.use('/', express.static(__dirname + '/../client'));
 app.use('/common', express.static(__dirname + '/../common'));
-
+app.use('/res', express.static(__dirname + '/../res'));
 
 server.listen(Constants.PORT, function () {
   console.log('Starting server on port ' + Constants.PORT);

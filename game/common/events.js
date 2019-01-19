@@ -7,9 +7,5 @@ var Events = {
 Object.freeze(Events);
   
 if (typeof module != 'undefined') {
-    module.exports = {
-        default: Events
-    };
+    module.exports = Events;
 }
-  
-  

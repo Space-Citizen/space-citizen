@@ -8,8 +8,5 @@ var Constants = {
 Object.freeze(Constants);
 
 if (typeof module != 'undefined') {
-  module.exports = {
-    default: Constants
-  };
+  module.exports = Constants;
 }
-

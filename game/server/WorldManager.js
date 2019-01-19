@@ -1,53 +1,56 @@
 
-var ServerEntity = require('./ServerEntity').default;
-var Events = require('../common/events').default;
+var entity = require('./entity');
+var Events = require('../common/Events');
 
 class WorldManager {
   constructor() {
-    this.players = {};
+    this.entities = {};
   }
 
   spawnPlayer(client) {
-    this.players[client.id] = new ServerEntity(this, client, 50, 50);
+    this.entities[client.id] = new entity.ServerEntityPlayer(this, client, 50, 50);
   }
 
   sendEventUpdateEntities(server_player) {
     var data = [];
-    for (var key in this.players) {
-      if (this.players.hasOwnProperty(key)) {
-        var player = this.players[key];
-        data.push(player.getSharedVars());
+    for (var key in this.entities) {
+      if (this.entities.hasOwnProperty(key)) {
+        var entity = this.entities[key];
+        data.push(entity.getSharedVars());
       }
     }
     server_player.client.emit(Events.UPDATE_ENTITIES, data);
   }
 
   movePlayer(client_id, pos) {
-    this.players[client_id].target = pos;
+    this.entities[client_id].setTarget(pos);
   }
 
   despawnPlayer(client_id) {
-    delete this.players[client_id];
+    delete this.entities[client_id];
+  }
+
+  runOnEntities(func) {
+    var entities = this.entities;
+    for (var key in entities) {
+      if (entities.hasOwnProperty(key)) {
+        var entity = entities[key];
+        func(entity);
+      }
+    }
   }
 
   onUpdate(timeElapsed) {
-    var players = this.players;
-    for (var key in players) {
-      if (players.hasOwnProperty(key)) {
-        var player = players[key];
-        player.onUpdate(timeElapsed);
+    var that = this;
+    this.runOnEntities(function (entity) {
+      entity.onUpdate(timeElapsed);
+    });
+    this.runOnEntities(function (entity) {
+      if (entity.s_type == "player") {
+        that.sendEventUpdateEntities(entity);
       }
-    }
-    for (var key in players) {
-      if (players.hasOwnProperty(key)) {
-        var player = players[key];
-        this.sendEventUpdateEntities(player);
-      }
-    }
-    //console.log(Object.keys(players));
+    });
   }
 }
 
-module.exports = {
-  default: WorldManager
-};
+module.exports = WorldManager;
