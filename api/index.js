@@ -29,10 +29,14 @@ global.db = db;
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
+const MeRoutes = require('./src/routes/MeRoutes');
+const ItemRoutes = require('./src/routes/ItemRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
 router.use('/users', UserRoutes);
+router.use('/me', MeRoutes);
+router.use('/items', ItemRoutes);
 
 //Use the router
 app.use('/api', router);

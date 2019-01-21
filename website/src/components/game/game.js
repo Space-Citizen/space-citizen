@@ -2,17 +2,23 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import Navbar from '../navbar/navbar';
 import Leftnav from '../navbar/leftnav';
+import axios from 'axios';
 
 class Game extends Component {
     constructor() {
         super();
         this.state = {
-            authToken: -1
+            authToken: -1,
+            connectedUser: []
         }
     };
 
     componentDidMount() {
-        this.setState({ authToken: localStorage.getItem("x-access-token") });
+        var token = localStorage.getItem("x-access-token");
+        this.setState({ authToken: token });
+        axios.get('/api/me/info', { headers: { "x-access-token": token } }).then(response => {
+            this.setState({ connectedUser: response.data });
+        });
     }
 
     render() {
@@ -21,18 +27,17 @@ class Game extends Component {
             return (<p>Loading...</p>);
         }
         if (this.state.authToken === null) {
-            console.log("token not found", this.token);
             return <Redirect to='/signIn' />
         }
         return (
             <div>
-                <Navbar />
-                <div>
+                <Navbar user={this.state.connectedUser} />
+                <div className="row">
                     <div className="col-3">
                         <Leftnav />
                     </div>
                     <div className="col-9">
-
+                        {this.props.pageContent}
                     </div>
                 </div>
             </div>
