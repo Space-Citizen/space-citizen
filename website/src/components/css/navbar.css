@@ -1,47 +1,64 @@
-.navbar-container
-{
-    background-color: rgb(80,80,80);
+.navbar-container {
+    background-color: rgb(80, 80, 80);
     height: 63px;
 }
 
-.navbar-element-btn
-{
+.navbar-element-btn {
     visibility: hidden;
     position: absolute;
 }
 
-.navbar-element:hover .navbar-element-btn
-{
+.navbar-element:hover .navbar-element-btn {
     visibility: visible;
     position: relative;
 }
 
-.row{
+.row {
     margin-left: 0;
     margin-right: 0;
 }
 
-.game-title-container
-{
+.game-title-container {
     display: table;
     height: 63px;
     overflow: hidden;
 }
 
-.game-title
-{
-    color:white;
-    display: table-cell; vertical-align: middle;
+.game-title {
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
 }
 
-.game-title-link
-{
-    color:white;
+.game-title-link {
+    color: white;
     text-decoration: none;
 }
 
-.game-title-link:hover
-{
-    color:white;
+.game-title-link:hover {
+    color: white;
     text-decoration: none;
+}
+
+.navbar-profile-container {
+    display: flex;
+    align-items: center;
+}
+
+/* User info */
+
+.user-info-box {
+    background-color: rgba(40, 40, 40, 0.8);
+    border-color: rgba(255, 200, 0, 0.5);
+    border-width: 2px;
+    border-style: solid;
+    color: white;
+}
+
+.user-info-box-value {
+    left: 0;
+}
+
+.user-info-box-text {
+    padding: 4px
 }

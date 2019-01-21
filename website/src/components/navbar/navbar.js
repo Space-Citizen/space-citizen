@@ -10,30 +10,104 @@ class Navbar extends Component {
     };
 
     componentDidMount() {
-        this.setState({authToken: localStorage.getItem("x-access-token")});
+        this.setState({ authToken: localStorage.getItem("x-access-token") });
+    }
+
+    logout() {
+        localStorage.removeItem("x-access-token");
+        document.location = "/";
+    }
+
+    displayUserInfo() {
+        return (
+            <div className="col-2 offset-5 user-info-box">
+                <div className="float-right">
+                    <div className="row">
+                        <div className="col-6">
+                            <i className="fas fa-money-bill"></i>
+                            <span className="user-info-box-text">1500</span>
+                        </div>
+                        <div className="col-6">
+                            <div className="float-left">
+                                <i className="fas fa-trophy"></i>
+                                <span className="user-info-box-text">10</span>
+                            </div>
+                        </div>
+                        <div className="col-6">
+                            <i className="fas fa-globe-americas"></i>
+                            <span className="user-info-box-text">NA</span>
+                        </div>
+                        <div className="col-6">
+                            <div className="float-left">
+                                <i className="fas fa-user-friends"></i>
+                                <span className="user-info-box-text">Earth</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    displayProfileButton() {
+        if (!this.props.user) {
+            return (
+                <div className="col-2 navbar-element">
+                    <a className="btn btn-secondary col-lg-10 offset-lg-1" href="/signin">
+                        <div className="navbar-profile-container">
+                            <div>
+                                <i class="fas fa-address-card fa-3x col-3"></i>
+                                <span className="col-7">Sign in !</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            )
+        }
+        return (
+            <div className="col-2 navbar-element">
+                <div className="dropdown show col-12">
+                    <button className="btn btn-secondary dropdown-toggle col-12" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div className="navbar-profile-container">
+                            <i class="fas fa-address-card fa-3x col-3"></i>
+                            <span className="col-7">{this.props.user.username}</span>
+                        </div>
+                    </button>
+                    <div className="dropdown-menu col-11" aria-labelledby="dropdownMenuLink">
+                        <a className="dropdown-item" href="/profile">Profile</a>
+                        <button className="dropdown-item" onClick={this.logout}>Logout</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    displayHomeButton() {
+        if (!this.props.user) {
+            return (
+                <div className="col-3 game-title-container">
+                    <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
+                        <a href="/" className="game-title-link">Space Citizen</a>
+                    </h2>
+                </div>
+            )
+        }
+        return (
+            <div className="col-3 game-title-container">
+                <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><a href="/game" className="game-title-link">Space Citizen</a></h2>
+            </div>
+        )
     }
 
     render() {
         return (
             <div>
                 <div className="col-12 row navbar-container">
-                    <div className="col-lg-3 col-sm-6 game-title-container">
-                        <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><a href="/game" className="game-title-link">Space Citizen</a></h2>
-                    </div>
-                    {/* <div className="col-6 navbar-element">
-                        <button className="btn btn-success col-lg-10 offset-lg-1">
-                            <i className="fas fa-space-shuttle fa-7x"></i>
-                            <span className="navbar-element-btn"><br /><b>PLAY !</b></span>
-                        </button>
-                    </div> */}
-                    <div className="col-lg-3 offset-lg-6 col-sm-6 navbar-element">
-                        <a className="btn btn-secondary sign-in-btn col-lg-10 offset-lg-1" href="/signin">
-                            <i className="fas fa-user-circle fa-3x"></i>
-                            <span className="navbar-element-btn"><br />Sign in</span>
-                        </a>
-                    </div>
+                    {this.displayHomeButton()}
+                    {this.displayUserInfo()}
+                    {this.displayProfileButton()}
                 </div>
-                <br/>
+                <br />
             </div>
         );
     }

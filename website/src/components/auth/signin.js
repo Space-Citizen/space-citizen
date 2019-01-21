@@ -25,17 +25,19 @@ class SignIn extends Component {
         return (
             <div>
                 <Navbar />
-                <div className="container">
+                <div className="container sign-in-form-container col-5">
                     <form onSubmit={this.handleSubmit}>
+                    <h2>Sign in</h2>
                         <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Email address</label>
+                            <label htmlFor="loginEmail">Email address</label>
                             <input type="email" className="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="exampleInputPassword1">Password</label>
-                            <input type="password" className="form-control" id="loginPassword" placeholder="Password" />
+                            <label htmlFor="loginPassword">Password</label>
+                            <input type="password" className="form-control" id="loginPassword" placeholder="Enter password" />
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <p>Don't have an account ? <a href="/signup"><u>Click here !</u></a></p>
+                        <button type="submit" className="btn btn-primary">Log in</button>
                     </form>
                 </div>
             </div>

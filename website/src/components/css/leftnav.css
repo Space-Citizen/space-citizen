@@ -18,7 +18,20 @@
     100% { border-color:#1df500; }
  }
 
- .button-menu-selected .button-menu-image
+ .play-button
+ {
+    position: relative;
+    opacity: 0.9;
+    transition: 0.3s ease;
+    cursor: pointer;
+ }
+
+ .play-button:hover
+{
+    opacity: 1;
+}
+
+ .play-button .button-menu-image
 {
     border-width:3px;
     border-style:solid;
@@ -36,9 +49,6 @@
 .button-menu:hover
 {
     opacity: 1;
-
-    /** default is 1, scale it to 1.5 */
-    transform: scale(1.5, 1.5);
 }
 
 .button-menu-text
@@ -51,10 +61,4 @@
     font-size: 30px;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
-}
-
-.play-btn
-{
-    width: 100%;
-    background-color: green;
 }

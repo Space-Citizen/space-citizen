@@ -1,0 +1,64 @@
+.hangar-title {
+    color: white;
+}
+
+.hangar-container {
+    background-color: rgba(60, 60, 60, 0.8);
+    height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Player inventory */
+
+.hangar-inventory {
+    border-color: black;
+    color: white;
+}
+
+.hangar-inventory-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: grey;
+    padding: 10px;
+    min-height: 100px;
+}
+
+.hangar-inventory-item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    max-width: 200px;
+    font-size: 20px;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.hangar-inventory-item:hover {
+    opacity: 1;
+}
+
+.hangar-inventory-item-text {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hangar-inventory-item-image {
+    width: 100%;
+    min-height: 100px;
+}
+
+/* Ship inventory */
+
+.hangar-ship-inventory-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: grey;
+    padding: 10px;
+    min-height: 130px;
+    color: white;
+}
