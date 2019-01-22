@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
+import axios from 'axios';
 import "../css/navbar.css";
 
 class Navbar extends Component {
     constructor() {
         super();
         this.state = {
-            authToken: -1
+            connectedUser: []
         }
+        this.token = localStorage.getItem("x-access-token");
     };
 
     componentDidMount() {
-        this.setState({ authToken: localStorage.getItem("x-access-token") });
+        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
+            if (response.data.error) {
+                if (document.location.toString().search("/game") >= 0) //redirect if not on signin page
+                {
+                    alert(response.data.error);
+                    window.location = "/signin";
+                }
+                return;
+            }
+            this.setState({ connectedUser: response.data });
+        });
+    }
+
+    isUserConnected() {
+        if (!this.token || Object.keys(this.state.connectedUser).length === 0)
+            return (false);
+        return (true);
     }
 
     logout() {
@@ -19,13 +38,16 @@ class Navbar extends Component {
     }
 
     displayUserInfo() {
+        const { connectedUser } = this.state;
+        if (!this.isUserConnected())
+            return;
         return (
             <div className="col-2 offset-5 user-info-box">
                 <div className="float-right">
                     <div className="row">
                         <div className="col-6">
                             <i className="fas fa-money-bill"></i>
-                            <span className="user-info-box-text">1500</span>
+                            <span className="user-info-box-text">{connectedUser.money}</span>
                         </div>
                         <div className="col-6">
                             <div className="float-left">
@@ -50,31 +72,33 @@ class Navbar extends Component {
     }
 
     displayProfileButton() {
-        if (!this.props.user) {
+        const { connectedUser } = this.state;
+
+        if (!this.isUserConnected()) {
             return (
-                <div className="col-2 navbar-element">
-                    <a className="btn btn-secondary col-lg-10 offset-lg-1" href="/signin">
+                <div className="col-2 offset-7 navbar-element">
+                    <Link className="btn btn-secondary col-lg-10 offset-lg-1" to="/signin">
                         <div className="navbar-profile-container">
                             <div>
-                                <i class="fas fa-address-card fa-3x col-3"></i>
+                                <i className="fas fa-address-card fa-3x col-3"></i>
                                 <span className="col-7">Sign in !</span>
                             </div>
                         </div>
-                    </a>
+                    </Link>
                 </div>
-            )
+            );
         }
         return (
-            <div className="col-2 navbar-element">
+            <div className="col-2 navbar-element" >
                 <div className="dropdown show col-12">
                     <button className="btn btn-secondary dropdown-toggle col-12" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div className="navbar-profile-container">
-                            <i class="fas fa-address-card fa-3x col-3"></i>
-                            <span className="col-7">{this.props.user.username}</span>
+                            <i className="fas fa-address-card fa-3x col-3"></i>
+                            <span className="col-7">{connectedUser.username}</span>
                         </div>
                     </button>
                     <div className="dropdown-menu col-11" aria-labelledby="dropdownMenuLink">
-                        <a className="dropdown-item" href="/profile">Profile</a>
+                        <Link className="dropdown-item" to="/profile">Profile</Link>
                         <button className="dropdown-item" onClick={this.logout}>Logout</button>
                     </div>
                 </div>
@@ -83,18 +107,18 @@ class Navbar extends Component {
     }
 
     displayHomeButton() {
-        if (!this.props.user) {
+        if (!this.isUserConnected()) {
             return (
                 <div className="col-3 game-title-container">
                     <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
-                        <a href="/" className="game-title-link">Space Citizen</a>
+                        <Link to="/" className="game-title-link">Space Citizen</Link>
                     </h2>
                 </div>
             )
         }
         return (
             <div className="col-3 game-title-container">
-                <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><a href="/game" className="game-title-link">Space Citizen</a></h2>
+                <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><Link to="/game" className="game-title-link">Space Citizen</Link></h2>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Navbar from './navbar/navbar';
 import { Redirect } from 'react-router-dom';
 import './css/home.css';
 
@@ -24,7 +23,6 @@ class Home extends Component {
     }
     return (
       <div>
-        <Navbar />
         <div className="container home-description-container">
           <h1 className="text-center home-title">Welcome to Space Citizen !</h1>
           <div className="home-description">

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../navbar/navbar';
+import { createNotification } from '../misc/notification';
 import axios from 'axios';
 import '../css/signup.css';
 
@@ -13,20 +13,19 @@ class SignUp extends Component {
 
         e.preventDefault();
         if (!username || !email || !password || !confirmPassword) {
-            alert("Please fill all the fields");
+            createNotification("warning", "Please fill all the fields");
             return;
         }
-        if (password !== confirmPassword)
-        {
-            alert("Passwords are different");
+        if (password !== confirmPassword) {
+            createNotification("error", "Passwords are different");
             return;
         }
         axios.post('/api/auth/signup', { email: email, password: password, username: username }).then(response => {
             if (!response || !response.data || !response.data.auth) {
                 if (response.data.error)
-                    alert("An error occured: " + response.data.error);
+                    createNotification("error", "An error occured: " + response.data.error);
                 else
-                    alert("Error while creating the account");
+                    createNotification("error", "Error while creating the account");
                 return;
             }
             //store the token
@@ -38,7 +37,6 @@ class SignUp extends Component {
     render() {
         return (
             <div>
-                <Navbar />
                 <div className="container sign-up-form-container">
                     <form onSubmit={this.handleSubmit}>
                         <h2>Sign up</h2>

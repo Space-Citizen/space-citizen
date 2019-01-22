@@ -18,7 +18,7 @@
 
 .hangar-inventory-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     background-color: grey;
     padding: 10px;
     min-height: 100px;
@@ -38,6 +38,7 @@
 
 .hangar-inventory-item:hover {
     opacity: 1;
+    cursor: pointer;
 }
 
 .hangar-inventory-item-text {
@@ -56,9 +57,86 @@
 
 .hangar-ship-inventory-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 200px 200px 200px 200px;
+    background-color: grey;
+    padding: 10px;
+    min-height: 140px;
+    color: white;
+}
+
+.hangar-ship-inventory-container .hangar-inventory-item {
+    opacity: 1;
+}
+
+.hangar-ship-inventory-title {
+    color: white;
+}
+
+/* Ships */
+
+.hangar-ship-container {
+    position: relative;
+    background-color: grey;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.hangar-ship {
+    color: white;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+}
+
+.hangar-ship:hover {
+    cursor: pointer;
+}
+
+.hangar-ship-selected {
+    border-width: 2px;
+    border-style: solid;
+    border-color: yellow;
+}
+
+.hangar-ship-icon {
+    max-width: 200px;
+}
+
+.hangar-ship-text {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.hangar-item-placeholder-container {
+    position: absolute;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     background-color: grey;
     padding: 10px;
     min-height: 130px;
     color: white;
+}
+
+.hangar-item-placeholder {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    width: 200px;
+    font-size: 20px;
+    min-height: 120px;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.hangar-ship button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
 }
