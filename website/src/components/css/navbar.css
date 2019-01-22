@@ -53,6 +53,7 @@
     border-width: 2px;
     border-style: solid;
     color: white;
+    padding-top: 5px;
 }
 
 .user-info-box-value {

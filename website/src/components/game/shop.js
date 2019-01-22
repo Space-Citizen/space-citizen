@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Game from './game';
 import axios from 'axios';
 import '../css/shop.css';
+import { createNotification } from '../misc/notification';
 
 class Shop extends Component {
     constructor() {
@@ -18,6 +18,19 @@ class Shop extends Component {
         });
     }
 
+    buy(itemId) {
+        var token = localStorage.getItem("x-access-token");
+        axios.post("/api/items/buy/" + itemId, [], { headers: { "x-access-token": token } }).then(response => {
+            if (response.data.error) {
+                createNotification("error", response.data.error);
+                return;
+            }
+            createNotification("success", response.data.success);
+            // re-display user's money
+            this.props.refreshUserInfo();
+        });
+    }
+
     displayItems() {
         var itemList = [];
 
@@ -28,7 +41,7 @@ class Shop extends Component {
                     <td>{item.name}</td>
                     <td>{item.description}</td>
                     <td>{item.price}</td>
-                    <td><button className="btn btn-warning">Buy</button></td>
+                    <td><button className="btn btn-warning" onClick={() => this.buy(item.id)}>Buy</button></td>
                 </tr>
             );
         });
@@ -52,14 +65,15 @@ class Shop extends Component {
     displayPageContent() {
         return (
             <div className="shop-container">
-                <h1 style={{ color: "white" }} className="text-center">Shop</h1>
+                <h1 className="text-center">Shop</h1>
                 {this.displayItems()}
             </div>
         );
     }
 
     render() {
-        return (<Game pageContent={this.displayPageContent()} />);
+        return (this.displayPageContent());
+        // return (<Game pageContent={this.displayPageContent()} />);
     }
 };
 

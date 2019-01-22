@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
-import Navbar from '../navbar/navbar';
-import Leftnav from '../navbar/leftnav';
+import { Redirect, Route } from 'react-router-dom'
 import axios from 'axios';
+import Leftnav from '../navbar/leftnav';
+import Hangar from './hangar';
+import Shop from './shop';
 
 class Game extends Component {
     constructor() {
@@ -10,34 +11,50 @@ class Game extends Component {
         this.state = {
             authToken: -1,
             connectedUser: []
-        }
+        };
+        this.token = localStorage.getItem("x-access-token");
+        this.refreshUser = this.refreshUser.bind(this);
     };
 
     componentDidMount() {
-        var token = localStorage.getItem("x-access-token");
-        this.setState({ authToken: token });
-        axios.get('/api/me/info', { headers: { "x-access-token": token } }).then(response => {
+        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
+            if (response.data.error) {
+                alert(response.data.error);
+                window.location = "/signin";
+                return;
+            }
+            this.setState({ connectedUser: response.data });
+        });
+    }
+
+    refreshUser() {
+        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
+            if (response.data.error) {
+                alert(response.data.error);
+                window.location = "/signin";
+                return;
+            }
             this.setState({ connectedUser: response.data });
         });
     }
 
     render() {
         //display a loading screen during the loading of the token
-        if (this.state.authToken === -1) {
+        if (this.token === -1) {
             return (<p>Loading...</p>);
         }
-        if (this.state.authToken === null) {
+        if (this.token === null) {
             return <Redirect to='/signIn' />
         }
         return (
             <div>
-                <Navbar user={this.state.connectedUser} />
                 <div className="row">
-                    <div className="col-3">
+                    <div className="col-2">
                         <Leftnav />
                     </div>
-                    <div className="col-9">
-                        {this.props.pageContent}
+                    <div className="col-10">
+                        <Route path="/game/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
+                        <Route path="/game/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} refreshUserInfo={this.refreshUser} />} />
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-var { analyseToken, mysqlError } = require('../misc/misc');
+var { analyseToken, mysqlError, tokenError } = require('../misc/misc');
 
 //get information about a user according to it's ID or username
 exports.getProfileInfo = function (req, res) {
@@ -19,6 +19,8 @@ exports.getProfileInfo = function (req, res) {
             //return first result
             res.status(200).json(results[0]);
         });
+    }, function (error) {
+        tokenError(res);
     });
 }
 

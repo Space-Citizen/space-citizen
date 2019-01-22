@@ -19,11 +19,11 @@ class Leftnav extends Component {
                     <img className="button-menu-image" src="/images/launch.jpg" alt="launch" />
                     <div className="button-menu-text font-weight-bold">Take Off</div>
                 </Link>
-                <Link className={"col-12 button-menu" + (document.location.toString().search("/hangar") === -1 ? "" : "-selected")} to="/hangar">
+                <Link className={"col-12 button-menu" + (document.location.toString().search("/hangar") === -1 ? "" : "-selected")} to="/game/hangar">
                     <img className="button-menu-image" src="/images/hangar.jpg" alt="hangar" />
                     <div className="button-menu-text font-weight-bold">Hangar</div>
                 </Link>
-                <Link className={"col-12 button-menu" + (document.location.toString().search("/shop") === -1 ? "" : "-selected")} to="/shop">
+                <Link className={"col-12 button-menu" + (document.location.toString().search("/shop") === -1 ? "" : "-selected")} to="/game/shop">
                     <img className="button-menu-image" src="/images/shop.jpg" alt="shop" />
                     <div className="button-menu-text font-weight-bold">Shop</div>
                 </Link>
