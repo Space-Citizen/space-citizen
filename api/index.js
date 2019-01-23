@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //Database
-const db = mysql.createConnection({
+const dbPool = mysql.createPool({
     host: '35.235.82.216',
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
@@ -16,23 +16,30 @@ const db = mysql.createConnection({
 });
 
 // connect to database
-db.connect((err) => {
+dbPool.getConnection(function (err, connection) {
     if (err) {
-        throw err;
+        console.log("mysql connect err:", err);
+        return;
     }
+    //save variable as global
     console.log('Connected to database');
+    global.db = connection;
 });
 
-//save variable as global
-global.db = db;
 
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
+const MeRoutes = require('./src/routes/MeRoutes');
+const ItemRoutes = require('./src/routes/ItemRoutes');
+const ShipRoutes = require('./src/routes/ShipRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
 router.use('/users', UserRoutes);
+router.use('/me', MeRoutes);
+router.use('/items', ItemRoutes);
+router.use('/ships', ShipRoutes);
 
 //Use the router
 app.use('/api', router);

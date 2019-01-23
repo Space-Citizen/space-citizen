@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from '../navbar/navbar';
 import axios from 'axios';
+import { createNotification } from '../misc/notification';
 import '../css/signin.css';
 
 class SignIn extends Component {
@@ -11,8 +11,8 @@ class SignIn extends Component {
 
         e.preventDefault();
         axios.post('/api/auth/signin', { email: email, password: password }).then(response => {
-            if (!response || !response.data || !response.data.auth) {
-                alert("Invalid password / email");
+            if (!response.data || !response.data.auth || response.data.error) {
+                createNotification("error", response.data.error);
                 return;
             }
             //store the token
@@ -24,18 +24,19 @@ class SignIn extends Component {
     render() {
         return (
             <div>
-                <Navbar />
-                <div className="container">
+                <div className="container sign-in-form-container col-5">
                     <form onSubmit={this.handleSubmit}>
+                        <h2>Sign in</h2>
                         <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Email address</label>
+                            <label htmlFor="loginEmail">Email address</label>
                             <input type="email" className="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="exampleInputPassword1">Password</label>
-                            <input type="password" className="form-control" id="loginPassword" placeholder="Password" />
+                            <label htmlFor="loginPassword">Password</label>
+                            <input type="password" className="form-control" id="loginPassword" placeholder="Enter password" />
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <p>Don't have an account ? <a href="/signup"><u>Click here !</u></a></p>
+                        <button type="submit" className="btn btn-primary">Log in</button>
                     </form>
                 </div>
             </div>

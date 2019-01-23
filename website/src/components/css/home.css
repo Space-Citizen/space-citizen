@@ -1,0 +1,24 @@
+.home-title
+{
+    color:white;
+}
+
+body
+{
+    background: url(/images/spaceship-fight.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.home-description-container
+{
+    color:white;
+    background-color: rgba(20,20,20,0.7);
+    padding: 10px;
+}
+
+.home-description
+{
+    font-size:20px;
+}
