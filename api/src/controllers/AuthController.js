@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-var {mysqlError } = require('../misc/misc');
+var { mysqlError } = require('../misc/misc');
 
 exports.signIn = function (req, res) {
     if (!req.body || !req.body.password || !req.body.email) {
@@ -18,7 +18,7 @@ exports.signIn = function (req, res) {
         //comapre password with the hashed password
         var passwordIsValid = bcrypt.compareSync(req.body.password, result[0].password);
         if (!passwordIsValid) {
-            return res.status(401).send({ auth: false, token: null });
+            return res.status(200).send({ auth: false, token: null, error: "Password or email invalid" });
         }
         var token = jwt.sign({ id: result[0].id }, process.env.SPACE_CITIZEN_JWT_PASSWORD, {
             expiresIn: 86400 // expires in 24 hours
