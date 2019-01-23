@@ -12,7 +12,8 @@ function update_dict(dest, src) {
 
 function createEntity(server_entity, manager) {
     var EntityClasses = {
-        "player": EntityPlayer
+        "player": EntityPlayer,
+        "stargate": EntityStargate
     }
     var res = new EntityClasses[server_entity.s_type](server_entity, manager);
     return res;

@@ -26,18 +26,7 @@ var world_manager = new WorldManager();
 
 io.on('connection', function (client) {
   // TODO event like system
-
   world_manager.spawnPlayer(client);
-
-  client.on("mousePos", function (mouse) {
-    world_manager.movePlayer(client.id, mouse);
-  });
-
-  client.on("disconnect", function () {
-    console.log(client.id + " disconnected");
-    world_manager.despawnPlayer(client.id);
-  });
-
 });
 
 var gameLoop = new objects.GameLoop(

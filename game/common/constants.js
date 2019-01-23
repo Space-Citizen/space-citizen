@@ -3,7 +3,8 @@ var Constants = {
   "FRAMERATE": 30,
   "SERVER": 'http://192.168.1.25:12345',
   "WORLD_SIZE": 10000,
-  "PORT": 12345
+  "PORT": 12345,
+  "SCREEN_RATIO": 16 / 9,
 }
 Object.freeze(Constants);
 
