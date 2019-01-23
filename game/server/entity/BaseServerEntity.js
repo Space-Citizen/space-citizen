@@ -2,10 +2,9 @@
 var objects = require("../../common");
 
 class BaseServerEntity {
-  constructor(world_manager, client, x, y) {
-    this.client = client;
+  constructor(world_manager, x, y, id) {
     this.wm = world_manager;
-    this.id = client.id;
+    this.id = id;
     this.s_pos = new objects.Position(x, y);
     this.s_bearing = 0;
     this.s_type = this.getType();

@@ -11,8 +11,15 @@ class Manager {
   }
 
   onUpdate(timeElapsed) {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
+    if (window.innerHeight * Constants.SCREEN_RATIO > window.innerWidth) {
+      // if height > width
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.width / Constants.SCREEN_RATIO;
+    } else {
+      canvas.height = window.innerHeight;
+      canvas.width = canvas.height * Constants.SCREEN_RATIO;
+    }
+
     canvasClear();
     var rep = this.state.onUpdate(timeElapsed);
     if (rep) {
