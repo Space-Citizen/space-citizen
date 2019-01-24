@@ -1,5 +1,4 @@
 
-
 var g_loaded_res_counter = 0;
 
 function __loadImage(src) {
@@ -14,12 +13,12 @@ function __loadImage(src) {
 class ResImage {
     constructor(src, ratio) {
         this._image = __loadImage(src);
-        this._ratio = ratio / 100.0;
+        this._ratio = ratio / Constants.X_VIEW_RANGE;
     }
     size() {
-        var imageRatio = this._image.width / this._image.height;
-        var sizeY = canvas.height * this._ratio;
-        return new Position(sizeY * imageRatio, sizeY);
+        var imageRatio = this._image.height / this._image.width;
+        var sizeX = canvas.width * this._ratio;
+        return new Position(sizeX, sizeX * imageRatio);
     }
 
     drawAt(x, y, rotation = 0, x_offset = 0, y_offset = 0) {
@@ -59,9 +58,9 @@ class ResText {
 
 var ressources = {
     "TEXT_MEDIUM": new ResText("blue", "18px Arial"),
-    "BACKGROUND": new ResImage("../res/static_background_2.png", 100),
-    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 20),
-    "THRUSTER_1": new ResImage("../res/thrust.png", 5),
+    "BACKGROUND": new ResImage("../res/static_background_2.png", Constants.X_VIEW_RANGE),
+    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 40),
+    "THRUSTER_1": new ResImage("../res/thrust.png", 10),
     "STARGATE": new ResImage("../res/stargate.png", 30),
 };
 

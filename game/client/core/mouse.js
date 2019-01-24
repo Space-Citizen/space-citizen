@@ -21,11 +21,9 @@ canvas.addEventListener("mousedown", function (evt) {
   if (evt.which == 3) {
     mouse.right_click = true;
   }
-  console.log(evt)
 });
 
 canvas.addEventListener("mouseup", function (evt) {
-  console.log(evt.which);
   if (evt.which == 1) {
     mouse.left_click = false;
   }

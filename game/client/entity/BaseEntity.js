@@ -1,6 +1,6 @@
 class BaseEntity {
 
-  constructor(server_entity, manager, pos_smooth = 20, bearing_smooth = 20) {
+  constructor(server_entity, manager, pos_smooth = 10, bearing_smooth = 10) {
     this.manager = manager;
     this._pos_smooth = pos_smooth;
     this._bearing_smooth = bearing_smooth;
@@ -26,20 +26,8 @@ class BaseEntity {
     this.pos.y += dir_y * Math.min(this._pos_smooth * timeElapsed, 1);
 
 
-    var bearing_diff = (this.s_bearing - this.bearing);
-
-    /*
-    console.log("s_bearing: " + this.s_bearing);
-    console.log("bearing: " + this.bearing);
-
-    if (bearing_diff > 0) {
-      this.bearing += Math.min(bearing_diff * this._bearing_smooth * timeElapsed, bearing_diff);
-    }
-    else {
-      this.bearing += Math.max(bearing_diff * this._bearing_smooth * timeElapsed, bearing_diff);
-    }
-    */
-
+    //var bearing_diff = (this.s_bearing - this.bearing);
+    // TODO: smooth bearing
     this.bearing = this.s_bearing;
 
   }
