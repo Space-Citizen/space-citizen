@@ -41,8 +41,11 @@ class StateGame extends IState {
     updateEntities(timeElapsed) {
         for (var key in this.entities) {
             var entity = this.entities[key];
-            entity.onUpdate(timeElapsed);
+            if (entity.id != this.self.id) {
+                entity.onUpdate(timeElapsed);
+            }
         }
+        this.self.onUpdate(timeElapsed);
     }
 
     onUpdate(timeElapsed) {
@@ -67,8 +70,8 @@ class StateGame extends IState {
         // convert world pos to screen pos
         // Constants.SCREEN_RATIO
         var res = new Position(
-            (pos.x - this.self.pos.x) * canvas.width + canvas.width / 2,
-            (pos.y - this.self.pos.y) * (canvas.height * Constants.SCREEN_RATIO) + canvas.height / 2
+            (pos.x - this.self.pos.x) / Constants.X_VIEW_RANGE * canvas.width + canvas.width / 2,
+            (pos.y - this.self.pos.y) / Constants.X_VIEW_RANGE * (canvas.height * Constants.SCREEN_RATIO) + canvas.height / 2
         );
         return res;
     }
@@ -76,8 +79,8 @@ class StateGame extends IState {
     worldPos(pos) {
         // convert screen pos to world
         var res = new Position(
-            (pos.x - canvas.width / 2) / canvas.width + this.self.pos.x,
-            (pos.y - canvas.height / 2) / (canvas.height * Constants.SCREEN_RATIO) + this.self.pos.y
+            (pos.x - canvas.width / 2) * Constants.X_VIEW_RANGE / canvas.width + this.self.pos.x,
+            (pos.y - canvas.height / 2) * Constants.X_VIEW_RANGE / (canvas.height * Constants.SCREEN_RATIO) + this.self.pos.y
         );
         return res;
     }

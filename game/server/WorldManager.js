@@ -3,8 +3,11 @@ var entity = require('./entity');
 var Events = require('../common/Events');
 
 class WorldManager {
-  constructor() {
+  constructor(server) {
+    this.server = server;
     this.entities = {};
+
+    this.entities["sg1"] = new entity.ServerEntityStargate(this, 10, 10, "sg1");
     /*
     for (var x = 5; x < 100; x += 1) {
       this.entities["sg" + x] = new entity.ServerEntityStargate(this, 0.2 * x, 0, "sg" + x);

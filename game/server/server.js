@@ -13,26 +13,32 @@ var Constants = objects.Constants;
 
 var WorldManager = require('./WorldManager');
 
-//app.set('port', port);
-app.use('/', express.static(__dirname + '/../client'));
-app.use('/common', express.static(__dirname + '/../common'));
-app.use('/res', express.static(__dirname + '/../res'));
+class Server {
+  constructor() {
+    //app.set('port', port);
+    app.use('/', express.static(__dirname + '/../client'));
+    app.use('/common', express.static(__dirname + '/../common'));
+    app.use('/res', express.static(__dirname + '/../res'));
 
-server.listen(Constants.PORT, function () {
-  console.log('Starting server on port ' + Constants.PORT);
-});
+    server.listen(Constants.PORT, function () {
+      console.log('Starting server on port ' + Constants.PORT);
+    });
+    this.world = new WorldManager(this);
+    io.on('connection', this.eventConnection.bind(this));
+  }
 
-var world_manager = new WorldManager();
+  eventConnection(client) {
+    this.world.spawnPlayer(client);
+  }
 
-io.on('connection', function (client) {
-  // TODO event like system
-  world_manager.spawnPlayer(client);
-});
+  onUpdate(timeElapsed) {
+    this.world.onUpdate(timeElapsed);
+  }
+  start() {
+    var gameLoop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+    gameLoop.start();
+  }
+}
 
-var gameLoop = new objects.GameLoop(
-  function (timeElapsed) {
-    world_manager.onUpdate(timeElapsed)
-    //io.emit("world_update", world_manager.world);
-  }, Constants.FRAMERATE);
-
-gameLoop.start();
+var server = new Server();
+server.start();

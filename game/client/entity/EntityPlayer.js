@@ -1,23 +1,10 @@
-class EntityPlayer extends BaseEntity {
+class EntityPlayer extends BaseEntityShip {
     onInit() {
-        this.image_body = ressources.SPACESHIP_BODY;
-        this.image_thruster = ressources.THRUSTER_1;
+        super.onInit();
     }
 
     onUpdate(timeElapsed) {
         super.onUpdate(timeElapsed);
-        var screen_pos = this.manager.relPos(this.pos);
-        //context.stroke();
-        if (this.s_target) {
-            this.image_thruster.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing,
-                0, this.image_body.size().y / 1.8);
-        }
-        this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
-        ressources.TEXT_MEDIUM.drawCenterAt(
-            this.id,
-            screen_pos.x,
-            screen_pos.y + this.image_body.size().y / 2
-        );
     }
 
     onDestroy() {
