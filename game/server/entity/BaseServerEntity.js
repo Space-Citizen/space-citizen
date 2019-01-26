@@ -8,11 +8,11 @@ class BaseServerEntity {
     this.s_pos = new objects.Position(x, y);
     this.s_bearing = 0;
     this.s_type = this.getType();
-    this.onInit();
+    this.wm.addEntity(this);
   }
 
-  onInit() {
-    throw new Error("Method 'onInit()' must be implemented.");
+  delete() {
+    this.wm.removeEntity(this);
   }
 
   onUpdate() {

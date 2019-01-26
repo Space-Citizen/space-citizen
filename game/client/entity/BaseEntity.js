@@ -19,6 +19,12 @@ class BaseEntity {
     throw new Error("Method 'onInit()' must be implemented.");
   }
 
+  hitCircle() {
+    // just like hit box, but its a circle
+    // it will be used for mouse targeting
+    throw new Error("Method 'hitCircle()' must be implemented.");
+  }
+
   onUpdate(timeElapsed) {
     var dir_x = (this.s_pos.x - this.pos.x);
     var dir_y = (this.s_pos.y - this.pos.y);

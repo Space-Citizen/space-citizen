@@ -23,4 +23,8 @@ class BaseEntityShip extends BaseEntity {
     onDestroy() {
 
     }
+
+    hitCircle() {
+        return 20;
+    }
 }
