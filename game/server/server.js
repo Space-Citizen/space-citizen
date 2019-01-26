@@ -11,10 +11,13 @@ var io = socketIO(server);
 var objects = require('../common');
 var Constants = objects.Constants;
 
-var WorldManager = require('./WorldManager');
+var World = require('./World');
+var Entity = require('./entity');
 
 class Server {
   constructor() {
+    this.running = false;
+    this.worlds = {}
     //app.set('port', port);
     app.use('/', express.static(__dirname + '/../client'));
     app.use('/common', express.static(__dirname + '/../common'));
@@ -23,20 +26,33 @@ class Server {
     server.listen(Constants.PORT, function () {
       console.log('Starting server on port ' + Constants.PORT);
     });
-    this.world = new WorldManager(this);
+
+    this.addWorld(new World.WorldEarth(this));
+    this.addWorld(new World.WorldMars(this));
     io.on('connection', this.eventConnection.bind(this));
   }
 
+  addWorld(world) {
+    this.worlds[world.getWorldName()] = world;
+  }
+
   eventConnection(client) {
-    this.world.spawnPlayer(client);
+    var player = new Entity.ServerEntityPlayer(this.worlds.earth, 0, 0, client);
   }
 
   onUpdate(timeElapsed) {
-    this.world.onUpdate(timeElapsed);
+    for (var key in this.worlds) {
+      var world = this.worlds[key];
+      world.onUpdate(timeElapsed);
+    }
   }
+
   start() {
-    var gameLoop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
-    gameLoop.start();
+    if (!this.running) {
+      this.running = true;
+      var gameLoop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+      gameLoop.start();
+    }
   }
 }
 

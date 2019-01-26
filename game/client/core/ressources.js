@@ -11,11 +11,12 @@ function __loadImage(src) {
 }
 
 class ResImage {
-    constructor(src, ratio) {
+    constructor(src, size_x) {
         this._image = __loadImage(src);
-        this._ratio = ratio / Constants.X_VIEW_RANGE;
+        this._ratio = size_x / Constants.X_VIEW_RANGE;
     }
     size() {
+        // get on screen size
         var imageRatio = this._image.height / this._image.width;
         var sizeX = canvas.width * this._ratio;
         return new Position(sizeX, sizeX * imageRatio);
@@ -58,10 +59,15 @@ class ResText {
 
 var ressources = {
     "TEXT_MEDIUM": new ResText("blue", "18px Arial"),
-    "BACKGROUND": new ResImage("../res/static_background_2.png", Constants.X_VIEW_RANGE),
-    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 40),
+    "BACKGROUND_EARTH": new ResImage("../res/static_background_earth.jpg", Constants.X_VIEW_RANGE),
+    "BACKGROUND_MARS": new ResImage("../res/static_background_mars.jpg", Constants.X_VIEW_RANGE),
+    "BACKGROUND_SPACE": new ResImage("../res/static_background_space.png", Constants.X_VIEW_RANGE),
+    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 30),
     "THRUSTER_1": new ResImage("../res/thrust.png", 10),
-    "STARGATE": new ResImage("../res/stargate.png", 30),
+    "STARGATE_OPEN": new ResImage("../res/stargate_open.png", 30),
+    "STARGATE_CLOSED": new ResImage("../res/stargate_closed.png", 30),
+    "TARGET_BLUE": new ResImage("../res/target_blue.png", 35),
+    "TARGET_RED": new ResImage("../res/target_red.png", 35),
 };
 
 var g_res_count = Object.keys(ressources).length

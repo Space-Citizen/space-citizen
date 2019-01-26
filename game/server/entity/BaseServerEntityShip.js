@@ -6,13 +6,11 @@ class BaseServerEntityShip extends BaseServerEntity {
     constructor(world_manager, x, y, id,
         speed, inertia_length, stop_target_dist = 2) {
         super(world_manager, x, y, id);
+        this.s_target = null;
         this.speed = speed; // m/s
         this.inertia_length = inertia_length; // start slow down at
         this.stop_target_dist = stop_target_dist; // stop at this target dist
-    }
 
-    onInit() {
-        this.s_target = null;
     }
 
     setTarget(pos) {

@@ -1,5 +1,5 @@
 
-var entity = require('./entity');
+var Entity = require('./entity');
 var Events = require('../common/Events');
 
 class WorldManager {
@@ -7,39 +7,28 @@ class WorldManager {
     this.server = server;
     this.entities = {};
 
-    this.entities["sg1"] = new entity.ServerEntityStargate(this, 10, 10, "sg1");
+    var sg = new Entity.ServerEntityStargate(this, 50, 0, "sg1");
+    sg.openStargate("mars", 0, 0);
     /*
     for (var x = 5; x < 100; x += 1) {
-      this.entities["sg" + x] = new entity.ServerEntityStargate(this, 0.2 * x, 0, "sg" + x);
+      new entity.ServerEntityStargate(this, 0.2 * x, 0, "sg" + x);
     }
-
-    this.entities["sg2"] = new entity.ServerEntityStargate(this, 0.2, 0, "sg2");
-    this.entities["sg3"] = new entity.ServerEntityStargate(this, 0, 0.2, "sg3");
-    this.entities["sg4"] = new entity.ServerEntityStargate(this, 0.2, 0.2, "sg4");
     */
   }
 
-  spawnPlayer(client) {
-    this.entities[client.id] = new entity.ServerEntityPlayer(this, 1, 1, client);
-    var that = this;
-    client.on(Events.PLAYER_MOVE_TO, function (pos) {
-      that.eventMovePlayer(client.id, pos);
-    });
-
-    client.on(Events.DISCONNECT, function () {
-      console.log(client.id + " disconnected");
-      that.eventDespawnPlayer(client.id);
-    });
-
-    //client.removeAllListeners(Events.DISCONNECT);
+  getWorldByName(world_name) {
+    return this.server.worlds[world_name];
   }
 
-  eventMovePlayer(client_id, pos) {
-    this.entities[client_id].setTarget(pos);
+  addEntity(entity) {
+    this.entities[entity.id] = entity;
   }
 
-  eventDespawnPlayer(client_id) {
-    this.removeEntity(client_id);
+  removeEntity(entity) {
+    delete this.entities[entity.id];
+    this.runOnPlayers(function (player) {
+      player.client.emit(Events.SERVER_DELETE_ENTITY, entity.id);
+    });
   }
 
   sendEventUpdateEntities(server_player) {
@@ -51,13 +40,6 @@ class WorldManager {
       }
     }
     server_player.client.emit(Events.SERVER_UPDATE_ENTITIES, data);
-  }
-
-  removeEntity(id) {
-    delete this.entities[id];
-    this.runOnPlayers(function (entity) {
-      entity.client.emit(Events.SERVER_DELETE_ENTITY, id);
-    });
   }
 
   runOnEntities(func) {
