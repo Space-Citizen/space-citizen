@@ -4,7 +4,8 @@ var BaseWorld = require('./BaseWorld');
 
 class WorldMars extends BaseWorld {
     onInit() {
-        var sg = new Entity.ServerEntityStargate(this, 50, 0, "sg1");
+        var sg = new Entity.ServerEntityStargate(this, 50, 0, "sga");
+        sg.openStargate("earth", 0, 0);
     }
 
     getWorldName() {

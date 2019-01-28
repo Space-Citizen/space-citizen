@@ -25,7 +25,7 @@ class BaseServerEntityShip extends BaseServerEntity {
 
     onUpdate(timeElapsed) {
         if (this.s_target != null) {
-            var dist = Helper.dist(this.s_pos, this.s_target);
+            var dist = Helper.opti_dist(this.s_pos, this.s_target);
             var breaks = Math.min(Helper.map(dist, 0, this.inertia_length, 0, 1), 1); // break speed
             var dir_x = Math.cos(this.s_bearing) * this.speed * breaks;
             var dir_y = Math.sin(this.s_bearing) * this.speed * breaks;

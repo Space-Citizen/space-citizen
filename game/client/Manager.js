@@ -11,6 +11,8 @@ class Manager {
   }
 
   onUpdate(timeElapsed) {
+
+    // TODO optimize
     if (window.innerHeight * Constants.SCREEN_RATIO > window.innerWidth) {
       // if height > width
       canvas.width = window.innerWidth;

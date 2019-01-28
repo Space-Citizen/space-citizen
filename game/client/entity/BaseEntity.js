@@ -19,10 +19,15 @@ class BaseEntity {
     throw new Error("Method 'onInit()' must be implemented.");
   }
 
-  hitCircle() {
+  getHitCircle() {
     // just like hit box, but its a circle
     // it will be used for mouse targeting
     throw new Error("Method 'hitCircle()' must be implemented.");
+  }
+
+  getPriority() {
+    // higher the priority, sooner it will be displayed
+    throw new Error("Method 'getPriority()' must be implemented.");
   }
 
   onUpdate(timeElapsed) {
@@ -31,11 +36,10 @@ class BaseEntity {
     this.pos.x += dir_x * Math.min(this._pos_smooth * timeElapsed, 1);
     this.pos.y += dir_y * Math.min(this._pos_smooth * timeElapsed, 1);
 
-
     //var bearing_diff = (this.s_bearing - this.bearing);
     // TODO: smooth bearing
     this.bearing = this.s_bearing;
-
+    // TODO: _onUpdate ?
   }
 
   onDestroy() {

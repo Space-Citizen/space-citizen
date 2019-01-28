@@ -19,7 +19,11 @@ class EntityStargate extends BaseEntity {
 
     }
 
-    hitCircle() {
+    getHitCircle() {
         return 0;
+    }
+
+    getPriority() {
+        return priority.STARGATE;
     }
 }
