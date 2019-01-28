@@ -1,3 +1,5 @@
+
+
 class StateGame extends IState {
     onInit() {
         this.socket = io.connect(Constants.SERVER);
@@ -12,8 +14,12 @@ class StateGame extends IState {
     }
 
     initWorld() {
+        this.pos = new Position(0, 0);
         this.entities = {};
         this.target = null;
+        this.uis = {
+            "target_reticle": new UiTargetReticle(this),
+        }
     }
 
     runOnEntities(func) {
@@ -33,7 +39,7 @@ class StateGame extends IState {
         var res = null;
         this.runOnEntities(function (entity) {
             var dist = Helper.dist(world_pos, entity.pos);
-            if (dist < entity.hitCircle()) {
+            if (dist < entity.getHitCircle()) {
                 if (min_dist == null || (min_dist != null && dist < min_dist)) {
                     min_dist = dist;
                     res = entity;
@@ -47,8 +53,11 @@ class StateGame extends IState {
     onUpdate(timeElapsed) {
         if (this.id in this.entities) {
             this.self = this.entities[this.id];
-            this.displayWorld();
+            this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
+            this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
+            this.displayWorld(timeElapsed);
             this.updateEntities(timeElapsed);
+            //this.updateUis(timeElapsed);
 
             if (mouse.right_click) {
                 this.socket.emit(Events.PLAYER_MOVE_TO, this.worldPos(mouse));
@@ -56,7 +65,6 @@ class StateGame extends IState {
             if (mouse.left_click) {
                 this.targetEntityAt(this.worldPos(mouse));
             }
-            console.log(this.self);
         }
     }
 
@@ -76,6 +84,9 @@ class StateGame extends IState {
 
     eventDeleteEntity(id) {
         if (id in this.entities) {
+            if (this.target && this.target.id == id) {
+                this.target == null;
+            }
             this.entities[id].onDestroy();
             delete this.entities[id];
         }
@@ -96,13 +107,41 @@ class StateGame extends IState {
     }
 
     updateEntities(timeElapsed) {
-        for (var key in this.entities) {
-            var entity = this.entities[key];
-            if (entity.id != this.self.id) {
-                entity.onUpdate(timeElapsed);
+        var entities = this.entities;
+        var keys = Object.keys(entities);
+        // TODO OPTIMIZE?
+        keys.sort(function (a, b) {
+            var ent_a = entities[a];
+            var ent_b = entities[b];
+            var priority = ent_a.getPriority() - ent_b.getPriority();
+            if (priority != 0) {
+                return (priority);
+            }
+            return ent_a.pos.y - ent_b.pos.y;
+
+        });
+
+        var arrayLength = keys.length;
+        for (var x = 0; x < arrayLength; x++) {
+            var key = keys[x];
+            if (entities.hasOwnProperty(key)) {
+                var entity = entities[key];
+                if (entity.id != this.self.id) {
+                    entity.onUpdate(timeElapsed);
+                }
             }
         }
         this.self.onUpdate(timeElapsed);
+    }
+
+    updateUis(timeElapsed) {
+        var uis = this.uis;
+        for (var key in uis) {
+            if (uis.hasOwnProperty(key)) {
+                var ui = uis[key];
+                ui.onUpdate(timeElapsed);
+            }
+        }
     }
 
     eventResetMap() {
@@ -114,8 +153,8 @@ class StateGame extends IState {
         // convert world pos to screen pos
         // Constants.SCREEN_RATIO
         var res = new Position(
-            (pos.x - this.self.pos.x) / Constants.X_VIEW_RANGE * canvas.width + canvas.width / 2,
-            (pos.y - this.self.pos.y) / Constants.X_VIEW_RANGE * (canvas.height * Constants.SCREEN_RATIO) + canvas.height / 2
+            (pos.x - this.pos.x) / Constants.X_VIEW_RANGE * canvas.width + canvas.width / 2,
+            (pos.y - this.pos.y) / Constants.X_VIEW_RANGE * (canvas.height * Constants.SCREEN_RATIO) + canvas.height / 2
         );
         return res;
     }
@@ -123,17 +162,18 @@ class StateGame extends IState {
     worldPos(pos) {
         // convert screen pos to world
         var res = new Position(
-            (pos.x - canvas.width / 2) * Constants.X_VIEW_RANGE / canvas.width + this.self.pos.x,
-            (pos.y - canvas.height / 2) * Constants.X_VIEW_RANGE / (canvas.height * Constants.SCREEN_RATIO) + this.self.pos.y
+            (pos.x - canvas.width / 2) * Constants.X_VIEW_RANGE / canvas.width + this.pos.x,
+            (pos.y - canvas.height / 2) * Constants.X_VIEW_RANGE / (canvas.height * Constants.SCREEN_RATIO) + this.pos.y
         );
         return res;
     }
 
-    displayWorld() {
+    displayWorld(timeElapsed) {
         ressources.BACKGROUND_SPACE.drawCenterAt(canvas.width / 2, canvas.height / 2);
+
         if (this.target) {
             var screen_pos = this.relPos(this.target.pos);
-            ressources.TARGET_BLUE.drawCenterAt(screen_pos.x, screen_pos.y);
+            ressources.TARGET_RED.drawCenterAt(screen_pos.x, screen_pos.y);
         }
     }
 }

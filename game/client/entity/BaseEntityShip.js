@@ -24,7 +24,11 @@ class BaseEntityShip extends BaseEntity {
 
     }
 
-    hitCircle() {
+    getHitCircle() {
         return 20;
+    }
+
+    getPriority() {
+        return priority.SHIPS;
     }
 }

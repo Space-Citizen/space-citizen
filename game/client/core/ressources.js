@@ -62,12 +62,11 @@ var ressources = {
     "BACKGROUND_EARTH": new ResImage("../res/static_background_earth.jpg", Constants.X_VIEW_RANGE),
     "BACKGROUND_MARS": new ResImage("../res/static_background_mars.jpg", Constants.X_VIEW_RANGE),
     "BACKGROUND_SPACE": new ResImage("../res/static_background_space.png", Constants.X_VIEW_RANGE),
-    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 30),
+    "SPACESHIP_BODY": new ResImage("../res/spaceship1.png", 20),
     "THRUSTER_1": new ResImage("../res/thrust.png", 10),
     "STARGATE_OPEN": new ResImage("../res/stargate_open.png", 30),
     "STARGATE_CLOSED": new ResImage("../res/stargate_closed.png", 30),
-    "TARGET_BLUE": new ResImage("../res/target_blue.png", 35),
-    "TARGET_RED": new ResImage("../res/target_red.png", 35),
+    "TARGET_RED": new ResImage("../res/target_red.png", 40),
 };
 
 var g_res_count = Object.keys(ressources).length

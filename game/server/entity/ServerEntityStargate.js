@@ -31,13 +31,13 @@ class ServerEntityStargate extends BaseServerEntity {
         }
         this.s_bearing += 0.5 * timeElapsed;
         var that = this;
+        // TODO optimize (dont run at every frame?)
         this.wm.runOnPlayers(function (entity) {
-            var dist = Helper.dist(entity.s_pos, that.s_pos);
+            var dist = Helper.opti_dist(entity.s_pos, that.s_pos);
             if (dist <= 10) {
                 that.teleportPlayer(entity, that.wm.getWorldByName(that.dest.name));
             }
         });
-
     }
 
     getType() {

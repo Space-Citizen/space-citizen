@@ -1,9 +1,11 @@
 
+var port = 12345;
+
 var Constants = {
   "FRAMERATE": 30,
-  "SERVER": 'http://192.168.1.25:12345/',
+  "SERVER": ':' + port, // used by client (io.connect)
   "WORLD_SIZE": 10000,
-  "PORT": 12345,
+  "PORT": port,
   "SCREEN_RATIO": 16 / 9,
   "X_VIEW_RANGE": 300, // value in meters. Y view range is defined by screen ratio
 }

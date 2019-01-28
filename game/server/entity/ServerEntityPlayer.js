@@ -6,8 +6,8 @@ var Events = require('../../common/Events');
 class ServerEntityPlayer extends BaseServerEntityShip {
   constructor(world_manager, x, y, client) {
     super(world_manager, x, y, client.id,
-      100,
-      30);
+      60,
+      20);
     this.client = client;
     this.listeners = {};
 
