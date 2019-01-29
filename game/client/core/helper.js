@@ -3,7 +3,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function update_dict(dest, src) {
+function updateDict(dest, src) {
     for (key in src) {
         dest[key] = src[key]
     }
@@ -13,8 +13,14 @@ function update_dict(dest, src) {
 function createEntity(server_entity, manager) {
     var EntityClasses = {
         "player": EntityPlayer,
-        "stargate": EntityStargate
+        "stargate": EntityStargate,
+        "background": EntityBackground
     }
     var res = new EntityClasses[server_entity.s_type](server_entity, manager);
     return res;
+}
+
+function convertSizeToScreen(size) {
+    // convert size (in meters) to screen size
+    return canvas.width * (size / Constants.X_VIEW_RANGE);
 }

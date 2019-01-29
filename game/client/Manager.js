@@ -1,16 +1,16 @@
 
 class Manager {
   constructor() {
-    this.gameLoop = new GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+    this.game_loop = new GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
     this.state = new StateLoading();
     this.state.init(this);
   }
 
   start() {
-    this.gameLoop.start();
+    this.game_loop.start();
   }
 
-  onUpdate(timeElapsed) {
+  onUpdate(time_elapsed) {
 
     // TODO optimize
     if (window.innerHeight * Constants.SCREEN_RATIO > window.innerWidth) {
@@ -23,7 +23,7 @@ class Manager {
     }
 
     canvasClear();
-    var rep = this.state.onUpdate(timeElapsed);
+    var rep = this.state.onUpdate(time_elapsed);
     if (rep) {
       this.state.onDestroy();
       this.state = rep;

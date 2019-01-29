@@ -7,6 +7,9 @@ var mouse = {
   left_click: false,
 }
 
+__mouse_left_listeners = {};
+__mouse_right_listeners = {};
+
 canvas.addEventListener("mousemove", function (evt) {
   var rect = canvas.getBoundingClientRect();
   mouse.x = evt.clientX - rect.left;

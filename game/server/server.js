@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
+const request = require('request');
 
 var app = express();
 var server = http.Server(app);
@@ -10,8 +11,9 @@ var io = socketIO(server);
 
 var objects = require('../common');
 var Constants = objects.Constants;
+var Events = require('../common/Events');
 
-var World = require('./World');
+var World = require('./world');
 var Entity = require('./entity');
 
 class Server {
@@ -37,21 +39,45 @@ class Server {
   }
 
   eventConnection(client) {
-    var player = new Entity.ServerEntityPlayer(this.worlds.earth, 0, 0, client);
+    var that = this;
+    client.on(Events.PLAYER_AUTH, function (token) {
+
+      // get the user's information from the api
+      request.get({
+        url: process.env.SPACE_CITIZEN_API_URL + '/api/me/info',
+        headers: { "x-access-token": token }
+      }, function (error, response) {
+        var user_info = undefined;
+
+        if (response)
+          user_info = JSON.parse(response.body);
+
+        // TODO: REMOVE DEBUG CONDITION
+        if (token === "test")
+          user_info = { username: "pute", id: 1 };
+        // if authentication fail, abort
+        if ((error && token !== "test") || !user_info || user_info.error) {
+          return;
+        }
+        // create the user
+        new Entity.ServerEntityPlayer(that.worlds.earth, 0, 0, client, user_info);
+      });
+
+    });
   }
 
-  onUpdate(timeElapsed) {
+  onUpdate(time_elapsed) {
     for (var key in this.worlds) {
       var world = this.worlds[key];
-      world.onUpdate(timeElapsed);
+      world.onUpdate(time_elapsed);
     }
   }
 
   start() {
     if (!this.running) {
       this.running = true;
-      var gameLoop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
-      gameLoop.start();
+      var game_loop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+      game_loop.start();
     }
   }
 }

@@ -4,11 +4,13 @@ if (typeof module != 'undefined') {
   var GameLoop = require('./GameLoop');
   var Position = require('./Position');
   var Events = require('./Events');
+  var WorldTypes = require('./WorldTypes');
 
   module.exports = {
     Position,
     GameLoop,
     Events,
-    Constants
+    Constants,
+    WorldTypes,
   };
 }
