@@ -3,22 +3,32 @@
 class StateGame extends IState {
     onInit() {
         this.socket = io.connect(Constants.SERVER);
-        //console.log(this.socket);
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
         this.socket.on(Events.SERVER_DELETE_ENTITY, this.eventDeleteEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
 
+        this.playerAuth();
         this.initWorld();
+    }
+
+    playerAuth() {
+        // get the token from the url
+        var url_params = {}
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            url_params[key] = value;
+        });
+        // send it to the server
+        this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
     }
 
     initWorld() {
         this.pos = new Position(0, 0);
         this.entities = {};
-        this.target = null;
+        this.aim = new UiAim(this);
         this.uis = {
-            "target_reticle": new UiTargetReticle(this),
+            "aim": this.aim,
         }
     }
 
@@ -32,38 +42,35 @@ class StateGame extends IState {
         }
     }
 
-
-    targetEntityAt(world_pos) {
-        // target closest entity from mouse pos
-        var min_dist = null;
-        var res = null;
-        this.runOnEntities(function (entity) {
-            var dist = Helper.dist(world_pos, entity.pos);
-            if (dist < entity.getHitCircle()) {
-                if (min_dist == null || (min_dist != null && dist < min_dist)) {
-                    min_dist = dist;
-                    res = entity;
-                }
+    runOnUis(func) {
+        var uis = this.uis;
+        for (var key in uis) {
+            if (uis.hasOwnProperty(key)) {
+                var ui = uis[key];
+                func(ui);
             }
-        });
-        this.target = res;
-        return res != null;
+        }
     }
 
-    onUpdate(timeElapsed) {
+    onUpdate(time_elapsed) {
         if (this.id in this.entities) {
             this.self = this.entities[this.id];
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
             this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
-            this.displayWorld(timeElapsed);
-            this.updateEntities(timeElapsed);
-            //this.updateUis(timeElapsed);
+            this.updateEntities(time_elapsed);
+            this.updateUis(time_elapsed);
 
-            if (mouse.right_click) {
-                this.socket.emit(Events.PLAYER_MOVE_TO, this.worldPos(mouse));
-            }
             if (mouse.left_click) {
-                this.targetEntityAt(this.worldPos(mouse));
+                this.runOnUis(function (ui) {
+                    ui.onMouseLeftClick();
+                });
+            }
+            if (mouse.right_click) {
+                this.runOnUis(function (ui) {
+                    ui.onMouseRightClick();
+                });
+                this.socket.emit(Events.PLAYER_RUN_FUNCTION, "s_moveTo", this.worldPos(mouse));
+                //this.socket.emit(Events.PLAYER_MOVE_TO, this.worldPos(mouse));
             }
         }
     }
@@ -84,9 +91,9 @@ class StateGame extends IState {
 
     eventDeleteEntity(id) {
         if (id in this.entities) {
-            if (this.target && this.target.id == id) {
-                this.target == null;
-            }
+            this.runOnUis(function (ui) {
+                ui.onEntityRemoved(id);
+            });
             this.entities[id].onDestroy();
             delete this.entities[id];
         }
@@ -106,7 +113,7 @@ class StateGame extends IState {
         }
     }
 
-    updateEntities(timeElapsed) {
+    updateEntities(time_elapsed) {
         var entities = this.entities;
         var keys = Object.keys(entities);
         // TODO OPTIMIZE?
@@ -127,27 +134,22 @@ class StateGame extends IState {
             if (entities.hasOwnProperty(key)) {
                 var entity = entities[key];
                 if (entity.id != this.self.id) {
-                    entity.onUpdate(timeElapsed);
+                    entity.onUpdate(time_elapsed);
                 }
             }
         }
-        this.self.onUpdate(timeElapsed);
+        this.self.onUpdate(time_elapsed);
     }
 
-    updateUis(timeElapsed) {
-        var uis = this.uis;
-        for (var key in uis) {
-            if (uis.hasOwnProperty(key)) {
-                var ui = uis[key];
-                ui.onUpdate(timeElapsed);
-            }
-        }
+    updateUis(time_elapsed) {
+        this.runOnUis(function (ui) {
+            ui.onUpdate(time_elapsed);
+        });
     }
 
     eventResetMap() {
         this.initWorld();
     }
-
 
     relPos(pos) {
         // convert world pos to screen pos
@@ -166,14 +168,5 @@ class StateGame extends IState {
             (pos.y - canvas.height / 2) * Constants.X_VIEW_RANGE / (canvas.height * Constants.SCREEN_RATIO) + this.pos.y
         );
         return res;
-    }
-
-    displayWorld(timeElapsed) {
-        ressources.BACKGROUND_SPACE.drawCenterAt(canvas.width / 2, canvas.height / 2);
-
-        if (this.target) {
-            var screen_pos = this.relPos(this.target.pos);
-            ressources.TARGET_RED.drawCenterAt(screen_pos.x, screen_pos.y);
-        }
     }
 }

@@ -10,8 +10,8 @@ class IState {
         throw new Error("Method 'onInit()' must be implemented.");
     }
 
-    onUpdate(timeElapsed) {
-        throw new Error("Method 'onUpdate(timeElapsed)' must be implemented.");
+    onUpdate(time_elapsed) {
+        throw new Error("Method 'onUpdate(time_elapsed)' must be implemented.");
     }
 
     onDestroy() {

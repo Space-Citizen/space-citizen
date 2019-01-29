@@ -61,10 +61,10 @@ class BaseWorld {
         });
     }
 
-    onUpdate(timeElapsed) {
+    onUpdate(time_elapsed) {
         var that = this;
         this.runOnEntities(function (entity) {
-            entity.onUpdate(timeElapsed);
+            entity.onUpdate(time_elapsed);
         });
         this.runOnPlayers(function (player) {
             that.sendEventUpdateEntities(player);

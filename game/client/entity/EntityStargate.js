@@ -4,8 +4,8 @@ class EntityStargate extends BaseEntity {
         this.image_open = ressources.STARGATE_OPEN;
     }
 
-    onUpdate(timeElapsed) {
-        super.onUpdate(timeElapsed);
+    onUpdate(time_elapsed) {
+        super.onUpdate(time_elapsed);
         var screen_pos = this.manager.relPos(this.pos);
         //context.stroke();
         var image = this.image_closed;

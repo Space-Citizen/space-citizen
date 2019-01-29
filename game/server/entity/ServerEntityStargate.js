@@ -6,8 +6,8 @@ var ServerEntityPlayer = require('./ServerEntityPlayer');
 var BaseServerEntity = require("./BaseServerEntity");
 
 class ServerEntityStargate extends BaseServerEntity {
-    constructor(world_manager, x, y, id) {
-        super(world_manager, x, y, id);
+    constructor(world, x, y, id) {
+        super(world, x, y, id);
         this.dest = null;
         this.s_stargate_open = false;
     }
@@ -24,18 +24,18 @@ class ServerEntityStargate extends BaseServerEntity {
         this.dest = null;
     }
 
-    onUpdate(timeElapsed) {
+    onUpdate(time_elapsed) {
         this.s_stargate_open = this.dest ? true : false;
         if (!this.s_stargate_open) {
             return;
         }
-        this.s_bearing += 0.5 * timeElapsed;
+        this.s_bearing += 0.5 * time_elapsed;
         var that = this;
         // TODO optimize (dont run at every frame?)
-        this.wm.runOnPlayers(function (entity) {
-            var dist = Helper.opti_dist(entity.s_pos, that.s_pos);
+        this.world.runOnPlayers(function (entity) {
+            var dist = Helper.dist(entity.s_pos, that.s_pos);
             if (dist <= 10) {
-                that.teleportPlayer(entity, that.wm.getWorldByName(that.dest.name));
+                that.teleportPlayer(entity, that.world.getWorldByName(that.dest.name));
             }
         });
     }
@@ -48,7 +48,7 @@ class ServerEntityStargate extends BaseServerEntity {
         var client = entity.client;
         entity.delete()
         entity.client.emit(Events.SERVER_RESET_MAP);
-        var player = new ServerEntityPlayer(world, this.dest.x, this.dest.y, client);
+        var player = new ServerEntityPlayer(world, this.dest.x, this.dest.y, client, entity.user_info);
         player.s_bearing = entity.s_bearing;
     }
 }

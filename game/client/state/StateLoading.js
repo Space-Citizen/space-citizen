@@ -4,7 +4,7 @@ class StateLoading extends IState {
         context.font = "30px Arial";
     }
 
-    onUpdate(timeElapsed) {
+    onUpdate(time_elapsed) {
         if (g_loaded_res_counter >= g_res_count) {
             console.log("Ressources loaded");
             return new StateGame();
