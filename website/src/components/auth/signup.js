@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createNotification } from '../misc/notification';
+import { createNotification } from '../../misc/notification';
 import axios from 'axios';
 import '../css/signup.css';
 
