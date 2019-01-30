@@ -1,63 +1,61 @@
-.button-menu-image
-{
-    width:100%;
-    height:100%;
+.button-menu-image {
+    width: 100%;
+    height: 100%;
 }
 
-.button-menu-selected
-{
+.button-menu-selected {
     position: relative;
     opacity: 1;
     transition: 0.3s ease;
     cursor: pointer;
 }
 
-@keyframes blink { 
-    0% { border-color:#1df500; }
-    50% { border-color: #0787ff; }
-    100% { border-color:#1df500; }
- }
+@keyframes blink {
+    0% {
+        border-color: #1df500;
+    }
+    50% {
+        border-color: #0787ff;
+    }
+    100% {
+        border-color: #1df500;
+    }
+}
 
- .play-button
- {
+.play-button {
     position: relative;
     opacity: 0.9;
     transition: 0.3s ease;
     cursor: pointer;
- }
+}
 
- .play-button:hover
-{
+.play-button:hover {
     opacity: 1;
 }
 
- .play-button .button-menu-image
-{
-    border-width:3px;
-    border-style:solid;
+.play-button .button-menu-image {
+    border-width: 3px;
+    border-style: solid;
     animation: blink 3s ease alternate infinite;
 }
 
-.button-menu
-{
+.button-menu {
     position: relative;
     opacity: 0.5;
     transition: 0.3s ease;
     cursor: pointer;
 }
 
-.button-menu:hover
-{
+.button-menu:hover {
     opacity: 1;
 }
 
-.button-menu-text
- {
+.button-menu-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color:white;
+    color: white;
     font-size: 30px;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;

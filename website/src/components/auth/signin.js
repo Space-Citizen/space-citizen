@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { createNotification } from '../misc/notification';
+import { createNotification } from '../../misc/notification';
 import '../css/signin.css';
 
 class SignIn extends Component {

@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const ShipController = require('../controllers/ShipController');
+const shipControllers = require('../controllers/ShipControllers/');
+const { requireUserToken } = require("../tokens/");
 
 // Edit ship
-router.post('/edit', ShipController.edit);
+router.post('/edit', requireUserToken(shipControllers.edit));
 
 // get ship equipment
-router.get('/inventory/:shipId', ShipController.getInventory)
+router.get('/inventory/:shipId', requireUserToken(shipControllers.getInventory));
+
 module.exports = router;

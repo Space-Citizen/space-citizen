@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createNotification } from '../misc/notification';
+import { createNotification } from '../../misc/notification';
 import axios from 'axios';
 import '../css/hangar.css';
 
@@ -57,7 +57,6 @@ class Hangar extends Component {
       });
       this.setState({ inventory: inventory });
     });
-
   }
 
   createItem(item) {
@@ -72,6 +71,7 @@ class Hangar extends Component {
         </div>
     })
   }
+
   getInventoryCapacity() {
     // to implement
     return (20);
@@ -108,6 +108,11 @@ class Hangar extends Component {
     // add item to inventory
     inventory.push(itemToMove);
     // update
+    inventory.sort(function (a, b) {
+      if (a.item_type < b.item_type) { return -1; }
+      if (a.item_type > b.item_type) { return 1; }
+      return 0;
+    });
     this.setState({ [arraySourceName]: arraySource, inventory: inventory });
   }
 
@@ -123,7 +128,7 @@ class Hangar extends Component {
     var destArray = this.state[shipDestination.destination];
 
     if (destArray.length + 1 > this.getItemTypeCapacityOnShip(item.item_type)) {
-      createNotification("warning", "Destination inventory is full");
+      createNotification("warning", "Ship's inventory is full");
       return;
     }
     inventory.splice(itemIndexInInventory, 1);

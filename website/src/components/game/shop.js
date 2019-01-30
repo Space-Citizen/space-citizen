@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import '../css/shop.css';
-import { createNotification } from '../misc/notification';
+import { createNotification } from '../../misc/notification';
 
 class Shop extends Component {
     constructor() {

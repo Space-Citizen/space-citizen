@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const MeController = require('../controllers/MeController');
+const MeController = require('../controllers/MeControllers/');
+const { requireUserToken } = require("../tokens/");
 
 // get connected user's info
-router.get('/info', MeController.getInfo);
+router.get('/info', requireUserToken(MeController.getInfo));
 
 // get connected user's inventory
-router.get('/inventory', MeController.getInventory);
-
-// update user's inventory
-router.post('/inventory/update', MeController.updateInventory);
+router.get('/inventory', requireUserToken(MeController.getInventory));
 
 // get connected user's ships
-router.get('/ships', MeController.getShips);
+router.get('/ships', requireUserToken(MeController.getShips));
 
 module.exports = router;
