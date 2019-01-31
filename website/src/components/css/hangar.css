@@ -60,7 +60,6 @@
     display: grid;
     grid-template-columns: 200px 200px 200px 200px;
     background-color: grey;
-    padding: 10px;
     min-height: 140px;
     color: white;
 }
@@ -71,6 +70,11 @@
 
 .hangar-ship-inventory-title {
     color: white;
+}
+
+.hangar-ship-item-container {
+    width: 200px;
+    margin: 10px;
 }
 
 /* Ships */

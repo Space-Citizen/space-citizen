@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import { get } from '../../misc/axios';
+import { isConnected } from '../../misc/token';
 import "../css/navbar.css";
 
 class Navbar extends Component {
     constructor() {
         super();
         this.state = {
-            connectedUser: []
+            connectedUser: undefined
         }
-        this.token = localStorage.getItem("x-access-token");
     };
 
     componentDidMount() {
-        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
-            if (response.data.error) {
-                if (document.location.toString().search("/game") >= 0) //redirect if not on signin page
-                {
-                    alert(response.data.error);
-                    window.location = "/signin";
-                }
-                return;
-            }
-            this.setState({ connectedUser: response.data });
-        });
-    }
-
-    isUserConnected() {
-        if (!this.token || Object.keys(this.state.connectedUser).length === 0)
-            return (false);
-        return (true);
+        if (isConnected()) {
+            get('/api/me/info').then(response => {
+                this.setState({ connectedUser: response.data });
+            });
+        }
     }
 
     logout() {
@@ -39,7 +27,8 @@ class Navbar extends Component {
 
     displayUserInfo() {
         const { connectedUser } = this.state;
-        if (!this.isUserConnected())
+
+        if (!connectedUser)
             return;
         return (
             <div className="col-2 offset-5 user-info-box">
@@ -74,20 +63,8 @@ class Navbar extends Component {
     displayProfileButton() {
         const { connectedUser } = this.state;
 
-        if (!this.isUserConnected()) {
-            return (
-                <div className="col-2 offset-7 navbar-element">
-                    <Link className="btn btn-secondary col-lg-10 offset-lg-1" to="/signin">
-                        <div className="navbar-profile-container">
-                            <div>
-                                <i className="fas fa-address-card fa-3x col-3"></i>
-                                <span className="col-7">Sign in !</span>
-                            </div>
-                        </div>
-                    </Link>
-                </div>
-            );
-        }
+        if (!connectedUser)
+            return;
         return (
             <div className="col-2 navbar-element" >
                 <div className="dropdown show col-12">
@@ -99,6 +76,7 @@ class Navbar extends Component {
                     </button>
                     <div className="dropdown-menu col-11" aria-labelledby="dropdownMenuLink">
                         <Link className="dropdown-item" to="/profile">Profile</Link>
+                        <Link className="dropdown-item" to="/messages">Messages</Link>
                         <button className="dropdown-item" onClick={this.logout}>Logout</button>
                     </div>
                 </div>
@@ -107,15 +85,6 @@ class Navbar extends Component {
     }
 
     displayHomeButton() {
-        if (!this.isUserConnected()) {
-            return (
-                <div className="col-3 game-title-container">
-                    <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
-                        <Link to="/" className="game-title-link">Space Citizen</Link>
-                    </h2>
-                </div>
-            )
-        }
         return (
             <div className="col-3 game-title-container">
                 <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><Link to="/game" className="game-title-link">Space Citizen</Link></h2>
@@ -124,6 +93,32 @@ class Navbar extends Component {
     }
 
     render() {
+        // if user is not connected
+        if (!isConnected()) {
+            return (
+                <div>
+                    <div className="col-12 row navbar-container">
+                        <div className="col-3 game-title-container">
+                            <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
+                                <Link to="/" className="game-title-link">Space Citizen</Link>
+                            </h2>
+                        </div>
+                        <div className="col-2 offset-7 navbar-element">
+                            <Link className="btn btn-secondary col-lg-10 offset-lg-1" to="/signin">
+                                <div className="navbar-profile-container">
+                                    <div>
+                                        <i className="fas fa-address-card fa-3x col-3"></i>
+                                        <span className="col-7">Sign in !</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            );
+        }
+
         return (
             <div>
                 <div className="col-12 row navbar-container">

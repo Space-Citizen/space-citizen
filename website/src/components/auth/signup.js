@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { post } from '../../misc/axios';
 import { createNotification } from '../../misc/notification';
-import axios from 'axios';
 import '../css/signup.css';
 
 class SignUp extends Component {
@@ -20,14 +20,7 @@ class SignUp extends Component {
             createNotification("error", "Passwords are different");
             return;
         }
-        axios.post('/api/auth/signup', { email: email, password: password, username: username }).then(response => {
-            if (!response || !response.data || !response.data.auth) {
-                if (response.data.error)
-                    createNotification("error", "An error occured: " + response.data.error);
-                else
-                    createNotification("error", "Error while creating the account");
-                return;
-            }
+        post('/api/auth/signup', { email: email, password: password, username: username }).then(response => {
             //store the token
             localStorage.setItem("x-access-token", response.data.token);
             document.location = "/game";

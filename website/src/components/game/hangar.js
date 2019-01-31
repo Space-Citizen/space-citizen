@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createNotification } from '../../misc/notification';
-import axios from 'axios';
+import { get, post } from '../../misc/axios';
 import '../css/hangar.css';
 
 class Hangar extends Component {
@@ -11,8 +11,6 @@ class Hangar extends Component {
       ships: [],
       selectedShip: {}
     };
-    //used for auth
-    this.token = localStorage.getItem("x-access-token");
     // equipments type available on the ships
     this.shipComponents = ["guns", "shields"];
 
@@ -41,7 +39,7 @@ class Hangar extends Component {
       this.setState({ ["ship" + componentName]: [] });
     });
     this.getUserInventory();
-    axios.get("/api/me/ships", { headers: { "x-access-token": this.token } }).then(response => {
+    get("/api/me/ships").then(response => {
       this.setState({ ships: response.data });
     });
   }
@@ -50,7 +48,7 @@ class Hangar extends Component {
 
   getUserInventory() {
     //get all items
-    axios.get("/api/me/inventory", { headers: { "x-access-token": this.token } }).then(response => {
+    get("/api/me/inventory").then(response => {
       var inventory = [];
       response.data.forEach(element => {
         inventory.push(this.createItem(element));
@@ -161,11 +159,8 @@ class Hangar extends Component {
 
     // edit ship equipment
 
-    axios.post("/api/ships/edit", { shipId: this.state.selectedShip.id, itemsToShip: shipItemsId, itemsToInventory: itemsToInventory }, { headers: { "x-access-token": this.token } }).then(response => {
-      if (response.data && response.data.error)
-        createNotification('error', response.data.error);
-      else if (response.data.success)
-        createNotification('success', response.data.success);
+    post("/api/ships/edit", { shipId: this.state.selectedShip.id, itemsToShip: shipItemsId, itemsToInventory: itemsToInventory }).then(response => {
+      createNotification('success', response.data.success);
     });
   }
 
@@ -184,11 +179,7 @@ class Hangar extends Component {
     this.getUserInventory();
 
     // get ship's inventory
-    axios.get("/api/ships/inventory/" + newShipId, { headers: { "x-access-token": this.token } }).then(response => {
-      if (response.data && response.data.error) {
-        createNotification('error', response.data.error);
-        return;
-      }
+    get("/api/ships/inventory/" + newShipId).then(response => {
       // for each item
       response.data.forEach(item => {
         if (!item.specifications)
@@ -256,7 +247,7 @@ class Hangar extends Component {
               {this.displayItemsPlaceholder(JSON.parse(this.state.selectedShip.specifications)[componentName + "_slots"])}
             </div>
             {this.state["ship" + componentName].map((item) => (
-              <div key={componentName + item.id}>
+              <div key={componentName + item.id} className="hangar-ship-item-container">
                 <div className="hangar-inventory-item"
                   onClick={() => this.resetItemToInventory("ship" + componentName, item.id)}>
                   {item.content}
@@ -298,6 +289,8 @@ class Hangar extends Component {
             </div>
           </div>
           <br />
+          <button className="btn btn-primary" onClick={() => this.saveChanges()}><i className="fas fa-save"></i> Save changes</button>
+          <button className="btn btn-success"><i className="fas fa-warehouse"></i> Use this ship</button>
           <div className="row">
             <div className="col-8 ship-inventory">
               <div>
@@ -309,7 +302,6 @@ class Hangar extends Component {
               {this.displayinventory()}
             </div>
           </div>
-          <button className="btn btn-primary offset-5" onClick={() => this.saveChanges()}>Save changes</button>
         </div>
       </div >
     );

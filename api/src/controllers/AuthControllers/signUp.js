@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
     doQuery("SELECT id FROM `users` WHERE `username` = ? OR `email` = ?", [req.body.username, req.body.email]).then(function (querySelectResult) {
         //send an error if a user with the same name or email is found
         if (querySelectResult.length > 0) {
-            res.status(200).json({ error: "Email or Username already taken" });
+            res.status(400).json({ error: "Email or Username already taken" });
             return;
         }
         //Creating user

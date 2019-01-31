@@ -26,5 +26,5 @@ exports.mysqlError = function (err, res) {
 
 exports.tokenError = function (res) {
     console.log("token error");
-    res.status(200).json({ error: "Invalid token" });
+    res.status(400).json({ error: "Invalid token" });
 }

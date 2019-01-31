@@ -30,7 +30,7 @@ module.exports = function (req, res, next, userId) {
     // get item information
     getItemInfo(req.params.itemId).then(function (itemInfo) {
         if (itemInfo.length === 0) {
-            res.status(200).json({ error: "Item not found" });
+            res.status(400).json({ error: "Item not found" });
             return;
         }
         //get first element in array
@@ -47,7 +47,7 @@ module.exports = function (req, res, next, userId) {
 
             // check if user has enough money
             if (userBalance < itemInfo.price) {
-                res.status(200).json({ error: "You don't have enough money to buy this item." });
+                res.status(400).json({ error: "You don't have enough money to buy this item." });
                 return;
             }
             // update user's balance

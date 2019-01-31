@@ -1,49 +1,35 @@
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom'
-import axios from 'axios';
+import { get } from '../../misc/axios';
 import Leftnav from '../navbar/leftnav';
 import Hangar from './hangar';
 import Shop from './shop';
+import { isConnected } from '../../misc/token';
 
 class Game extends Component {
     constructor() {
         super();
         this.state = {
-            authToken: -1,
             connectedUser: []
         };
-        this.token = localStorage.getItem("x-access-token");
         this.refreshUser = this.refreshUser.bind(this);
     };
 
     componentDidMount() {
-        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
-            if (response.data.error) {
-                alert(response.data.error);
-                window.location = "/signin";
-                return;
-            }
+        get('/api/me/info').then(response => {
             this.setState({ connectedUser: response.data });
         });
     }
 
     refreshUser() {
-        axios.get('/api/me/info', { headers: { "x-access-token": this.token } }).then(response => {
-            if (response.data.error) {
-                alert(response.data.error);
-                window.location = "/signin";
-                return;
-            }
+        get('/api/me/info').then(response => {
             this.setState({ connectedUser: response.data });
         });
     }
 
     render() {
         //display a loading screen during the loading of the token
-        if (this.token === -1) {
-            return (<p>Loading...</p>);
-        }
-        if (this.token === null) {
+        if (!isConnected()) {
             return <Redirect to='/signIn' />
         }
         return (
