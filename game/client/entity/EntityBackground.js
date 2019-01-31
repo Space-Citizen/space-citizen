@@ -17,10 +17,6 @@ class EntityBackground extends BaseEntity {
         this.image.drawCenterAt(canvas.width / 2, canvas.height / 2);
     }
 
-    onDestroy() {
-
-    }
-
     getHitCircle() {
         return 0;
     }

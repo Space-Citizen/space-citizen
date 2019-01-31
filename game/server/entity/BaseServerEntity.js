@@ -6,7 +6,6 @@ class BaseServerEntity {
     this.world = world;
     this.id = id;
     this.s_pos = new objects.Position(x, y);
-    this.s_bearing = 0;
     this.s_type = this.getType();
     this.world.addEntity(this);
   }

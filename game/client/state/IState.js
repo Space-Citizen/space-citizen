@@ -5,7 +5,7 @@ class IState {
         this.manager = manager;
         this.onInit();
     }
-    
+
     onInit() {
         throw new Error("Method 'onInit()' must be implemented.");
     }

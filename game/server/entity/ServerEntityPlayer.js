@@ -12,10 +12,8 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.listeners = {};
     this.s_name = user_info.username;
     this.user_info = user_info;
-    this.addListener(Events.PLAYER_MOVE_TO, this.eventMovePlayer.bind(this));
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
-    this.addListener(Events.PLAYER_RUN_FUNCTION, this.eventPlayerRunFunction.bind(this));
-
+    this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
   }
 
   delete() {
@@ -24,11 +22,12 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.world.removeEntity(this.id);
   }
 
-  s_moveTo(world_pos) {
+  playerMoveTo(world_pos) {
+    // TODO check args
     this.setTarget(world_pos);
   }
 
-  eventPlayerRunFunction(func_name, ...args) {
+  eventPlayerCallFunction(func_name, ...args) {
     var func = this[func_name].bind(this);
     // check if in allowed list
     if (func.length != args.length) {
@@ -40,10 +39,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
       return;
     }
     func(...args);
-  }
-
-  eventMovePlayer(pos) {
-    this.setTarget(pos);
   }
 
   eventDisconnect() {
@@ -66,7 +61,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     var names = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
     for (var x in names) {
       var key = names[x];
-      if (key.startsWith("s_")) {
+      if (key.startsWith("player")) {
         res[key] = this[key];
       }
     }

@@ -29,7 +29,6 @@ class ServerEntityStargate extends BaseServerEntity {
         if (!this.s_stargate_open) {
             return;
         }
-        this.s_bearing += 0.5 * time_elapsed;
         var that = this;
         // TODO optimize (dont run at every frame?)
         this.world.runOnPlayers(function (entity) {

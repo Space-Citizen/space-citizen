@@ -47,19 +47,18 @@ class Server {
         url: process.env.SPACE_CITIZEN_API_URL + '/api/me/info',
         headers: { "x-access-token": token }
       }, function (error, response) {
-        var user_info = undefined;
-
+        var user_info;
         if (response)
           user_info = JSON.parse(response.body);
-
         // TODO: REMOVE DEBUG CONDITION
         if (token === "test")
-          user_info = { username: "pute", id: 1 };
+          user_info = { username: "tester", id: 1 };
         // if authentication fail, abort
         if ((error && token !== "test") || !user_info || user_info.error) {
+          //console.error(user_info.error);
           return;
         }
-        // create the user
+        // create the player
         new Entity.ServerEntityPlayer(that.worlds.earth, 0, 0, client, user_info);
       });
 

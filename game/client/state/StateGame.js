@@ -69,10 +69,13 @@ class StateGame extends IState {
                 this.runOnUis(function (ui) {
                     ui.onMouseRightClick();
                 });
-                this.socket.emit(Events.PLAYER_RUN_FUNCTION, "s_moveTo", this.worldPos(mouse));
-                //this.socket.emit(Events.PLAYER_MOVE_TO, this.worldPos(mouse));
+                this.playerCallFunction("playerMoveTo", this.worldPos(mouse));
             }
         }
+    }
+
+    playerCallFunction(func_name, ...args) {
+        this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
     }
 
     onDestroy() {
@@ -91,14 +94,7 @@ class StateGame extends IState {
 
     eventDeleteEntity(id) {
         if (id in this.entities) {
-            this.runOnUis(function (ui) {
-                ui.onEntityRemoved(id);
-            });
-            this.entities[id].onDestroy();
-            delete this.entities[id];
-        }
-        else {
-            console.log("Error eventDeleteEntity " + id + " does not exist");
+            this.entities[id].delete();
         }
     }
 
@@ -107,9 +103,25 @@ class StateGame extends IState {
         for (var x in entities_info) {
             var server_entity = entities_info[x];
             if (!(server_entity.id in this.entities)) {
-                this.entities[server_entity.id] = createEntity(server_entity, this);
+                createEntity(server_entity, this);
             }
             this.entities[server_entity.id].onServerUpdate(server_entity);
+        }
+    }
+
+    addEntity(entity) {
+        this.entities[entity.id] = entity;
+    }
+
+    deleteEntity(id) {
+        if (id in this.entities) {
+            this.runOnUis(function (ui) {
+                ui.onEntityRemoved(id);
+            });
+            delete this.entities[id];
+        }
+        else {
+            console.log("Error eventDeleteEntity " + id + " does not exist");
         }
     }
 
@@ -148,6 +160,7 @@ class StateGame extends IState {
     }
 
     eventResetMap() {
+        ressources.SOUND_HYPERWINDOW.clone().play();
         this.initWorld();
     }
 
