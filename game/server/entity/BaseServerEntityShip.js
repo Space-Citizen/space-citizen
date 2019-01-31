@@ -8,6 +8,7 @@ class BaseServerEntityShip extends BaseServerEntity {
         super(world, x, y, id);
         this.s_target = null;
         this.s_hp = 100;
+        this.s_bearing = 0;
         this.speed = speed; // m/s
         this.inertia_length = inertia_length; // start slow down at
         this.stop_target_dist = stop_target_dist; // stop at this target dist

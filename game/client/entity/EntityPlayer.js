@@ -6,17 +6,13 @@ class EntityPlayer extends BaseEntityShip {
     getScreenPos() {
         // this is to prevent jerky movement of the user ship
         // relative to the center of the screen
-        if (this.id === this.manager.self.id) {
-            return this.manager.relPos(this.manager.pos);
+        if (this.id === this.game.self.id) {
+            return this.game.relPos(this.game.pos);
         }
         return super.getScreenPos();
     }
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-    }
-
-    onDestroy() {
-
     }
 }

@@ -1,18 +1,36 @@
 class BaseEntity {
 
-  constructor(server_entity, manager, pos_smooth = 5, bearing_smooth = 10) {
-    this.manager = manager;
+  constructor(server_entity, game, pos_smooth = 5) {
+    this.game = game;
     this._pos_smooth = pos_smooth;
-    this._bearing_smooth = bearing_smooth;
+    this._audios = [];
     this.onServerUpdate(server_entity);
     this.onInit();
     this.pos = this.s_pos;
-    this.bearing = this.s_bearing;
     this.type = this.s_type;
+    this.game.addEntity(this);
   }
 
   onServerUpdate(server_entity) {
     updateDict(this, server_entity);
+  }
+
+  getAudio(audio) {
+    var res = audio.cloneNode();
+    this._audios.push(res);
+    return res;
+  }
+
+  _updateAudios() {
+    // update audio volumes
+    var dist = Helper.dist(this.pos, this.game.self.pos);
+    if (dist > 300)
+      return;
+    for (var x = 0; x < this._audios.length; x += 1) {
+      var audio = this._audios[x];
+      audio.volume = Helper.map(dist, 0, 300, 1, 0);
+      console.log(audio.volume);
+    }
   }
 
   onInit() {
@@ -38,11 +56,15 @@ class BaseEntity {
 
     //var bearing_diff = (this.s_bearing - this.bearing);
     // TODO: smooth bearing
-    this.bearing = this.s_bearing;
     // TODO: _onUpdate ?
+    this._updateAudios();
   }
 
-  onDestroy() {
-    throw new Error("Method 'onDestroy()' must be implemented.");
+  delete() {
+    this.game.deleteEntity(this.id);
+  }
+
+  kill() {
+    this.delete();
   }
 }

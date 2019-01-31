@@ -1,11 +1,11 @@
 class BaseEntityShip extends BaseEntity {
     onInit() {
-        this.image_body = ressources.SPACESHIP_2;
+        this.image_body = ressources.SPACESHIP_1;
         this.image_thruster = ressources.THRUSTER_1;
     }
 
     getScreenPos() {
-        return this.manager.relPos(this.pos);
+        return this.game.relPos(this.pos);
     }
 
     drawHealthBar(x, y, size) {
@@ -28,6 +28,7 @@ class BaseEntityShip extends BaseEntity {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
+        this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
         //context.stroke();
         if (this.s_target) {
@@ -44,10 +45,6 @@ class BaseEntityShip extends BaseEntity {
             screen_pos.y + this.image_body.size().x
         );
         this.drawHealthBar(screen_pos.x, screen_pos.y - + this.image_body.size().y, 30);
-    }
-
-    onDestroy() {
-
     }
 
     getHitCircle() {

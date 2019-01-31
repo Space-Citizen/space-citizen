@@ -20,7 +20,7 @@ class UiAim extends BaseUi {
             }
         });
         this.target = res;
-        console.log(this.target);
+        //console.log(this.target);
         return res != null; // if target found, returns true
     }
 
