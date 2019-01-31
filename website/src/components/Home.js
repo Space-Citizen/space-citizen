@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { isConnected } from '../misc/token';
 import './css/home.css';
 
 class Home extends Component {
-  constructor() {
-    super();
-    this.state = {
-      authToken: -1
-    }
-  };
-
-  componentDidMount() {
-    this.setState({ authToken: localStorage.getItem("x-access-token") });
-  }
-
   render() {
-    if (this.state.authToken === -1) {
-      return (<p>Loading...</p>);
-    }
-    if (this.state.authToken !== null) {
+    // redirect to game if user is already connected
+    if (isConnected()) {
       return <Redirect to='/game' />
     }
     return (

@@ -22,7 +22,7 @@ function addItemsToinventory(itemsToInventory, userId) {
 module.exports = function (req, res, next, userId) {
 
     if (!req.body || !req.body.shipId || !req.body.itemsToShip || !req.body.itemsToInventory) {
-        res.status(200).json({ error: "Missing parameters" });
+        res.status(400).json({ error: "Missing parameters" });
         return;
     }
 

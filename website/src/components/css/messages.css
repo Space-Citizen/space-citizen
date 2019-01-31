@@ -1,0 +1,145 @@
+.message-img {
+    max-width: 100%;
+}
+
+.inbox_msg {
+    border: 1px solid #c4c4c4;
+    clear: both;
+    overflow: hidden;
+}
+
+.incoming_msg_img {
+    display: inline-block;
+    width: 6%;
+}
+
+.received_msg {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    vertical-align: top;
+    width: auto;
+}
+
+.received_withd_msg p {
+    background: rgb(240, 240, 240) none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #646464;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+}
+
+.time_date {
+    color: #747474;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.received_withd_msg {
+    width: 57%;
+}
+
+.mesgs {
+    float: left;
+    padding: 30px 15px 0 25px;
+    width: 100%;
+}
+
+.sent_msg p {
+    background: #05728f none repeat scroll 0 0;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 0;
+    color: #fff;
+    padding: 5px 10px 5px 12px;
+}
+
+.outgoing_msg {
+    overflow: hidden;
+    margin: 26px 0 26px;
+}
+
+.sent_msg {
+    float: right;
+    width: 46%;
+}
+
+.input_msg_write input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #4c4c4c;
+    font-size: 15px;
+    min-height: 48px;
+}
+
+.type_msg {
+    border-top: 1px solid #c4c4c4;
+    position: relative;
+}
+
+.msg_send_btn {
+    background: #05728f none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    height: 33px;
+    position: absolute;
+    right: 0;
+    top: 11px;
+    width: 33px;
+}
+
+.messaging {
+    background-color: rgb(230, 230, 230);
+}
+
+.msg_history {
+    height: 75vh;
+    overflow-y: auto;
+}
+
+.messages-container {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+/* contacts */
+
+.messages-contact-search-result-container {
+    box-shadow: 2px 3px 5px grey;
+    background-color: white;
+    position: relative;
+    z-index: 999;
+    width: 90%;
+    margin-left: 5%;
+    /* top: 90px; */
+}
+
+.messages-contact-search-result {
+    color: black;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
+}
+
+.messages-contact-search-empty-button {
+    position: absolute;
+    visibility: hidden;
+    right: 0;
+}
+
+.messages-contact-list-container {
+    background-color: white;
+}
+
+.messages-contact-selected {
+    background-color: rgb(230, 230, 230);
+}
+
+.messages-contact:hover {
+    background-color: rgb(230, 230, 230);
+}

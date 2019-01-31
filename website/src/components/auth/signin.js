@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { createNotification } from '../../misc/notification';
+import { post } from '../../misc/axios';
 import '../css/signin.css';
 
 class SignIn extends Component {
@@ -10,11 +9,7 @@ class SignIn extends Component {
         var password = document.getElementById("loginPassword").value;
 
         e.preventDefault();
-        axios.post('/api/auth/signin', { email: email, password: password }).then(response => {
-            if (!response.data || !response.data.auth || response.data.error) {
-                createNotification("error", response.data.error);
-                return;
-            }
+        post('/api/auth/signin', { email: email, password: password }).then(response => {
             //store the token
             localStorage.setItem("x-access-token", response.data.token);
             document.location = "/";
