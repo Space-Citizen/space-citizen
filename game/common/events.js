@@ -7,6 +7,7 @@ var Events = {
     "SERVER_UPDATE_ENTITIES": 1, // list[Entity]
     "SERVER_DELETE_ENTITY": 2, // int
     "SERVER_RESET_MAP": 3, // void
+    "SERVER_CALL_FUNCTION": 4,// entity id, function name, args as list
 
     // client >> server
     "PLAYER_AUTH": 5, // Authenticate the player
