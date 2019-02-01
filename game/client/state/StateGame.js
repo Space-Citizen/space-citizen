@@ -11,6 +11,8 @@ class StateGame extends IState {
 
         this.playerAuth();
         this.initWorld();
+
+        this.aim = this.manager.addUi("aim", new UiAim(this));
     }
 
     playerAuth() {
@@ -26,10 +28,6 @@ class StateGame extends IState {
     initWorld() {
         this.pos = new Position(0, 0);
         this.entities = {};
-        this.aim = new UiAim(this);
-        this.uis = {
-            "aim": this.aim,
-        }
     }
 
     runOnEntities(func) {
@@ -42,35 +40,12 @@ class StateGame extends IState {
         }
     }
 
-    runOnUis(func) {
-        var uis = this.uis;
-        for (var key in uis) {
-            if (uis.hasOwnProperty(key)) {
-                var ui = uis[key];
-                func(ui);
-            }
-        }
-    }
-
     onUpdate(time_elapsed) {
         if (this.id in this.entities) {
             this.self = this.entities[this.id];
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
             this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
             this.updateEntities(time_elapsed);
-            this.updateUis(time_elapsed);
-
-            if (mouse.left_click) {
-                this.runOnUis(function (ui) {
-                    ui.onMouseLeftClick();
-                });
-            }
-            if (mouse.right_click) {
-                this.runOnUis(function (ui) {
-                    ui.onMouseRightClick();
-                });
-                this.playerCallFunction("playerMoveTo", this.worldPos(mouse));
-            }
         }
     }
 
@@ -115,9 +90,6 @@ class StateGame extends IState {
 
     deleteEntity(id) {
         if (id in this.entities) {
-            this.runOnUis(function (ui) {
-                ui.onEntityRemoved(id);
-            });
             delete this.entities[id];
         }
         else {
@@ -151,12 +123,6 @@ class StateGame extends IState {
             }
         }
         this.self.onUpdate(time_elapsed);
-    }
-
-    updateUis(time_elapsed) {
-        this.runOnUis(function (ui) {
-            ui.onUpdate(time_elapsed);
-        });
     }
 
     eventResetMap() {
