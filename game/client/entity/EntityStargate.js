@@ -3,7 +3,7 @@ class EntityStargate extends BaseEntity {
         this.image_closed = ressources.STARGATE_CLOSED;
         this.image_open = ressources.STARGATE_OPEN;
         this.bearing = 0;
-        this.sound_hyper_window = ressources.SOUND_HYPERWINDOW.clone()
+        this.sound_hyper_window = this.getAudio(ressources.SOUND_HYPERWINDOW);
     }
 
     onUpdate(time_elapsed) {

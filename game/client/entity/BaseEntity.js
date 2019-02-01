@@ -16,7 +16,7 @@ class BaseEntity {
   }
 
   getAudio(audio) {
-    var res = audio.cloneNode();
+    var res = audio.clone();
     this._audios.push(res);
     return res;
   }
