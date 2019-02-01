@@ -19,7 +19,7 @@ class EntityStargate extends BaseEntity {
     }
 
     serverStargateUsed() {
-        this.sound_hyper_window.play();
+        this.sound_hyper_window.clone().play();
     }
 
     getHitCircle() {
