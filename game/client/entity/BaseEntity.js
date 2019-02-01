@@ -16,7 +16,7 @@ class BaseEntity {
   }
 
   getAudio(audio) {
-    var res = audio.cloneNode();
+    var res = audio.clone();
     this._audios.push(res);
     return res;
   }
@@ -24,12 +24,15 @@ class BaseEntity {
   _updateAudios() {
     // update audio volumes
     var dist = Helper.dist(this.pos, this.game.self.pos);
-    if (dist > 300)
-      return;
+
     for (var x = 0; x < this._audios.length; x += 1) {
       var audio = this._audios[x];
-      audio.volume = Helper.map(dist, 0, 300, 1, 0);
-      console.log(audio.volume);
+      if (dist > Constants.SOUND_RANGE) {
+        audio.setVolume(0);
+      } else {
+        audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 1, 0));
+      }
+      //console.log("volume: " + audio._audio.volume);
     }
   }
 

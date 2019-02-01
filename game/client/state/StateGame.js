@@ -8,6 +8,7 @@ class StateGame extends IState {
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
         this.socket.on(Events.SERVER_DELETE_ENTITY, this.eventDeleteEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
+        this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
 
         this.playerAuth();
         this.initWorld();
@@ -73,6 +74,15 @@ class StateGame extends IState {
         }
     }
 
+    eventServerCallFunction(entity_id, func_name, ...args) {
+        if (!(entity_id in this.entities)) {
+            console.error("eventServerCallFunction: entity " + entity_id + " not found");
+            return;
+        }
+        var entity = this.entities[entity_id];
+        entity[func_name](...args);
+    }
+
     eventUpdateEntities(entities_info) {
         //async >> await sleep(1000);
         for (var x in entities_info) {
@@ -126,7 +136,7 @@ class StateGame extends IState {
     }
 
     eventResetMap() {
-        ressources.SOUND_HYPERWINDOW.clone().play();
+        //ressources.SOUND_HYPERWINDOW.clone().play();
         this.initWorld();
     }
 
