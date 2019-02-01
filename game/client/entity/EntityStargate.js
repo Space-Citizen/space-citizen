@@ -3,6 +3,7 @@ class EntityStargate extends BaseEntity {
         this.image_closed = ressources.STARGATE_CLOSED;
         this.image_open = ressources.STARGATE_OPEN;
         this.bearing = 0;
+        this.sound_hyper_window = this.getAudio(ressources.SOUND_HYPERWINDOW);
     }
 
     onUpdate(time_elapsed) {
@@ -15,6 +16,10 @@ class EntityStargate extends BaseEntity {
             this.bearing += 0.5 * time_elapsed;
         }
         image.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+    }
+
+    serverStargateUsed() {
+        this.sound_hyper_window.clone().play();
     }
 
     getHitCircle() {
