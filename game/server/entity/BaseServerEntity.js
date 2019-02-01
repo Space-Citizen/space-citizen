@@ -12,6 +12,9 @@ class BaseServerEntity {
   }
 
   serverCallFunction(func_name, ...args) {
+    if (!func_name.startsWith("server")) {
+      console.error("serverCallFunction: function name must start with 'server'");
+    }
     var that = this;
     this.world.runOnPlayers(function (player) {
       player.client.emit(Events.SERVER_CALL_FUNCTION, that.id, func_name, ...args);
