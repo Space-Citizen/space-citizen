@@ -34,6 +34,10 @@ class ServerEntityStargate extends BaseServerEntity {
         this.world.runOnPlayers(function (entity) {
             var dist = Helper.dist(entity.s_pos, that.s_pos);
             if (dist <= 10) {
+                that.world.runOnPlayers(function (player) {
+                    player.client.emit(Events.SERVER_CALL_FUNCTION, that.id, "serverStargateUsed");
+                });
+
                 that.teleportPlayer(entity, that.world.getWorldByName(that.dest.name));
             }
         });
