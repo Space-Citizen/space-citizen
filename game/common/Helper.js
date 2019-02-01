@@ -6,6 +6,13 @@ class Helper {
         return Math.sqrt(a);
     }
 
+    static updateDict(dest, src) {
+        for (var key in src) {
+            dest[key] = src[key];
+        }
+        return dest;
+    }
+
     static dist(pos_a, pos_b) {
         // optimized distance calculation (also less precise)
         var dx = Math.abs(pos_b.x - pos_a.x)

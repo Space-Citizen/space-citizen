@@ -12,7 +12,7 @@ class BaseEntity {
   }
 
   onServerUpdate(server_entity) {
-    updateDict(this, server_entity);
+    Helper.updateDict(this, server_entity);
   }
 
   getAudio(audio) {

@@ -3,13 +3,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function updateDict(dest, src) {
-    for (key in src) {
-        dest[key] = src[key]
-    }
-    return dest;
-}
-
 function createEntity(server_entity, game) {
     var EntityClasses = {
         "player": EntityPlayer,

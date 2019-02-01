@@ -1,7 +1,7 @@
 
 class BaseUi {
-    constructor(game) {
-        this.game = game;
+    constructor(state) {
+        this.state = state;
         this.onInit();
     }
 
@@ -17,10 +17,6 @@ class BaseUi {
     onMouseRightClick() {
         // return bool (true to override click)
         throw new Error("Method 'onMouseRightClick()' must be implemented.");
-    }
-
-    onEntityRemoved(entity_id) {
-        throw new Error("Method 'onEntityRemoved(entity_id)' must be implemented.");
     }
 
     onUpdate(time_elapsed) {
