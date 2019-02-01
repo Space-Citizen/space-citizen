@@ -19,7 +19,8 @@ class ResAudio {
         this._audio.loop = loop;
     }
 
-    setVolume(vol) {
+    setVolume(volume) {
+        console.log(this._audio);
         this._audio.volume = volume;
     }
 
