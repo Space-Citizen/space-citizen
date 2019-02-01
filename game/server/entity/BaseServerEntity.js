@@ -1,5 +1,6 @@
 
 var objects = require("../../common");
+var Events = require('../../common/Events');
 
 class BaseServerEntity {
   constructor(world, x, y, id) {
@@ -8,6 +9,13 @@ class BaseServerEntity {
     this.s_pos = new objects.Position(x, y);
     this.s_type = this.getType();
     this.world.addEntity(this);
+  }
+
+  serverCallFunction(func_name, ...args) {
+    var that = this;
+    this.world.runOnPlayers(function (player) {
+      player.client.emit(Events.SERVER_CALL_FUNCTION, that.id, func_name, ...args);
+    });
   }
 
   delete() {
