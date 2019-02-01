@@ -27,12 +27,12 @@ class BaseEntity {
 
     for (var x = 0; x < this._audios.length; x += 1) {
       var audio = this._audios[x];
-      if (dist > 100) {
-        audio.volume = 0;
+      if (dist > Constants.SOUND_RANGE) {
+        audio.setVolume(0);
       } else {
-        audio.volume = Helper.map(dist, 0, 100, 1, 0);
+        audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 1, 0));
       }
-      console.log("volume: " + audio.volume);
+      //console.log("volume: " + audio._audio.volume);
     }
   }
 
