@@ -3,6 +3,13 @@
 class StateGame extends IState {
     onInit() {
         this.socket = io.connect(Constants.SERVER);
+
+        this.playerAuth();
+        this.initWorld();
+        this.uis = null;
+        this.initUis();
+        this.aim = this.addUi("aim", new UiAim(this));
+
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
@@ -10,11 +17,35 @@ class StateGame extends IState {
         this.socket.on(Events.SERVER_KILL_ENTITY, this.eventKillEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
         this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
+    }
 
-        this.playerAuth();
-        this.initWorld();
 
-        this.aim = this.manager.addUi("aim", new UiAim(this));
+    initUis() {
+        this.uis = {};
+    }
+
+    addUi(name, ui) {
+        this.uis[name] = ui;
+        return ui;
+    }
+
+    updateUis(time_elapsed) {
+        this.runOnUis(function (ui) {
+            ui.onUpdate(time_elapsed);
+        });
+    }
+
+    runOnUis(func) {
+        var uis = this.uis;
+        for (var key in uis) {
+            if (uis.hasOwnProperty(key)) {
+                var ui = uis[key];
+                if (func(ui)) {
+                    // if func is return true, dont call other Uis
+                    return;
+                }
+            }
+        }
     }
 
     playerAuth() {
@@ -48,6 +79,17 @@ class StateGame extends IState {
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
             this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
             this.updateEntities(time_elapsed);
+            this.updateUis(time_elapsed);
+            if (mouse.left_click) {
+                this.runOnUis(function (ui) {
+                    ui.onMouseLeftClick();
+                });
+            }
+            if (mouse.right_click) {
+                this.runOnUis(function (ui) {
+                    ui.onMouseRightClick();
+                });
+            }
         } else {
             ressources.NO_SIGNAL.drawCenterAt(canvas.width / 2, canvas.height / 2);
         }
