@@ -30,7 +30,7 @@ class BaseEntity {
       if (dist > Constants.SOUND_RANGE) {
         audio.setVolume(0);
       } else {
-        audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 1, 0));
+        audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 0.3, 0));
       }
       //console.log("volume: " + audio._audio.volume);
     }
