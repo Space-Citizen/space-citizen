@@ -132,12 +132,12 @@ class StateGame extends IState {
             this.updateUis(time_elapsed);
             if (mouse.left_click) {
                 this.runOnUis(function (ui) {
-                    ui.onMouseLeftClick();
+                    return ui.onMouseLeftClick();
                 });
             }
             if (mouse.right_click) {
                 this.runOnUis(function (ui) {
-                    ui.onMouseRightClick();
+                    return ui.onMouseRightClick();
                 });
             }
         } else {
