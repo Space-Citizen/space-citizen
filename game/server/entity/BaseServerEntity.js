@@ -22,7 +22,11 @@ class BaseServerEntity {
   }
 
   delete() {
-    this.world.removeEntity(this);
+    this.world.deleteEntity(this);
+  }
+
+  kill() {
+    this.world.killEntity(this);
   }
 
   onUpdate() {

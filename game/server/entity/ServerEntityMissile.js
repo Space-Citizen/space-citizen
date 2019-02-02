@@ -13,6 +13,11 @@ class ServerEntityMissile extends BaseServerEntity {
     }
 
     onUpdate(time_elapsed) {
+        if (!this.target_entity) {
+            console.error("Missile got no entity");
+            this.kill();
+            return;
+        }
         var target_pos = this.target_entity.s_pos;
         var m = (this.s_pos.y - target_pos.y) / (this.s_pos.x - target_pos.x);
         var ang = Math.atan(m);
@@ -28,7 +33,7 @@ class ServerEntityMissile extends BaseServerEntity {
         if (dist <= this.blow_distance) {
             // if target is closer than 1 meter, stop moving
             this.target_entity.playerHit(10);
-            this.delete();
+            this.kill();
         }
 
     }

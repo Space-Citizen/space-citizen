@@ -20,13 +20,13 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   delete() {
     super.delete();
     this.removeListeners();
-    this.world.removeEntity(this.id);
+    this.world.deleteEntity(this.id);
   }
 
   playerHit(hp) {
     this.s_hp -= hp;
     if (this.s_hp <= 0) {
-      this.delete();
+      this.kill();
     }
   }
 
