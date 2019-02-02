@@ -24,6 +24,13 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.s_target = pos;
     }
 
+    shipHit(attacker_entity, hp) {
+        this.s_hp -= hp;
+        if (this.s_hp <= 0) {
+            this.kill();
+        }
+    }
+
     onUpdate(time_elapsed) {
         if (this.s_target != null) {
             var dist = Helper.dist(this.s_pos, this.s_target);
