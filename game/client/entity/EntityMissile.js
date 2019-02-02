@@ -1,6 +1,10 @@
 class EntityMissile extends BaseEntity {
     onInit() {
         this.image_body = ressources.MISSILE_1;
+
+        this.sound_fire = this.getAudio(ressources.SOUND_MISSILE_FIRE);
+        this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
+        this.sound_fire.play();
     }
 
     getScreenPos() {
@@ -21,5 +25,10 @@ class EntityMissile extends BaseEntity {
 
     getPriority() {
         return priority.MISSILE;
+    }
+
+    delete() {
+        this.sound_explosion.play();
+        super.delete();
     }
 }
