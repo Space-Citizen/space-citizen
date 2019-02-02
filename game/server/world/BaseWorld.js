@@ -25,10 +25,21 @@ class BaseWorld {
         this.entities[entity.id] = entity;
     }
 
-    removeEntity(entity) {
+    _deleteEntity(entity) {
         delete this.entities[entity.id];
+    }
+
+    deleteEntity(entity) {
+        this._deleteEntity(entity);
         this.runOnPlayers(function (player) {
             player.client.emit(Events.SERVER_DELETE_ENTITY, entity.id);
+        });
+    }
+
+    killEntity(entity) {
+        this._deleteEntity(entity);
+        this.runOnPlayers(function (player) {
+            player.client.emit(Events.SERVER_KILL_ENTITY, entity.id);
         });
     }
 

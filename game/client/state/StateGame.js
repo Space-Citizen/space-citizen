@@ -7,6 +7,7 @@ class StateGame extends IState {
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
         this.socket.on(Events.SERVER_DELETE_ENTITY, this.eventDeleteEntity.bind(this));
+        this.socket.on(Events.SERVER_KILL_ENTITY, this.eventKillEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
         this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
 
@@ -71,6 +72,12 @@ class StateGame extends IState {
     eventDeleteEntity(id) {
         if (id in this.entities) {
             this.entities[id].delete();
+        }
+    }
+
+    eventKillEntity(id) {
+        if (id in this.entities) {
+            this.entities[id].kill();
         }
     }
 

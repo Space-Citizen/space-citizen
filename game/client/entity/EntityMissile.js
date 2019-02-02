@@ -27,8 +27,8 @@ class EntityMissile extends BaseEntity {
         return priority.MISSILE;
     }
 
-    delete() {
+    kill() {
         this.sound_explosion.play();
-        super.delete();
+        super.kill();
     }
 }
