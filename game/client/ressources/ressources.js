@@ -14,6 +14,7 @@ var ressources = {
     "STARGATE_OPEN": new ResWorldImage("stargate_open.png", 30),
     "STARGATE_CLOSED": new ResWorldImage("stargate_closed.png", 30),
     "TARGET_RED": new ResWorldImage("target_red.png", 40),
+    "MISSILE_1": new ResWorldImage("missile_1.png", 10),
     // Sounds
     "SOUND_THRUSTER_1": new ResAudio("thruster_1.mp3", true),
     "SOUND_HYPERWINDOW": new ResAudio("hyperwindow.wav"),
