@@ -26,7 +26,12 @@ class UiAim extends BaseUi {
             }
         });
         this.target = res;
-        //console.log(this.target);
+
+        //
+        if (res != null) {
+            this.game.playerCallFunction("playerLaunchMissile", res.id);
+        }
+        //
         return res != null; // if target found, returns true
     }
 

@@ -7,7 +7,8 @@ function createEntity(server_entity, game) {
     var EntityClasses = {
         "player": EntityPlayer,
         "stargate": EntityStargate,
-        "background": EntityBackground
+        "background": EntityBackground,
+        "missile": EntityMissile,
     }
     var res = new EntityClasses[server_entity.s_type](server_entity, game);
     return res;
