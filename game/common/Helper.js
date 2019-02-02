@@ -1,5 +1,23 @@
 
 class Helper {
+
+    static moveInDirection(pos, bearing, speed, time_elapsed) {
+        var dir_x = Math.cos(bearing) * speed;
+        var dir_y = Math.sin(bearing) * speed;
+        pos.x += dir_x * time_elapsed;
+        pos.y += dir_y * time_elapsed;
+    }
+
+    static getDirection(pos_a, pos_b) {
+        // get direction (angle) from pos_a to pos_b
+        var m = (pos_a.y - pos_b.y) / (pos_a.x - pos_b.x);
+        var ang = Math.atan(m);
+        if (pos_a.x > pos_b.x) {
+            ang += Math.PI;
+        }
+        return ang;
+    }
+
     static accurateDist(pos_a, pos_b) {
         // accurate distance calculation (also very cpu expensive)
         var a = Math.pow(pos_b.y - pos_a.y, 2) + Math.pow(pos_b.x - pos_a.x, 2);
