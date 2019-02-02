@@ -36,17 +36,17 @@ class BaseWorld {
     }
 
     deleteEntity(entity) {
-        this._deleteEntity(entity);
         this.runOnPlayers(function (player) {
             player.client.emit(Events.SERVER_DELETE_ENTITY, entity.id);
         });
+        this._deleteEntity(entity);
     }
 
     killEntity(entity) {
-        this._deleteEntity(entity);
         this.runOnPlayers(function (player) {
             player.client.emit(Events.SERVER_KILL_ENTITY, entity.id);
         });
+        this._deleteEntity(entity);
     }
 
     sendEventUpdateEntities(server_player) {

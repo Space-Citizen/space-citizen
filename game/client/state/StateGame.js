@@ -48,11 +48,15 @@ class StateGame extends IState {
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
             this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
             this.updateEntities(time_elapsed);
+        } else {
+            ressources.NO_SIGNAL.drawCenterAt(canvas.width / 2, canvas.height / 2);
         }
     }
 
     playerCallFunction(func_name, ...args) {
-        this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
+        if (this.self) {
+            this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
+        }
     }
 
     onDestroy() {
