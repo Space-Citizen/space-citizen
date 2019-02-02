@@ -4,9 +4,7 @@ class StateGame extends IState {
     onInit() {
         this.socket = io.connect(Constants.SERVER);
 
-        this.playerAuth();
         this.initWorld();
-        this.uis = null;
         this.initUis();
         this.aim = this.addUi("aim", new UiAim(this));
 
@@ -19,6 +17,73 @@ class StateGame extends IState {
         this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
     }
 
+
+    eventConnect() {
+        this.playerAuth();
+        this.initWorld();
+        this.id = this.socket.io.engine.id;
+        console.log("connected as " + this.id);
+    }
+
+    eventDisconnect() {
+        console.log("Disconnected");
+        if (this.self) {
+            this.eventDeleteEntity(this.self.id);
+        }
+        this.self = null;
+    }
+
+
+    eventDeleteEntity(id) {
+        if (id in this.entities) {
+            this.entities[id].delete();
+        }
+    }
+
+    eventKillEntity(id) {
+        if (id in this.entities) {
+            this.entities[id].kill();
+        }
+    }
+
+    eventServerCallFunction(entity_id, func_name, ...args) {
+        if (!(entity_id in this.entities)) {
+            console.error("eventServerCallFunction: entity " + entity_id + " not found");
+            return;
+        }
+        var entity = this.entities[entity_id];
+        entity[func_name](...args);
+    }
+
+    eventUpdateEntities(entities_info) {
+        //async >> await sleep(1000);
+        for (var x in entities_info) {
+            var server_entity = entities_info[x];
+            if (!(server_entity.id in this.entities)) {
+                createEntity(server_entity, this);
+            }
+            this.entities[server_entity.id].onServerUpdate(server_entity);
+        }
+    }
+
+    eventResetMap() {
+        this.initWorld();
+    }
+
+    playerAuth() {
+        // get the token from the url
+        var url_params = {}
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            url_params[key] = value;
+        });
+        // send it to the server
+        this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
+    }
+
+    initWorld() {
+        this.pos = new Position(0, 0);
+        this.entities = {};
+    }
 
     initUis() {
         this.uis = {};
@@ -46,21 +111,6 @@ class StateGame extends IState {
                 }
             }
         }
-    }
-
-    playerAuth() {
-        // get the token from the url
-        var url_params = {}
-        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-            url_params[key] = value;
-        });
-        // send it to the server
-        this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
-    }
-
-    initWorld() {
-        this.pos = new Position(0, 0);
-        this.entities = {};
     }
 
     runOnEntities(func) {
@@ -105,48 +155,6 @@ class StateGame extends IState {
         this.socket.disconnect(true);
     }
 
-    eventConnect() {
-        this.initWorld();
-        this.id = this.socket.io.engine.id;
-        console.log("connected as " + this.id);
-    }
-
-    eventDisconnect() {
-        console.log("Disconnected");
-    }
-
-    eventDeleteEntity(id) {
-        if (id in this.entities) {
-            this.entities[id].delete();
-        }
-    }
-
-    eventKillEntity(id) {
-        if (id in this.entities) {
-            this.entities[id].kill();
-        }
-    }
-
-    eventServerCallFunction(entity_id, func_name, ...args) {
-        if (!(entity_id in this.entities)) {
-            console.error("eventServerCallFunction: entity " + entity_id + " not found");
-            return;
-        }
-        var entity = this.entities[entity_id];
-        entity[func_name](...args);
-    }
-
-    eventUpdateEntities(entities_info) {
-        //async >> await sleep(1000);
-        for (var x in entities_info) {
-            var server_entity = entities_info[x];
-            if (!(server_entity.id in this.entities)) {
-                createEntity(server_entity, this);
-            }
-            this.entities[server_entity.id].onServerUpdate(server_entity);
-        }
-    }
-
     addEntity(entity) {
         this.entities[entity.id] = entity;
     }
@@ -186,11 +194,6 @@ class StateGame extends IState {
             }
         }
         this.self.onUpdate(time_elapsed);
-    }
-
-    eventResetMap() {
-        //ressources.SOUND_HYPERWINDOW.clone().play();
-        this.initWorld();
     }
 
     relPos(pos) {
