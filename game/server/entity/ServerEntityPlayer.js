@@ -36,7 +36,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   }
 
   playerLaunchMissile(entity_id) {
-    new ServerEntityMissile(this.world, "missile_" + Math.random(), this, this.world.entities[entity_id]);
+    new ServerEntityMissile(this.world, this.world.getFreeId(), this, this.world.entities[entity_id]);
   }
 
   eventPlayerCallFunction(func_name, ...args) {
