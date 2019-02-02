@@ -1,6 +1,7 @@
 
 var Helper = require("../../common/Helper");
 var BaseServerEntityShip = require("./BaseServerEntityShip");
+var ServerEntityMissile = require("./ServerEntityMissile");
 var Events = require('../../common/Events');
 
 class ServerEntityPlayer extends BaseServerEntityShip {
@@ -19,12 +20,23 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   delete() {
     super.delete();
     this.removeListeners();
-    this.world.removeEntity(this.id);
+    this.world.deleteEntity(this.id);
+  }
+
+  playerHit(hp) {
+    this.s_hp -= hp;
+    if (this.s_hp <= 0) {
+      this.kill();
+    }
   }
 
   playerMoveTo(world_pos) {
     // TODO check args
     this.setTarget(world_pos);
+  }
+
+  playerLaunchMissile(entity_id) {
+    new ServerEntityMissile(this.world, this.world.getFreeId(), this, this.world.entities[entity_id]);
   }
 
   eventPlayerCallFunction(func_name, ...args) {

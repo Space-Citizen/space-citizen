@@ -7,6 +7,7 @@ class StateGame extends IState {
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
         this.socket.on(Events.SERVER_DELETE_ENTITY, this.eventDeleteEntity.bind(this));
+        this.socket.on(Events.SERVER_KILL_ENTITY, this.eventKillEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
         this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
 
@@ -47,11 +48,15 @@ class StateGame extends IState {
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
             this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
             this.updateEntities(time_elapsed);
+        } else {
+            ressources.NO_SIGNAL.drawCenterAt(canvas.width / 2, canvas.height / 2);
         }
     }
 
     playerCallFunction(func_name, ...args) {
-        this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
+        if (this.self) {
+            this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
+        }
     }
 
     onDestroy() {
@@ -71,6 +76,12 @@ class StateGame extends IState {
     eventDeleteEntity(id) {
         if (id in this.entities) {
             this.entities[id].delete();
+        }
+    }
+
+    eventKillEntity(id) {
+        if (id in this.entities) {
+            this.entities[id].kill();
         }
     }
 

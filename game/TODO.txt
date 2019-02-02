@@ -1,0 +1,2 @@
+socket.io rooms
+fix getFreeIdfunction

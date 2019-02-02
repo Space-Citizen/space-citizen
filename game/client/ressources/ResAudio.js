@@ -20,7 +20,6 @@ class ResAudio {
     }
 
     setVolume(volume) {
-        console.log(this._audio);
         this._audio.volume = volume;
     }
 
