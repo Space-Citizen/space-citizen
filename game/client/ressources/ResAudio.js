@@ -24,7 +24,9 @@ class ResAudio {
     }
 
     clone() {
-        return new ResAudio(this._audio.cloneNode(), this._loop);
+        var res = new ResAudio(this._audio.cloneNode(), this._loop);
+        res.setVolume(this._audio.volume);
+        return res;
     }
 
     play() {
