@@ -8,7 +8,7 @@ var Constants = {
   "PORT": port,
   "SCREEN_RATIO": 16 / 9,
   "X_VIEW_RANGE": 300, // value in meters. Y view range is defined by screen ratio
-  "SOUND_RANGE": 500,
+  "SOUND_RANGE": 300,
   "HEALTH_BAR_SIZE": 30 // value in meters
 }
 Object.freeze(Constants);
