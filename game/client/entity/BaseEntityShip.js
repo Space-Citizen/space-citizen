@@ -22,7 +22,7 @@ class BaseEntityShip extends BaseEntity {
 
         context.beginPath();
         context.fillStyle = "green"
-        context.fillRect(x, y, x_size, y_size * this.s_hp / 100);
+        context.fillRect(x, y, x_size * this.s_hp / 100, y_size);
         context.stroke();
     }
 
