@@ -15,12 +15,7 @@ class BaseServerEntityShip extends BaseServerEntity {
     }
 
     setTarget(pos) {
-        var m = (this.s_pos.y - pos.y) / (this.s_pos.x - pos.x);
-        var ang = Math.atan(m);
-        if (this.s_pos.x > pos.x) {
-            ang += Math.PI;
-        }
-        this.s_bearing = ang;
+        this.s_bearing = Helper.getDirection(this.s_pos, pos);
         this.s_target = pos;
     }
 
@@ -34,11 +29,10 @@ class BaseServerEntityShip extends BaseServerEntity {
     onUpdate(time_elapsed) {
         if (this.s_target != null) {
             var dist = Helper.dist(this.s_pos, this.s_target);
-            var breaks = Math.min(Helper.map(dist, 0, this.inertia_length, 0, 1), 1); // break speed
-            var dir_x = Math.cos(this.s_bearing) * this.speed * breaks;
-            var dir_y = Math.sin(this.s_bearing) * this.speed * breaks;
-            this.s_pos.x += dir_x * time_elapsed;
-            this.s_pos.y += dir_y * time_elapsed;
+            // break speed
+            var breaks = Math.min(Helper.map(dist, 0, this.inertia_length, 0, 1), 1);
+            Helper.moveInDirection(this.s_pos, this.s_bearing,
+                this.speed * breaks, time_elapsed);
             if (dist <= this.stop_target_dist) {
                 // if target is closer than 1 meter, stop moving
                 this.s_target = null;
