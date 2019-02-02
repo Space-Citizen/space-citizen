@@ -4,9 +4,7 @@ class StateGame extends IState {
     onInit() {
         this.socket = io.connect(Constants.SERVER);
 
-        this.playerAuth();
         this.initWorld();
-        this.uis = null;
         this.initUis();
         this.aim = this.addUi("aim", new UiAim(this));
 
@@ -20,92 +18,8 @@ class StateGame extends IState {
     }
 
 
-    initUis() {
-        this.uis = {};
-    }
-
-    addUi(name, ui) {
-        this.uis[name] = ui;
-        return ui;
-    }
-
-    updateUis(time_elapsed) {
-        this.runOnUis(function (ui) {
-            ui.onUpdate(time_elapsed);
-        });
-    }
-
-    runOnUis(func) {
-        var uis = this.uis;
-        for (var key in uis) {
-            if (uis.hasOwnProperty(key)) {
-                var ui = uis[key];
-                if (func(ui)) {
-                    // if func is return true, dont call other Uis
-                    return;
-                }
-            }
-        }
-    }
-
-    playerAuth() {
-        // get the token from the url
-        var url_params = {}
-        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-            url_params[key] = value;
-        });
-        // send it to the server
-        this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
-    }
-
-    initWorld() {
-        this.pos = new Position(0, 0);
-        this.entities = {};
-    }
-
-    runOnEntities(func) {
-        var entities = this.entities;
-        for (var key in entities) {
-            if (entities.hasOwnProperty(key)) {
-                var entity = entities[key];
-                func(entity);
-            }
-        }
-    }
-
-    onUpdate(time_elapsed) {
-        if (this.id in this.entities) {
-            this.self = this.entities[this.id];
-            this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
-            this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
-            this.updateEntities(time_elapsed);
-            this.updateUis(time_elapsed);
-            if (mouse.left_click) {
-                this.runOnUis(function (ui) {
-                    ui.onMouseLeftClick();
-                });
-            }
-            if (mouse.right_click) {
-                this.runOnUis(function (ui) {
-                    ui.onMouseRightClick();
-                });
-            }
-        } else {
-            ressources.NO_SIGNAL.drawCenterAt(canvas.width / 2, canvas.height / 2);
-        }
-    }
-
-    playerCallFunction(func_name, ...args) {
-        if (this.self) {
-            this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
-        }
-    }
-
-    onDestroy() {
-        this.socket.disconnect(true);
-    }
-
     eventConnect() {
+        this.playerAuth();
         this.initWorld();
         this.id = this.socket.io.engine.id;
         console.log("connected as " + this.id);
@@ -113,7 +27,12 @@ class StateGame extends IState {
 
     eventDisconnect() {
         console.log("Disconnected");
+        if (this.self) {
+            this.eventDeleteEntity(this.self.id);
+        }
+        this.self = null;
     }
+
 
     eventDeleteEntity(id) {
         if (id in this.entities) {
@@ -145,6 +64,95 @@ class StateGame extends IState {
             }
             this.entities[server_entity.id].onServerUpdate(server_entity);
         }
+    }
+
+    eventResetMap() {
+        this.initWorld();
+    }
+
+    playerAuth() {
+        // get the token from the url
+        var url_params = {}
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            url_params[key] = value;
+        });
+        // send it to the server
+        this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
+    }
+
+    initWorld() {
+        this.pos = new Position(0, 0);
+        this.entities = {};
+    }
+
+    initUis() {
+        this.uis = {};
+    }
+
+    addUi(name, ui) {
+        this.uis[name] = ui;
+        return ui;
+    }
+
+    updateUis(time_elapsed) {
+        this.runOnUis(function (ui) {
+            ui.onUpdate(time_elapsed);
+        });
+    }
+
+    runOnUis(func) {
+        var uis = this.uis;
+        for (var key in uis) {
+            if (uis.hasOwnProperty(key)) {
+                var ui = uis[key];
+                if (func(ui)) {
+                    // if func is return true, dont call other Uis
+                    return;
+                }
+            }
+        }
+    }
+
+    runOnEntities(func) {
+        var entities = this.entities;
+        for (var key in entities) {
+            if (entities.hasOwnProperty(key)) {
+                var entity = entities[key];
+                func(entity);
+            }
+        }
+    }
+
+    onUpdate(time_elapsed) {
+        if (this.id in this.entities) {
+            this.self = this.entities[this.id];
+            this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
+            this.pos.y = this.self.pos.y; // this is why I m saving it now, to prevent shifting during the display
+            this.updateEntities(time_elapsed);
+            this.updateUis(time_elapsed);
+            if (mouse.left_click) {
+                this.runOnUis(function (ui) {
+                    return ui.onMouseLeftClick();
+                });
+            }
+            if (mouse.right_click) {
+                this.runOnUis(function (ui) {
+                    return ui.onMouseRightClick();
+                });
+            }
+        } else {
+            ressources.NO_SIGNAL.drawCenterAt(canvas.width / 2, canvas.height / 2);
+        }
+    }
+
+    playerCallFunction(func_name, ...args) {
+        if (this.self) {
+            this.socket.emit(Events.PLAYER_CALL_FUNCTION, func_name, ...args);
+        }
+    }
+
+    onDestroy() {
+        this.socket.disconnect(true);
     }
 
     addEntity(entity) {
@@ -186,11 +194,6 @@ class StateGame extends IState {
             }
         }
         this.self.onUpdate(time_elapsed);
-    }
-
-    eventResetMap() {
-        //ressources.SOUND_HYPERWINDOW.clone().play();
-        this.initWorld();
     }
 
     relPos(pos) {

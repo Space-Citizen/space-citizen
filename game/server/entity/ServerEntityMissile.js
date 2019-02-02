@@ -8,7 +8,10 @@ class ServerEntityMissile extends BaseServerEntity {
         super(world, attacker_entity.s_pos.x, attacker_entity.s_pos.y, id);
         this.s_bearing = 0;
         this.speed = 100;
-        this.blow_distance = 5;
+        this.blow_distance = 2;
+        this.damage = 10;
+        // this.warm_up_time = 2;
+        // this.warm = 0;
         this.target_entity = target_entity;
     }
 
@@ -19,23 +22,15 @@ class ServerEntityMissile extends BaseServerEntity {
             return;
         }
         var target_pos = this.target_entity.s_pos;
-        var m = (this.s_pos.y - target_pos.y) / (this.s_pos.x - target_pos.x);
-        var ang = Math.atan(m);
-        if (this.s_pos.x > target_pos.x) {
-            ang += Math.PI;
-        }
-        this.s_bearing = ang;
+        this.s_bearing = Helper.getDirection(this.s_pos, target_pos);
+        Helper.moveInDirection(this.s_pos, this.s_bearing,
+            this.speed, time_elapsed);
         var dist = Helper.dist(this.s_pos, target_pos);
-        var dir_x = Math.cos(this.s_bearing) * this.speed;
-        var dir_y = Math.sin(this.s_bearing) * this.speed;
-        this.s_pos.x += dir_x * time_elapsed;
-        this.s_pos.y += dir_y * time_elapsed;
         if (dist <= this.blow_distance) {
             // if target is closer than 1 meter, stop moving
-            this.target_entity.playerHit(10);
+            this.target_entity.shipHit(this.attacker, this.damage);
             this.kill();
         }
-
     }
 
     getType() {
