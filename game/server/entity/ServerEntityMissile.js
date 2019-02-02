@@ -32,7 +32,7 @@ class ServerEntityMissile extends BaseServerEntity {
         this.s_pos.y += dir_y * time_elapsed;
         if (dist <= this.blow_distance) {
             // if target is closer than 1 meter, stop moving
-            this.target_entity.playerHit(10);
+            this.target_entity.shipHit(this.attacker, 10);
             this.kill();
         }
 
