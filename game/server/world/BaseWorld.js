@@ -7,6 +7,12 @@ class BaseWorld {
         this.server = server;
         this.entities = {};
         this.onInit();
+        this._id_count = 0;
+    }
+
+    getFreeId() {
+        this._id_count += 1;
+        return "FID_" + this._id_count;
     }
 
     onInit() {
