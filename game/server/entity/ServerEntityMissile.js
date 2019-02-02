@@ -10,7 +10,6 @@ class ServerEntityMissile extends BaseServerEntity {
         this.speed = 100;
         this.blow_distance = 5;
         this.target_entity = target_entity;
-
     }
 
     onUpdate(time_elapsed) {

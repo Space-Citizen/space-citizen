@@ -18,6 +18,8 @@ var ressources = {
     // Sounds
     "SOUND_THRUSTER_1": new ResAudio("thruster_1.mp3", true),
     "SOUND_HYPERWINDOW": new ResAudio("hyperwindow.wav"),
+    "SOUND_MISSILE_FIRE": new ResAudio("missile_fire_1.wav"),
+    "SOUND_EXPLOSION_1": new ResAudio("explosion_1.wav"),
 };
 
 var g_res_count = Object.keys(ressources).length
