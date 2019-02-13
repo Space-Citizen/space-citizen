@@ -8,14 +8,14 @@ class Navbar extends Component {
     constructor() {
         super();
         this.state = {
-            connectedUser: undefined
+            connected_user: undefined
         }
     };
 
     componentDidMount() {
         if (isConnected()) {
             get('/api/me/info').then(response => {
-                this.setState({ connectedUser: response.data });
+                this.setState({ connected_user: response.data });
             });
         }
     }
@@ -26,9 +26,9 @@ class Navbar extends Component {
     }
 
     displayUserInfo() {
-        const { connectedUser } = this.state;
+        const { connected_user } = this.state;
 
-        if (!connectedUser)
+        if (!connected_user)
             return;
         return (
             <div className="col-2 offset-5 user-info-box">
@@ -36,7 +36,7 @@ class Navbar extends Component {
                     <div className="row">
                         <div className="col-6">
                             <i className="fas fa-money-bill"></i>
-                            <span className="user-info-box-text">{connectedUser.money}</span>
+                            <span className="user-info-box-text">{connected_user.money}</span>
                         </div>
                         <div className="col-6">
                             <div className="float-left">
@@ -61,9 +61,9 @@ class Navbar extends Component {
     }
 
     displayProfileButton() {
-        const { connectedUser } = this.state;
+        const { connected_user } = this.state;
 
-        if (!connectedUser)
+        if (!connected_user)
             return;
         return (
             <div className="col-2 navbar-element" >
@@ -71,11 +71,11 @@ class Navbar extends Component {
                     <button className="btn btn-secondary dropdown-toggle col-12" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div className="navbar-profile-container">
                             <i className="fas fa-address-card fa-3x col-3"></i>
-                            <span className="col-7">{connectedUser.username}</span>
+                            <span className="col-7">{connected_user.username}</span>
                         </div>
                     </button>
                     <div className="dropdown-menu col-11" aria-labelledby="dropdownMenuLink">
-                        <Link className="dropdown-item" to="/profile">Profile</Link>
+                        <Link className="dropdown-item" to={"/profile/" + connected_user.id}>Profile</Link>
                         <Link className="dropdown-item" to="/messages">Messages</Link>
                         <button className="dropdown-item" onClick={this.logout}>Logout</button>
                     </div>

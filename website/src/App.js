@@ -7,6 +7,7 @@ import SignUp from './components/auth/signup';
 import Game from './components/game/game';
 import Navbar from './components/navbar/navbar';
 import Messages from './components/messages/messaging';
+import Profile from './components/profile/profile';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route path="/messages/:contactId?" component={Messages} />
         <Route path="/game" component={Game} />
+        <Route path="/profile/:userId" component={Profile} />
         <Route component={NoMatch} />
       </Switch>
       <NotificationContainer />

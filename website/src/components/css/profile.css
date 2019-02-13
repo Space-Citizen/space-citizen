@@ -1,0 +1,10 @@
+.profile-container
+{
+    background-color: rgb(240,240,240);
+    height: 100vh;
+}
+
+.profile-user-card
+{
+    border-right: 2px solid;
+}
