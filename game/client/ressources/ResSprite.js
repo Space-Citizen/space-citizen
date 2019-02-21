@@ -9,9 +9,8 @@ class ResSprite extends ResWorldImage {
         }
         this._frame_size_x = this._image.width / this._frame_count_x;
         this._frame_size_y = this._image.height / this._frame_count_y;
-
-        this.reset(false);
         this._total_frames = this._frame_count_x * this._frame_count_y;
+        this.reset(false);
     }
 
     reset(loop) {
@@ -23,14 +22,13 @@ class ResSprite extends ResWorldImage {
     renderArea() {
         return {
             "width": this._frame_size_x,
-            "height": this._frame_size_x
+            "height": this._frame_size_y
         }
     }
 
     getSpritePos() {
         var nframe_x = (this._frame % this._frame_count_x);
         var nframe_y = Math.floor(this._frame / this._frame_count_x);
-        console.log(nframe_y);
         return new Position(
             this._frame_size_x * nframe_x,
             this._frame_size_y * nframe_y
