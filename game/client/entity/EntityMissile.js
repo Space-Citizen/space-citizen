@@ -17,14 +17,14 @@ class EntityMissile extends BaseEntity {
         super.onUpdate(time_elapsed);
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
-        // draw body
-        this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
-
         if (this.killed) {
             this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             if (this.explosion.isFinished()) {
                 super.kill();
             }
+        } else {
+            // normal flow
+            this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
         }
     }
 
