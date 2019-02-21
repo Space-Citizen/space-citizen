@@ -57,13 +57,13 @@ module.exports = function (req, res, next, userId) {
                 if (JSON.parse(itemInfo.specifications).type === "ship") {
                     // add ship to user ships
                     addNewShip(itemInfo, userId).then(function (result) {
-                        res.status(200).json({ success: shipInfo.name + " added to your hangar", newBalance: newBalance });
+                        res.status(200).json({ success: itemInfo.name + " added to your hangar", newBalance: newBalance, itemId: result.insertId });
                     }, function (error) { mysqlError(res, error) });;
                 }
                 else {
                     // add item to user's inventory
                     addItemToInventory(itemInfo, userId).then(function (result) {
-                        res.status(200).json({ success: itemInfo.name + " added to your inventory", newBalance: newBalance });
+                        res.status(200).json({ success: itemInfo.name + " added to your inventory", newBalance: newBalance, itemId: result.insertId });
                     }, function (error) { mysqlError(res, error) });;
                 }
             }, function (error) { mysqlError(res, error) });

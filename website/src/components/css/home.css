@@ -1,24 +1,23 @@
-.home-title
-{
-    color:white;
+.home-title {
+    color: white;
 }
 
-body
-{
-    background: url(/images/spaceship-fight.jpg) no-repeat center center fixed; 
+body {
+    /* Add image */
+    background: url(/images/spaceship-fight.jpg) no-repeat center center fixed;
+    /* Add the blur effect */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
-.home-description-container
-{
-    color:white;
-    background-color: rgba(20,20,20,0.7);
+
+.home-description-container {
+    color: white;
+    background-color: rgba(20, 20, 20, 0.7);
     padding: 10px;
 }
 
-.home-description
-{
-    font-size:20px;
+.home-description {
+    font-size: 20px;
 }
