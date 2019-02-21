@@ -16,6 +16,7 @@ class EntityStargate extends BaseEntity {
             this.bearing += 0.5 * time_elapsed;
         }
         image.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+        ressources.EXPLOSION_1.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
     }
 
     serverStargateUsed() {
