@@ -47,7 +47,8 @@ class ResWorldImage {
                 this._render_area.x, this._render_area.y,
                 -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y
             ]);
-        } */
+        }
+        */
         context.drawImage(this._image,
             sx, sy,
             this._render_area.x, this._render_area.y,
