@@ -7,10 +7,16 @@ class ResSprite extends ResWorldImage {
         if (this._frame_count_y == null) {
             this._frame_count_y = frame_count_x;
         }
+        this._total_frames = this._frame_count_x * this._frame_count_y;
+        this._frame_size_x = null;
+        this._frame_size_y = null;
+    }
+
+    onLoad() {
+        super.onLoad();
         this._frame_size_x = this._image.width / this._frame_count_x;
         this._frame_size_y = this._image.height / this._frame_count_y;
-        this._total_frames = this._frame_count_x * this._frame_count_y;
-        this.reset(false);
+        this.reset();
     }
 
     reset(loop) {
