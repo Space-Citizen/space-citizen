@@ -19,7 +19,7 @@ class ResSprite extends ResWorldImage {
         this._finished = false;
     }
 
-    renderArea() {
+    getRenderArea() {
         return new Position(this._frame_size_x, this._frame_size_y);
     }
 
