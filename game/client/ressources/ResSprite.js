@@ -1,16 +1,17 @@
 
 class ResSprite extends ResWorldImage {
-    constructor(name, size_x, sprite_size_x, sprite_size_y = null) {
+    constructor(name, size_x, frame_count_x, frame_count_y = null) {
         super(name, size_x);
-        this._sprite_size_x = sprite_size_x
-        this._sprite_size_y = sprite_size_y
-        if (this._sprite_size_y == null) {
-            this._sprite_size_y = this._sprite_size_x;
+        this._frame_count_x = frame_count_x;
+        this._frame_count_y = frame_count_y;
+        if (this._frame_count_y == null) {
+            this._frame_count_y = frame_count_x;
         }
+        this._frame_size_x = this._image.width / this._frame_count_x;
+        this._frame_size_y = this._image.height / this._frame_count_y;
+
         this.reset(false);
-        this._frames_x = this._image.width / this._sprite_size_x;
-        this._frames_y = this._image.height / this._sprite_size_y;
-        this._total_frames = this._frames_x * this._frames_y;
+        this._total_frames = this._frame_count_x * this._frame_count_y;
     }
 
     reset(loop) {
@@ -21,18 +22,18 @@ class ResSprite extends ResWorldImage {
 
     renderArea() {
         return {
-            "width": this._sprite_size_x,
-            "height": this._sprite_size_x
+            "width": this._frame_size_x,
+            "height": this._frame_size_x
         }
     }
 
     getSpritePos() {
-        var nframe_x = (this._frame % this._frames_x);
-        var nframe_y = Math.floor(this._frame / this._frames_x);
+        var nframe_x = (this._frame % this._frame_count_x);
+        var nframe_y = Math.floor(this._frame / this._frame_count_x);
         console.log(nframe_y);
         return new Position(
-            this._sprite_size_x * nframe_x,
-            this._sprite_size_y * nframe_y
+            this._frame_size_x * nframe_x,
+            this._frame_size_y * nframe_y
         );
     }
 
