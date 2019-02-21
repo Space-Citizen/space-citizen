@@ -3,6 +3,7 @@ class BaseEntityShip extends BaseEntity {
         this.image_body = ressources.SPACESHIP_1;
         this.image_thruster = ressources.THRUSTER_1;
         this.explosion = ressources.EXPLOSION_2.clone();
+        this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
         this.killed = false;
     }
 
@@ -33,7 +34,6 @@ class BaseEntityShip extends BaseEntity {
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
 
-        this.drawHealthBar(screen_pos.x, screen_pos.y - + this.image_body.size().y, 30);
         if (this.killed) {
             this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             if (this.explosion.isFinished()) {
@@ -54,6 +54,7 @@ class BaseEntityShip extends BaseEntity {
                 screen_pos.x,
                 screen_pos.y + this.image_body.size().x
             );
+            this.drawHealthBar(screen_pos.x, screen_pos.y - + this.image_body.size().y, 30);
         }
     }
 
