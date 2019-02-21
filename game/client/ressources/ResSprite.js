@@ -2,20 +2,21 @@
 class ResSprite extends ResWorldImage {
     constructor(name, size_x, frame_count_x, frame_count_y = null) {
         super(name, size_x);
-        this._frame_count_x = frame_count_x;
-        this._frame_count_y = frame_count_y;
-        if (this._frame_count_y == null) {
-            this._frame_count_y = frame_count_x;
+        if (frame_count_y != null) {
+            this._frame_count = new Position(frame_count_x, frame_count_y);
+        } else {
+            this._frame_count = new Position(frame_count_x, frame_count_x);
         }
-        this._total_frames = this._frame_count_x * this._frame_count_y;
-        this._frame_size_x = null;
-        this._frame_size_y = null;
+        this._total_frames = this._frame_count.x * this._frame_count.y;
+        this._frame_size = null;
     }
 
     onLoad() {
+        this._frame_size = new Position(
+            this._image.width / this._frame_count.x,
+            this._image.height / this._frame_count.y
+        );
         super.onLoad();
-        this._frame_size_x = this._image.width / this._frame_count_x;
-        this._frame_size_y = this._image.height / this._frame_count_y;
         this.reset();
     }
 
@@ -26,15 +27,15 @@ class ResSprite extends ResWorldImage {
     }
 
     getRenderArea() {
-        return new Position(this._frame_size_x, this._frame_size_y);
+        return new Position(this._frame_size.x, this._frame_size.y);
     }
 
     getSpritePos() {
-        var nframe_x = (this._frame % this._frame_count_x);
-        var nframe_y = Math.floor(this._frame / this._frame_count_x);
+        var nframe_x = (this._frame % this._frame_count.x);
+        var nframe_y = Math.floor(this._frame / this._frame_count.x);
         return new Position(
-            this._frame_size_x * nframe_x,
-            this._frame_size_y * nframe_y
+            this._frame_size.x * nframe_x,
+            this._frame_size.y * nframe_y
         );
     }
 
