@@ -1,7 +1,7 @@
 class BaseEntityShip extends BaseEntity {
     onInit() {
         this.image_body = ressources.SPACESHIP_1;
-        this.image_thruster = ressources.THRUSTER_1;
+        this.image_thruster = ressources.THRUSTER_2.clone(true);
         this.explosion = ressources.EXPLOSION_2.clone();
         this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
         this.killed = false;
