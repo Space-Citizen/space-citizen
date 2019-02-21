@@ -1,0 +1,809 @@
+{
+	"info": {
+		"_postman_id": "705e2161-0963-49a6-9f03-aff29df58764",
+		"name": "space-citizen-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "good tests",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "sign up",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a956fdb6-8d79-4439-aa81-34d0be4a5d4c",
+										"exec": [
+											"tests[\"Status code is 201\"] = responseCode.code === 201;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "{{username}}",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "{{email}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/auth/signup",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								},
+								"description": "Create a new account"
+							},
+							"response": []
+						},
+						{
+							"name": "sign in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "25ddd627-8da8-4c5e-8692-b5acc1d9251a",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"x-access-token\", jsonData.token);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "{{email}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/auth/signin",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "items",
+					"item": [
+						{
+							"name": "list all items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/items/all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"items",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get item info",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/items/info/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"items",
+										"info",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buy item (ship)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"shipId\", jsonData.itemId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/items/buy/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"items",
+										"buy",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buy item (gun)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"itemId\", jsonData.itemId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/items/buy/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"items",
+										"buy",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "me",
+					"item": [
+						{
+							"name": "get connected user info",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/me/info",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"me",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get connected user inventory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/me/inventory",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"me",
+										"inventory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get connected user ships",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/me/ships",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"me",
+										"ships"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "messages",
+					"item": [
+						{
+							"name": "send a message",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "receiver",
+											"value": "{{otherUserId}}",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "This is a test message",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/messages/send",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"messages",
+										"send"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list messages from a user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{host}}/messages/get_messages_from/{{otherUserId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"messages",
+										"get_messages_from",
+										"{{otherUserId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list contacts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{host}}/messages/list_contacts",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"messages",
+										"list_contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "searchQuery",
+											"value": "e",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/messages/search_contact",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"messages",
+										"search_contact"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ships",
+					"item": [
+						{
+							"name": "edit ship",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2e9397af-556e-4895-b8e4-b47a23aa6257",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"shipId\": {{shipId}},\n\t\"itemsToShip\": [ {{itemId}} ],\n\t\"itemsToInventory\": []\n}"
+								},
+								"url": {
+									"raw": "{{host}}/ships/edit",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"ships",
+										"edit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get ship inventory",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/ships/inventory/{{shipId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"ships",
+										"inventory",
+										"{{shipId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "get  user info",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"type": "text",
+										"value": "{{x-access-token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/users/profile_info/{{otherUserId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"profile_info",
+										"{{otherUserId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "delete account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "997eba4d-d08d-48aa-9a9a-caeeff53d019",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{x-access-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/auth/delete",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fail tests",
+			"item": []
+		}
+	]
+}

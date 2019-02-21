@@ -1,41 +1,38 @@
 import React, { Component } from 'react';
-import {get} from '../../misc/axios';
+import { get } from '../../misc/axios';
 import Loading from '../misc/loading';
 import "../css/profile.css";
 
 class Profile extends Component {
 
-    constructor()
-    {
+    constructor() {
         super();
         this.state = {
             profile_info: undefined
         };
     }
 
-    componentDidMount()
-    {
-        get("/api/users/profile_info/" + this.props.match.params.userId).then(response =>{
-            this.setState({profile_info: response.data});
+    componentDidMount() {
+        get("/api/users/profile_info/" + this.props.match.params.userId).then(response => {
+            this.setState({ profile_info: response.data });
         });
     }
 
-    displayUserInformations()
-    {
-        const {profile_info} = this.state;
+    displayUserInformations() {
+        const { profile_info } = this.state;
 
         if (!profile_info)
-            return (<Loading/>);
+            return (<Loading />);
         return (
             <div>
+                <img className="col-10 offset-1" src={"/public/profile_pictures/" + profile_info.profile_picture} alt="avatar" />
                 <h1 className="text-center">{profile_info.username}</h1>
-                <img src={"/public/profile_pictures/" + profile_info.profile_picture} alt="avatar"/>
+                <a className="btn btn-secondary col-10 offset-1" href={"/messages/" + profile_info.id}>Send a message</a>
             </div>
         );
     }
 
-    render()
-    {
+    render() {
         return (<div className="row profile-container">
             {/* User informations  */}
             <div className="col-2 profile-user-card">
