@@ -7,11 +7,16 @@ class ResSprite extends ResWorldImage {
         if (this._sprite_size_y == null) {
             this._sprite_size_y = this._sprite_size_x;
         }
-        this._frame = 0;
+        this.reset(false);
         this._frames_x = this._image.width / this._sprite_size_x;
         this._frames_y = this._image.height / this._sprite_size_y;
         this._total_frames = this._frames_x * this._frames_y;
-        console.log("total: " + this._total_frames);
+    }
+
+    reset(loop) {
+        this._loop = loop;
+        this._frame = 0;
+        this._finished = false;
     }
 
     renderArea() {
@@ -32,8 +37,30 @@ class ResSprite extends ResWorldImage {
     }
 
     drawAt(x, y, rotation = 0, x_offset = 0, y_offset = 0) {
-        this._frame = (this._frame + 1) % this._total_frames;
+        if (this._finished) {
+            return;
+        }
+        if (this._loop) {
+            this._frame = (this._frame + 1) % this._total_frames;
+        } else {
+            this._frame += 1;
+            if (this._frame > this._total_frames) {
+                this._finished = true;
+                return;
+            }
+        }
+
         super.drawAt(x, y, rotation, x_offset, y_offset,
             this.getSpritePos().x, this.getSpritePos().y);
+    }
+
+    isFinished() {
+        return this._finished;
+    }
+
+    clone(loop = false) {
+        var clone = Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+        clone.reset(loop);
+        return clone;
     }
 }
