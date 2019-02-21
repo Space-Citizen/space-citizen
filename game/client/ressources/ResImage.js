@@ -39,14 +39,15 @@ class ResWorldImage {
         context.translate(x + size.x / 2, y + size.y / 2);
         context.rotate(rotation);
 
-        /*
-        console.log([
-            this._image.src,
-            sx, sy,
-            this.renderArea().x, this.renderArea().y,
-            -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y
-        ]);
-        */
+        /* // debug
+        if (this._image.src.endsWith("explosion_1.png")) {
+            console.log([
+                this._image.src,
+                sx, sy,
+                this._render_area.x, this._render_area.y,
+                -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y
+            ]);
+        } */
         context.drawImage(this._image,
             sx, sy,
             this._render_area.x, this._render_area.y,
