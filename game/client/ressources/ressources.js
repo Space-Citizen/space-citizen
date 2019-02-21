@@ -17,7 +17,9 @@ var ressources = {
     "TARGET_RED": new ResWorldImage("target_red.png", 40),
     "MISSILE_1": new ResWorldImage("missile_1.png", 10),
     // Sprites
-    "EXPLOSION_1": new ResSprite("explosion_1.png", 20, 128),
+    // sprite images must be divisible by the number of frames
+    "EXPLOSION_1": new ResSprite("explosion_1.png", 20, 4),
+    "EXPLOSION_2": new ResSprite("explosion_2.png", 40, 4),
 
     // Sounds
     "SOUND_THRUSTER_1": new ResAudio("thruster_1.mp3", true),

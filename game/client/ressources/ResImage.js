@@ -7,12 +7,14 @@ class ResWorldImage {
         this._size_x = size_x;
         this._x_screen_ratio = this.getScreenRatio();
         this._image_ratio = null;
+        this._render_area = null;
     }
 
     onLoad() {
         console.log("Loaded: " + this._image.src);
         g_loaded_res_counter += 1;
-        this._image_ratio = this._image.height / this._image.width;
+        this._render_area = this.getRenderArea();
+        this._image_ratio = this._render_area.y / this._render_area.x;
     }
 
     getScreenRatio() {
@@ -25,13 +27,9 @@ class ResWorldImage {
         return new Position(screen_size_x, screen_size_x * this._image_ratio);
     }
 
-    renderArea() {
+    getRenderArea() {
         // Area of the image rendered
-        // returns {width, height}
-        return {
-            "width": this._image.width,
-            "height": this._image.height
-        }
+        return new Position(this._image.width, this._image.height);
     }
 
     drawAt(x, y, rotation = 0, x_offset = 0, y_offset = 0,
@@ -41,9 +39,19 @@ class ResWorldImage {
         context.translate(x + size.x / 2, y + size.y / 2);
         context.rotate(rotation);
 
+        /* // debug
+        if (this._image.src.endsWith("explosion_1.png")) {
+            console.log([
+                this._image.src,
+                sx, sy,
+                this._render_area.x, this._render_area.y,
+                -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y
+            ]);
+        }
+        */
         context.drawImage(this._image,
             sx, sy,
-            this.renderArea().width, this.renderArea().height,
+            this._render_area.x, this._render_area.y,
             -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y);
         context.restore();
     }
