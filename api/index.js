@@ -12,7 +12,7 @@ app.use('/common/', express.static('common'));
 //Database
 
 global.db = mysql.createConnection({
-    host: '35.235.82.216',
+    host: process.env.SPACE_CITIZEN_DB_URL,
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
     database: 'spacecitizen'
