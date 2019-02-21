@@ -20,10 +20,7 @@ class ResSprite extends ResWorldImage {
     }
 
     renderArea() {
-        return {
-            "width": this._frame_size_x,
-            "height": this._frame_size_y
-        }
+        return new Position(this._frame_size_x, this._frame_size_y);
     }
 
     getSpritePos() {
