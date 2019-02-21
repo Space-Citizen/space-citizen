@@ -13,6 +13,7 @@ class ResWorldImage {
         console.log("Loaded: " + this._image.src);
         g_loaded_res_counter += 1;
         this._image_ratio = this._image.height / this._image.width;
+        this._render_area = this.renderArea()
     }
 
     getScreenRatio() {
@@ -27,11 +28,7 @@ class ResWorldImage {
 
     renderArea() {
         // Area of the image rendered
-        // returns {width, height}
-        return {
-            "width": this._image.width,
-            "height": this._image.height
-        }
+        return new Position(this._image.width, this._image.height);
     }
 
     drawAt(x, y, rotation = 0, x_offset = 0, y_offset = 0,
@@ -43,7 +40,7 @@ class ResWorldImage {
 
         context.drawImage(this._image,
             sx, sy,
-            this.renderArea().width, this.renderArea().height,
+            this.renderArea().x, this.renderArea().y,
             -size.x / 2 + x_offset, -size.y / 2 + y_offset, size.x, size.y);
         context.restore();
     }
