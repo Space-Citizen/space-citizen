@@ -2,6 +2,8 @@ class BaseEntityShip extends BaseEntity {
     onInit() {
         this.image_body = ressources.SPACESHIP_1;
         this.image_thruster = ressources.THRUSTER_1;
+        this.explosion = ressources.EXPLOSION_2.clone();
+        this.killed = false;
     }
 
     getScreenPos() {
@@ -30,21 +32,29 @@ class BaseEntityShip extends BaseEntity {
         super.onUpdate(time_elapsed);
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
-        //context.stroke();
-        if (this.s_target) {
-            // draw thrusters
-            this.image_thruster.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing,
-                -this.image_body.size().x / 1.8, 0);
-        }
-        // draw body
-        this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
-        // draw name
-        ressources.TEXT_MEDIUM.drawCenterAt(
-            this.s_name,
-            screen_pos.x,
-            screen_pos.y + this.image_body.size().x
-        );
+
         this.drawHealthBar(screen_pos.x, screen_pos.y - + this.image_body.size().y, 30);
+        if (this.killed) {
+            this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+            if (this.explosion.isFinished()) {
+                super.kill();
+            }
+        } else {
+            //context.stroke();
+            if (this.s_target) {
+                // draw thrusters
+                this.image_thruster.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing,
+                    -this.image_body.size().x / 1.8, 0);
+            }
+            // draw body
+            this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+            // draw name
+            ressources.TEXT_MEDIUM.drawCenterAt(
+                this.s_name,
+                screen_pos.x,
+                screen_pos.y + this.image_body.size().x
+            );
+        }
     }
 
     getHitCircle() {
@@ -53,5 +63,10 @@ class BaseEntityShip extends BaseEntity {
 
     getPriority() {
         return priority.SHIPS;
+    }
+
+    kill() {
+        this.killed = true;
+        this.sound_explosion.play();
     }
 }
