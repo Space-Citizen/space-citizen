@@ -5,9 +5,9 @@ var ressources = {
     // Fonts
     "TEXT_MEDIUM": new ResText("blue", "18px Arial"),
     // Images
-    "BACKGROUND_EARTH": new ResUiImage("static_background_earth.jpg", 100),
-    "BACKGROUND_MARS": new ResUiImage("static_background_mars.jpg", 100),
-    "BACKGROUND_SPACE": new ResUiImage("static_background_space.png", 100),
+    "BACKGROUND_EARTH": new ResUiImage("static_background_earth.jpg", 200),
+    "BACKGROUND_MARS": new ResUiImage("static_background_mars.jpg", 200),
+    "BACKGROUND_SPACE": new ResUiImage("static_background_space.png", 200),
     "NO_SIGNAL": new ResUiImage("no_signal.jpg", 100),
     "SPACESHIP_1": new ResWorldImage("spaceship_1.png", 18),
     "SPACESHIP_2": new ResWorldImage("spaceship_2.png", 20),

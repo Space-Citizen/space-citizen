@@ -1,3 +1,4 @@
+
 class EntityBackground extends BaseEntity {
     onInit() {
         switch (this.s_world_type) {
@@ -14,7 +15,16 @@ class EntityBackground extends BaseEntity {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-        this.image.drawCenterAt(canvas.width / 2, canvas.height / 2);
+        var div = 1.5;
+        var off = new Position(
+            this.game.pos.x / div,
+            this.game.pos.y / div
+        );
+        var background_pos = this.game.relPos(off);
+        this.image.drawCenterAt(
+            background_pos.x,
+            background_pos.y
+        );
     }
 
     getHitCircle() {
