@@ -128,11 +128,13 @@ npm i
 echo "Build react";
 npm run build
 
+# change static folder location
+sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
+mkdir -p "$NGINX_STATIC/website"
+cp -rf ./build/static/* "$NGINX_STATIC/website/"
 # copy build files to the website's destination
 echo "copy build files to the website's destination";
 cp -rf ./build/* $NGINX_WEBSITE_ROOT
-mkdir -p "$NGINX_STATIC/website"
-cp -rf ./build/static/* "$NGINX_STATIC/website/"
 
 # return to root folder
 cd ..
@@ -151,6 +153,10 @@ npm i
 # copy the server to the servers location
 mkdir -p  "$SERVERS_ROOT/api"
 cp -rf ./* "$SERVERS_ROOT/api"
+
+# copy static content
+mkdir -p "$NGINX_STATIC/api"
+cp -rf ./common "$NGINX_STATIC/api/"
 
 # return to root folder
 cd ..
