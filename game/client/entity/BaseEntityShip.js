@@ -44,7 +44,7 @@ class BaseEntityShip extends BaseEntity {
             if (this.s_target) {
                 // draw thrusters
                 this.image_thruster.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing,
-                    -this.image_body.size().x / 1.8, 0);
+                    -this.image_body.size().x / 1.5, 0);
             }
             // draw body
             this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
