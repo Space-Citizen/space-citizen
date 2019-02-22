@@ -11,6 +11,7 @@ var ressources = {
     "NO_SIGNAL": new ResUiImage("no_signal.jpg", 100),
     "SPACESHIP_1": new ResWorldImage("spaceship_1.png", 20),
     "SPACESHIP_2": new ResWorldImage("spaceship_2.png", 10),
+    "SPACESHIP_3": new ResWorldImage("spaceship_3.png", 20),
     "THRUSTER_1": new ResWorldImage("thrust_1.png", 7),
     "STARGATE_OPEN": new ResWorldImage("stargate_open.png", 30),
     "STARGATE_CLOSED": new ResWorldImage("stargate_closed.png", 30),
