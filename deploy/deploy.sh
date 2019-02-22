@@ -131,7 +131,8 @@ npm run build
 # copy build files to the website's destination
 echo "copy build files to the website's destination";
 cp -rf ./build/* $NGINX_WEBSITE_ROOT
-cp -rf ./build/static/* $NGINX_STATIC
+mkdir -p "$NGINX_STATIC/website"
+cp -rf ./build/static/* "$NGINX_STATIC/website/"
 
 # return to root folder
 cd ..
@@ -201,7 +202,8 @@ cd game
 cp -rf ./client/* "$NGINX_GAME_ROOT/"
 
 # copy the ressources to the static location
-cp -rf ./res ./common "$NGINX_STATIC/"
+mkdir -p "$NGINX_STATIC/game"
+cp -rf ./res ./common "$NGINX_STATIC/game/"
 
 # return to root folder
 cd ..
