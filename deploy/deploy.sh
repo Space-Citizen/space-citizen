@@ -133,6 +133,7 @@ sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
 sed -i 's/\/static\/website\/api/\/static\/api\//g' ./build/index.html
 mkdir -p "$NGINX_STATIC/website"
 cp -rf ./build/static/* "$NGINX_STATIC/website/"
+cp -rf ./build/images "$NGINX_STATIC/website/"
 # copy build files to the website's destination
 echo "copy build files to the website's destination";
 cp -rf ./build/* $NGINX_WEBSITE_ROOT
