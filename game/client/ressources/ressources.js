@@ -11,7 +11,7 @@ var ressources = {
     "NO_SIGNAL": new ResUiImage("no_signal.jpg", 100),
     "SPACESHIP_1": new ResWorldImage("spaceship_1.png", 20),
     "SPACESHIP_2": new ResWorldImage("spaceship_2.png", 10),
-    "THRUSTER_1": new ResWorldImage("thrust.png", 7),
+    "THRUSTER_1": new ResWorldImage("thrust_1.png", 7),
     "STARGATE_OPEN": new ResWorldImage("stargate_open.png", 30),
     "STARGATE_CLOSED": new ResWorldImage("stargate_closed.png", 30),
     "TARGET_RED": new ResWorldImage("target_red.png", 40),
@@ -20,6 +20,7 @@ var ressources = {
     // sprite images must be divisible by the number of frames
     "EXPLOSION_1": new ResSprite("explosion_1.png", 20, 4),
     "EXPLOSION_2": new ResSprite("explosion_2.png", 40, 4),
+    "THRUSTER_2": new ResSprite("thrust_2.png", 10, 1, 7),
 
     // Sounds
     "SOUND_THRUSTER_1": new ResAudio("thruster_1.mp3", true),
