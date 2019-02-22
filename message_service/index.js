@@ -1,9 +1,12 @@
 const { sendMessage } = require('./controllers');
 const User = require('./classes/User');
 const request = require('request');
-var io = require('socket.io').listen(4001);
+const port = 4001;
+var io = require('socket.io').listen(port);
 
 global.users = [];
+
+console.log("Starting server on port " + port);
 
 io.sockets.on('connection', function (socket) {
     console.log('client connected');

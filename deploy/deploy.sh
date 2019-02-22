@@ -9,6 +9,7 @@ fi
 INSTALL=true
 UNINSTALL=false
 
+## functions
 # parse input
 
 function usage()
@@ -19,6 +20,7 @@ function usage()
     echo "      -u  --uninstall     :Delete every folders/files from previous installations"
     echo ""
 }
+## 
 
 while [ "$1" != "" ]; do
     PARAM=`echo $1 | awk -F= '{print $1}'`
@@ -52,8 +54,39 @@ if [ "$UNINSTALL" = true ]; then
     echo "Uninstalling everything";
     rm -rf $NGINX_ROOT
     rm -rf $SERVERS_ROOT
+    echo "Killing the screens"
+    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
     exit 0;
 fi
+
+# get env variables
+echo "Checking environment variables";
+
+if [ -z "$SPACE_CITIZEN_DB_URL" ]; then
+    echo "Variable SPACE_CITIZEN_DB_URL not found"
+    exit 1
+fi
+
+if [ -z "$SPACE_CITIZEN_JWT_PASSWORD" ]; then
+    echo "Variable SPACE_CITIZEN_JWT_PASSWORD not found"
+    exit 1
+fi
+
+if [ -z "$SPACE_CITIZEN_DB_USERNAME" ]; then
+    echo "Variable SPACE_CITIZEN_DB_USERNAME not found"
+    exit 1
+fi
+
+if [ -z "$SPACE_CITIZEN_DB_PASSWORD" ]; then
+    echo "Variable SPACE_CITIZEN_DB_PASSWORD not found"
+    exit 1
+fi
+
+if [ -z "$SPACE_CITIZEN_API_URL" ]; then
+    echo "Variable SPACE_CITIZEN_API_URL not found"
+    exit 1
+fi
+
 
 # folder creation
 
@@ -61,6 +94,7 @@ mkdir -p $NGINX_WEBSITE_ROOT
 mkdir -p $NGINX_GAME_ROOT
 mkdir -p $NGINX_STATIC
 mkdir -p $SERVERS_ROOT
+
 
 ## install packages
 
@@ -171,3 +205,18 @@ cp -rf ./res ./common "$NGINX_STATIC/"
 
 # return to root folder
 cd ..
+
+echo "Starting the servers"
+cd $SERVERS_ROOT
+
+# start api
+echo "Starting the api"
+screen node ./api/index.js
+
+# start message service
+echo "Starting the message service"
+screen node ./message_service/index.js
+
+# start game
+echo "Starting the game"
+screen node ./game/server/server.js
