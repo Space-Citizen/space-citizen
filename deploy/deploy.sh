@@ -130,6 +130,7 @@ npm run build
 
 # change static folder location
 sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
+sed -i 's/\/static\/website\/api/\/static\/api\//g' ./build/index.html
 mkdir -p "$NGINX_STATIC/website"
 cp -rf ./build/static/* "$NGINX_STATIC/website/"
 # copy build files to the website's destination
