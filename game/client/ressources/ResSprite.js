@@ -16,6 +16,9 @@ class ResSprite extends ResWorldImage {
             this._image.width / this._frame_count.x,
             this._image.height / this._frame_count.y
         );
+        if (!Helper.isInt(this._frame_size.x) || !Helper.isInt(this._frame_size.y)) {
+            throw "sprite images must be divisible by the number of frames";
+        }
         super.onLoad();
         this.reset();
     }
