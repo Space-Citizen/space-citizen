@@ -49,7 +49,7 @@ class UiAim extends BaseUi {
     }
 
     onUpdate(time_elapsed) {
-        if (this.target) {
+        if (this.self && this.target) {
             if (!(this.target.id in this.game.entities)) {
                 this.target = null;
             }

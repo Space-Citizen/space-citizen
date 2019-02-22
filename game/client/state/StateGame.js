@@ -6,6 +6,8 @@ class StateGame extends IState {
 
         this.initWorld();
         this.initUis();
+        this.self = null;
+        this.pos = null;
         this.aim = this.addUi("aim", new UiAim(this));
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
