@@ -1,6 +1,6 @@
 
 function __loadAudio(name, loop = false) {
-    var audio = new Audio("../game/res/sounds/" + name);
+    var audio = new Audio("/static/game/res/sounds/" + name);
     audio.loop = loop;
     audio.oncanplaythrough = function () {
         g_loaded_res_counter += 1;
