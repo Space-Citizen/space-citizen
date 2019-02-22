@@ -4,7 +4,6 @@ class BaseEntityShip extends BaseEntity {
         this.image_thruster = ressources.THRUSTER_2.clone(true);
         this.explosion = ressources.EXPLOSION_2.clone();
         this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
-        this.killed = false;
     }
 
     getScreenPos() {
@@ -34,13 +33,7 @@ class BaseEntityShip extends BaseEntity {
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
 
-        if (this.killed) {
-            this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
-            if (this.explosion.isFinished()) {
-                super.kill();
-            }
-        } else {
-            //context.stroke();
+        if (this.isAlive()) {
             if (this.s_target) {
                 // draw thrusters
                 this.image_thruster.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing,
@@ -55,6 +48,11 @@ class BaseEntityShip extends BaseEntity {
                 screen_pos.y + this.image_body.size().x
             );
             this.drawHealthBar(screen_pos.x, screen_pos.y - + this.image_body.size().y, 30);
+        } else {
+            this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+            if (this.explosion.isFinished()) {
+                super.kill();
+            }
         }
     }
 
@@ -67,7 +65,6 @@ class BaseEntityShip extends BaseEntity {
     }
 
     kill() {
-        this.killed = true;
         this.sound_explosion.play();
     }
 }
