@@ -12,6 +12,11 @@ class WorldEarth extends BaseWorld {
         } */
         var sg = new Entity.ServerEntityStargate(this, 50, 0, "sg1");
         sg.openStargate("mars", 0, 0);
+
+        var sg = new Entity.ServerEntityStargate(this, 250, 250, "sg5");
+        var sg = new Entity.ServerEntityStargate(this, -250, -250, "sg2");
+        var sg = new Entity.ServerEntityStargate(this, -250, 250, "sg3");
+        var sg = new Entity.ServerEntityStargate(this, 250, -250, "sg4");
     }
 
     getWorldName() {

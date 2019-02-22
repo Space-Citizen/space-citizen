@@ -9,6 +9,14 @@ class BaseEntity {
     this.pos = this.s_pos;
     this.type = this.s_type;
     this.game.addEntity(this);
+    this.killed = false; // var set in listener >> StateGame
+  }
+
+  isAlive() {
+    if (this.killed) {
+      return false;
+    }
+    return true;
   }
 
   onServerUpdate(server_entity) {
