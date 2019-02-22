@@ -3,7 +3,7 @@ class ResWorldImage {
     constructor(name, size_x) {
         this._image = new Image();
         this._image.onload = this.onLoad.bind(this);
-        this._image.src = "../game/res/images/" + name;
+        this._image.src = "/static/game/res/images/" + name;
         this._size_x = size_x;
         this._x_screen_ratio = this.getScreenRatio();
         this._image_ratio = null;
