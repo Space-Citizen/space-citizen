@@ -6,7 +6,6 @@ class EntityMissile extends BaseEntity {
         this.sound_fire = this.getAudio(ressources.SOUND_MISSILE_FIRE);
         this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
         this.sound_fire.play();
-        this.killed = false;
     }
 
     getScreenPos() {
@@ -17,14 +16,14 @@ class EntityMissile extends BaseEntity {
         super.onUpdate(time_elapsed);
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
-        if (this.killed) {
+        if (this.isAlive()) {
+            // normal flow
+            this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
+        } else {
             this.explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             if (this.explosion.isFinished()) {
                 super.kill();
             }
-        } else {
-            // normal flow
-            this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
         }
     }
 
@@ -37,7 +36,6 @@ class EntityMissile extends BaseEntity {
     }
 
     kill() {
-        this.killed = true;
         this.sound_explosion.play();
     }
 }

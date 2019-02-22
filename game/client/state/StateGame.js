@@ -42,6 +42,7 @@ class StateGame extends IState {
 
     eventKillEntity(id) {
         if (id in this.entities) {
+            this.entities[id].killed = true;
             this.entities[id].kill();
         }
     }
