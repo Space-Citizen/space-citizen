@@ -7,7 +7,7 @@ class Leftnav extends Component {
     render() {
         return (
             <div className="col-12">
-                <a className="col-12 play-button" href={"http://localhost:12345/?x-access-token=" + getToken()} target="_blank" rel="noopener noreferrer">
+                <a className="col-12 play-button" href={"/playgame/?x-access-token=" + getToken()} target="_blank" rel="noopener noreferrer">
                     <img className="button-menu-image" src="/images/launch.jpg" alt="launch" />
                     <div className="button-menu-text font-weight-bold">Take Off</div>
                 </a>
