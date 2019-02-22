@@ -48,6 +48,10 @@ class Helper {
     static map(x, sA, eA, sB, eB) {
         return ((((sA - x) / (sA - eA)) * (eB - sB)) + sB);
     }
+
+    static isInt(n) {
+        return n % 1 === 0;
+    }
 }
 
 if (typeof module != 'undefined') {
