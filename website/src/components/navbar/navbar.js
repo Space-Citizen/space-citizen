@@ -31,7 +31,7 @@ class Navbar extends Component {
         if (!connected_user)
             return;
         return (
-            <div className="col-2 offset-5 user-info-box">
+            <div className="col-lg-2 col-md-4 col-sm-4 offset-lg-5 user-info-box">
                 <div className="float-right">
                     <div className="row">
                         <div className="col-6">
@@ -66,7 +66,7 @@ class Navbar extends Component {
         if (!connected_user)
             return;
         return (
-            <div className="col-2 navbar-element" >
+            <div className="col-lg-2 col-md-4 col-sm-4 navbar-element">
                 <div className="dropdown show col-12">
                     <button className="btn btn-secondary dropdown-toggle col-12" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div className="navbar-profile-container">
@@ -86,7 +86,7 @@ class Navbar extends Component {
 
     displayHomeButton() {
         return (
-            <div className="col-3 game-title-container">
+            <div className="col-lg-3 col-md-4 col-sm-4 game-title-container">
                 <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><Link to="/game" className="game-title-link">Space Citizen</Link></h2>
             </div>
         )
@@ -103,12 +103,12 @@ class Navbar extends Component {
                                 <Link to="/" className="game-title-link">Space Citizen</Link>
                             </h2>
                         </div>
-                        <div className="col-2 offset-7 navbar-element">
+                        <div className="col-2 offset-7">
                             <Link className="btn btn-secondary col-lg-10 offset-lg-1" to="/signin">
                                 <div className="navbar-profile-container">
-                                    <div>
-                                        <i className="fas fa-address-card fa-3x col-3"></i>
-                                        <span className="col-7">Sign in !</span>
+                                    <div className="row">
+                                        <i className="fas fa-address-card fa-2x col-3"></i>
+                                        <span className="col-7 center-text">Sign in !</span>
                                     </div>
                                 </div>
                             </Link>

@@ -2,7 +2,7 @@ var { doQuery, mysqlError } = require('../../database/');
 
 //get item info
 module.exports = function (req, res, next, userId) {
-    doQuery("SELECT * FROM `items` WHERE `id` = ", [req.params.itemId]).then(function (itemsResult) {
+    doQuery("SELECT * FROM `items` WHERE `id` = ?", [req.params.itemId]).then(function (itemsResult) {
         if (itemsResult.length === 0) {
             res.status(401).json({ error: "Item not found" });
             return;

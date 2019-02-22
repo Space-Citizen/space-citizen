@@ -12,7 +12,7 @@ app.use('/common/', express.static('common'));
 //Database
 
 global.db = mysql.createConnection({
-    host: '35.235.82.216',
+    host: process.env.SPACE_CITIZEN_DB_URL,
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
     database: 'spacecitizen'
@@ -28,19 +28,19 @@ db.connect(function (err) {
 
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
-const UserRoutes = require('./src/routes/UserRoutes');
-const MeRoutes = require('./src/routes/MeRoutes');
 const ItemRoutes = require('./src/routes/ItemRoutes');
-const ShipRoutes = require('./src/routes/ShipRoutes');
+const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
+const ShipRoutes = require('./src/routes/ShipRoutes');
+const UserRoutes = require('./src/routes/UserRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
-router.use('/users', UserRoutes);
-router.use('/me', MeRoutes);
 router.use('/items', ItemRoutes);
-router.use('/ships', ShipRoutes);
+router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
+router.use('/ships', ShipRoutes);
+router.use('/users', UserRoutes);
 
 //Use the router
 app.use('/api', router);
