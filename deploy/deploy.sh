@@ -147,6 +147,7 @@ npm i
 # copy the server to the servers location
 mkdir -p  "$SERVERS_ROOT/api"
 cp -rf ./* "$SERVERS_ROOT/api"
+cp -rf ./common "$NGINX_WEBSITE_ROOT/static"
 
 # return to root folder
 cd ..
@@ -155,7 +156,7 @@ cd ..
 ## deploy message_service
 echo "Deploying the message service";
 
-# move to api's folder
+# move to message_service's folder
 cd message_service
 
 # install dependencies
@@ -173,7 +174,7 @@ cd ..
 ## deploy game server
 echo "Deploying the game server";
 
-# move to api's folder
+# move to game's folder
 cd game
 
 # install dependencies
@@ -191,7 +192,7 @@ cd ..
 ## deploy game front
 echo "Deploying the game front";
 
-# move to api's folder
+# move to game's folder
 cd game
 
 # copy res and common folders
@@ -201,10 +202,6 @@ cp -rf ./common ./res "$NGINX_GAME_ROOT/"
 
 # copy the server to the servers location
 cp -rf ./client/* "$NGINX_GAME_ROOT/"
-
-# copy the ressources to the static location
-# mkdir -p "$NGINX_STATIC/game"
-# cp -rf ./res ./common "$NGINX_STATIC/game/"
 
 # return to root folder
 cd ..
