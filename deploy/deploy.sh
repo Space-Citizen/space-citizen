@@ -128,12 +128,13 @@ npm i
 echo "Build react";
 npm run build
 
-# change static folder location
-sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
-sed -i 's/\/static\/website\/api/\/static\/api\//g' ./build/index.html
+# # change static folder location
+# sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
+# sed -i 's/\/static\/website\/api/\/static\/api\//g' ./build/index.html
+
 mkdir -p "$NGINX_STATIC/website"
-cp -rf ./build/static/* "$NGINX_STATIC/website/"
-cp -rf ./build/images "$NGINX_STATIC/website/"
+# cp -rf ./build/static/* "$NGINX_STATIC/website/"
+# cp -rf ./build/images "$NGINX_STATIC/website/"
 # copy build files to the website's destination
 echo "copy build files to the website's destination";
 cp -rf ./build/* $NGINX_WEBSITE_ROOT
@@ -157,8 +158,8 @@ mkdir -p  "$SERVERS_ROOT/api"
 cp -rf ./* "$SERVERS_ROOT/api"
 
 # copy static content
-mkdir -p "$NGINX_STATIC/api"
-cp -rf ./common "$NGINX_STATIC/api/"
+# mkdir -p "$NGINX_STATIC/api"
+# cp -rf ./common "$NGINX_STATIC/api/"
 
 # return to root folder
 cd ..
@@ -210,8 +211,8 @@ cd game
 cp -rf ./client/* "$NGINX_GAME_ROOT/"
 
 # copy the ressources to the static location
-mkdir -p "$NGINX_STATIC/game"
-cp -rf ./res ./common "$NGINX_STATIC/game/"
+# mkdir -p "$NGINX_STATIC/game"
+# cp -rf ./res ./common "$NGINX_STATIC/game/"
 
 # return to root folder
 cd ..
