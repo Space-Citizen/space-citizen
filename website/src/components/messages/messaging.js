@@ -15,7 +15,7 @@ class Messaging extends Component {
             contact: undefined,
             contactList: undefined
         };
-        this.socket = openSocket('http://localhost:4001');
+        this.socket = openSocket('https://35.235.82.216:4001', { secure: true });
         this.socket.on('message:authenticate:response', result => {
             if (result.error)
                 createNotification("warning", result.error);

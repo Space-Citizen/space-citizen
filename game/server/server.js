@@ -15,16 +15,6 @@ var Events = require('../common/Events');
 
 var World = require('./world');
 var Entity = require('./entity');
-var fs = require('fs');
-var privateKey, certificate, ca;
-try {
-  privateKey = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/privkey.pem').toString();
-  certificate = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/cert.pem').toString();
-  ca = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/chain.pem').toString();
-}
-catch (e) { console.log("Error while loading the SSL keys. Starting without SSL."); }
-
-// var io = require('socket.io').listen(3456, { key: privateKey, cert: certificate, ca: ca });
 
 class Server {
   constructor() {
@@ -35,17 +25,9 @@ class Server {
     app.use('/static/game/common', express.static(__dirname + '/../common'));
     app.use('/static/game/res', express.static(__dirname + '/../res'));
 
-    // if keys are present, start using ssl 
-    if (privateKey && certificate && ca) {
-      server.listen(Constants.PORT, { key: privateKey, cert: certificate, ca: ca }, function () {
-        console.log('Starting server on port ' + Constants.PORT);
-      });
-    }
-    else {
-      server.listen(Constants.PORT, { key: privateKey, cert: certificate, ca: ca }, function () {
-        console.log('Starting server on port ' + Constants.PORT);
-      });
-    }
+    server.listen(Constants.PORT, function () {
+      console.log('Starting server on port ' + Constants.PORT);
+    });
 
     this.addWorld(new World.WorldEarth(this));
     this.addWorld(new World.WorldMars(this));
