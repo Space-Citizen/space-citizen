@@ -38,6 +38,12 @@ class Server {
     this.worlds[world.getWorldName()] = world;
   }
 
+  spawnPlayer(client, user_info) {
+    var world = this.worlds["earth"];
+    var name = user_info.username;
+    new Entity.ServerEntityPlayer(world, 0, 0, client, name);
+  }
+
   eventConnection(client) {
     var that = this;
     client.on(Events.PLAYER_AUTH, function (token) {
@@ -50,16 +56,21 @@ class Server {
         var user_info;
         if (response)
           user_info = JSON.parse(response.body);
-        // TODO: REMOVE DEBUG CONDITION
-        if (token === "test")
-          user_info = { username: "tester", id: 1 };
+        if (token === "test") {
+          user_info = {
+            username: "tester",
+            ship_type: "BC304",
+            spawn_world: "earth",
+            id: 1
+          };
+        }
         // if authentication fail, abort
         if ((error && token !== "test") || !user_info || user_info.error) {
           //console.error(user_info.error);
           return;
         }
         // create the player
-        new Entity.ServerEntityPlayer(that.worlds.earth, 0, 0, client, user_info);
+        that.spawnPlayer(client, user_info);
       });
 
     });
