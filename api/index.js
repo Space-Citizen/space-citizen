@@ -7,7 +7,7 @@ const router = express.Router();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/public/', express.static('public'));
-app.use('/api/common/', express.static('common'));
+app.use('/static/common/', express.static('common'));
 
 //Database
 
