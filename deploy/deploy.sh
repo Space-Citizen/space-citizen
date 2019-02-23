@@ -44,8 +44,7 @@ done
 
 NGINX_ROOT="/var/www/space-citizen"
 NGINX_WEBSITE_ROOT="/var/www/space-citizen/website"
-NGINX_GAME_ROOT="/var/www/space-citizen/game"
-NGINX_STATIC="/var/www/space-citizen/static"
+NGINX_GAME_ROOT="/var/www/space-citizen/website/game"
 SERVERS_ROOT="/root/space-citizen"
 
 # uninstall if asked
@@ -92,7 +91,6 @@ fi
 
 mkdir -p $NGINX_WEBSITE_ROOT
 mkdir -p $NGINX_GAME_ROOT
-mkdir -p $NGINX_STATIC
 mkdir -p $SERVERS_ROOT
 
 
@@ -128,13 +126,6 @@ npm i
 echo "Build react";
 npm run build
 
-# # change static folder location
-# sed -i 's/\/static\//\/static\/website\//g' ./build/index.html
-# sed -i 's/\/static\/website\/api/\/static\/api\//g' ./build/index.html
-
-mkdir -p "$NGINX_STATIC/website"
-# cp -rf ./build/static/* "$NGINX_STATIC/website/"
-# cp -rf ./build/images "$NGINX_STATIC/website/"
 # copy build files to the website's destination
 echo "copy build files to the website's destination";
 cp -rf ./build/* $NGINX_WEBSITE_ROOT
@@ -156,10 +147,6 @@ npm i
 # copy the server to the servers location
 mkdir -p  "$SERVERS_ROOT/api"
 cp -rf ./* "$SERVERS_ROOT/api"
-
-# copy static content
-# mkdir -p "$NGINX_STATIC/api"
-# cp -rf ./common "$NGINX_STATIC/api/"
 
 # return to root folder
 cd ..
@@ -206,6 +193,11 @@ echo "Deploying the game front";
 
 # move to api's folder
 cd game
+
+# copy res and common folders
+
+cp -rf ./common ./res "$NGINX_GAME_ROOT/"
+
 
 # copy the server to the servers location
 cp -rf ./client/* "$NGINX_GAME_ROOT/"
