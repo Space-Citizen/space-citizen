@@ -12,7 +12,7 @@ catch (e) {
     console.log("Failed to load ssl keys");
 }
 
-var io = require('socket.io').listen(port, { key: privateKey, cert: certificate, ca: ca });
+var io = require('socket.io').listen(port);
 
 global.users = [];
 
