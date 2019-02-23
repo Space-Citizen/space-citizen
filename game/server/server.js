@@ -43,7 +43,7 @@ class Server {
     var name = user_info.username;
     var pos_x = user_info.spawn_world_x;
     var pos_y = user_info.spawn_world_y;
-    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, user_info);
+    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name);
   }
 
   eventConnection(client) {
