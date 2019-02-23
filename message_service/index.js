@@ -2,7 +2,17 @@ const { sendMessage } = require('./controllers');
 const User = require('./classes/User');
 const request = require('request');
 const port = 4001;
-var io = require('socket.io').listen(port);
+var ca, certificate, privateKey;
+try {
+    privateKey = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/privkey.pem').toString();
+    certificate = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/cert.pem').toString();
+    ca = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/chain.pem').toString();
+}
+catch (e) {
+    console.log("Failed to load ssl keys");
+}
+
+var io = require('socket.io').listen(port, { key: privateKey, cert: certificate, ca: ca });
 
 global.users = [];
 
