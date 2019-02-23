@@ -48,7 +48,12 @@ class ServerEntityStargate extends BaseServerEntity {
         var client = entity.client;
         entity.delete()
         entity.client.emit(Events.SERVER_RESET_MAP);
-        var player = new ServerEntityPlayer(world, this.dest.x, this.dest.y, client, entity.user_info);
+        var user_info = entity.user_info;
+        //console.log(world.getWorldName());
+        user_info.spawn_world = world.getWorldName();
+        user_info.spawn_world_x = this.dest.x;
+        user_info.spawn_world_y = this.dest.y;
+        var player = this.world.server.spawnPlayer(client, user_info);
         player.s_bearing = entity.s_bearing;
         player.s_hp = entity.s_hp;
     }

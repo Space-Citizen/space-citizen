@@ -39,9 +39,11 @@ class Server {
   }
 
   spawnPlayer(client, user_info) {
-    var world = this.worlds["earth"];
+    var world = this.worlds[user_info.spawn_world];
     var name = user_info.username;
-    new Entity.ServerEntityPlayer(world, 0, 0, client, name);
+    var pos_x = user_info.spawn_world_x;
+    var pos_y = user_info.spawn_world_y;
+    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, user_info);
   }
 
   eventConnection(client) {
@@ -58,10 +60,12 @@ class Server {
           user_info = JSON.parse(response.body);
         if (token === "test") {
           user_info = {
+            id: 1,
             username: "tester",
             ship_type: "BC304",
             spawn_world: "earth",
-            id: 1
+            spawn_world_x: 0,
+            spawn_world_y: 0,
           };
         }
         // if authentication fail, abort
