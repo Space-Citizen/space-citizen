@@ -86,8 +86,8 @@ class Navbar extends Component {
 
     displayHomeButton() {
         return (
-            <div className="col-lg-3 col-md-4 col-sm-4 game-title-container">
-                <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><Link to="/game" className="game-title-link">Space Citizen</Link></h2>
+            <div className="col-lg-3 col-md-4 col-sm-4 core-title-container">
+                <h2 className="font-weight-bold col-12 offset-1 core-title text-center"><Link to="/core" className="core-title-link">Space Citizen</Link></h2>
             </div>
         )
     }
@@ -98,9 +98,9 @@ class Navbar extends Component {
             return (
                 <div>
                     <div className="col-12 row navbar-container">
-                        <div className="col-3 game-title-container">
-                            <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
-                                <Link to="/" className="game-title-link">Space Citizen</Link>
+                        <div className="col-3 core-title-container">
+                            <h2 className="font-weight-bold col-12 offset-1 core-title text-center">
+                                <Link to="/" className="core-title-link">Space Citizen</Link>
                             </h2>
                         </div>
                         <div className="col-2 offset-7">
