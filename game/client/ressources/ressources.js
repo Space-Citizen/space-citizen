@@ -16,7 +16,6 @@ var ressources = {
     "SPACESHIP_3": new ResWorldImage("spaceship_3.png", 22),
     "SPACESHIP_4": new ResWorldImage("spaceship_4.png", 20),
     "SPACESHIP_5": new ResWorldImage("spaceship_5.png", 20),
-    "SPACESHIP_6": new ResWorldImage("spaceship_6.png", 20),
     "THRUSTER_1": new ResWorldImage("thrust_1.png", 7),
     "STARGATE_OPEN": new ResWorldImage("stargate_open.png", 30),
     "STARGATE_CLOSED": new ResWorldImage("stargate_closed.png", 30),
