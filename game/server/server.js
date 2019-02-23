@@ -22,8 +22,8 @@ class Server {
     this.worlds = {}
     //app.set('port', port);
     app.use('/game/', express.static(__dirname + '/../client'));
-    app.use('/static/game/common', express.static(__dirname + '/../common'));
-    app.use('/static/game/res', express.static(__dirname + '/../res'));
+    app.use('/game/common', express.static(__dirname + '/../common'));
+    app.use('/game/res', express.static(__dirname + '/../res'));
 
     server.listen(Constants.PORT, function () {
       console.log('Starting server on port ' + Constants.PORT);

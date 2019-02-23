@@ -4,7 +4,7 @@
 
 body {
     /* Add image */
-    background: url(/website/images/spaceship-fight.jpg) no-repeat center center fixed;
+    background: url(/images/spaceship-fight.jpg) no-repeat center center fixed;
     /* Add the blur effect */
     -webkit-background-size: cover;
     -moz-background-size: cover;
