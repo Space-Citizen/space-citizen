@@ -9,6 +9,8 @@ var ressources = {
     "BACKGROUND_MARS": new ResUiImage("static_background_mars.jpg", 200),
     "BACKGROUND_SPACE": new ResUiImage("static_background_space.png", 200),
     "NO_SIGNAL": new ResUiImage("no_signal.jpg", 100),
+    "FIGHTER_1": new ResWorldImage("fighter_1.png", 10),
+    "FIGHTER_2": new ResWorldImage("fighter_2.png", 10),
     "SPACESHIP_1": new ResWorldImage("spaceship_1.png", 18),
     "SPACESHIP_2": new ResWorldImage("spaceship_2.png", 20),
     "SPACESHIP_3": new ResWorldImage("spaceship_3.png", 22),
