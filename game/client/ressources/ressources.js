@@ -18,7 +18,7 @@ var ressources = {
     "STARGATE_OPEN": new ResWorldImage("stargate_open.png", 30),
     "STARGATE_CLOSED": new ResWorldImage("stargate_closed.png", 30),
     "TARGET_RED": new ResWorldImage("target_red.png", 40),
-    "MISSILE_1": new ResWorldImage("missile_1.png", 10),
+    "MISSILE_1": new ResWorldImage("missile_1.png", 6),
     // Sprites
     // WARNING: sprite images must be divisible by the number of frames
     "EXPLOSION_1": new ResSprite("explosion_1.png", 20, 4),
