@@ -2,7 +2,7 @@
 
 class StateGame extends IState {
     onInit() {
-        this.socket = io.connect(Constants.SERVER);
+        this.socket = io.connect(Constants.SERVER, { secure: true });
 
         this.initWorld();
         this.initUis();

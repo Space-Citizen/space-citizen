@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import SignIn from './components/auth/signin';
 import SignUp from './components/auth/signup';
-import Game from './components/game/game';
+import Core from './components/core/core';
 import Navbar from './components/navbar/navbar';
 import Messages from './components/messages/messaging';
 import Profile from './components/profile/profile';
@@ -22,7 +22,7 @@ const App = () => {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route path="/messages/:contactId?" component={Messages} />
-        <Route path="/game" component={Game} />
+        <Route path="/core" component={Core} />
         <Route path="/profile/:userId" component={Profile} />
         <Route component={NoMatch} />
       </Switch>
