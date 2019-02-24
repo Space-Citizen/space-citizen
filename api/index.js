@@ -28,6 +28,7 @@ db.connect(function (err) {
 
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
+const FactionRoutes = require('./src/routes/FactionRoutes');
 const ItemRoutes = require('./src/routes/ItemRoutes');
 const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
@@ -36,6 +37,7 @@ const UserRoutes = require('./src/routes/UserRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
+router.use('/factions', FactionRoutes);
 router.use('/items', ItemRoutes);
 router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
