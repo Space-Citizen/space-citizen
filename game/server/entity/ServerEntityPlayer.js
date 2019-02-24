@@ -77,6 +77,10 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     return res;
   }
 
+  isPlayer() {
+    return true;
+  }
+
   getType() {
     return "player";
   }
