@@ -45,8 +45,6 @@ class ServerEntityStargate extends BaseServerEntity {
     }
 
     teleportPlayer(entity, world) {
-        var client = entity.client;
-        entity.client.emit(Events.SERVER_RESET_MAP);
         entity.teleportTo(world, this.dest.x, this.dest.y);
     }
 }

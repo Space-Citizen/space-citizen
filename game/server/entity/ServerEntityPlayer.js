@@ -16,6 +16,11 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
   }
 
+  teleportTo(world, dest_x, dest_y) {
+    super.teleportTo(world, dest_x, dest_y);
+    this.client.emit(Events.SERVER_RESET_MAP);
+  }
+
   delete() {
     super.delete();
     this.removeListeners();
