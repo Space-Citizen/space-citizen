@@ -55,10 +55,6 @@ class BaseServerEntity {
     }
     return res;
   }
-
-  isPlayer() {
-    return false;
-  }
 }
 
 module.exports = BaseServerEntity;
