@@ -3,9 +3,10 @@ var objects = require("../../common");
 var Events = require('../../common/Events');
 
 class BaseServerEntity {
-  constructor(world, x, y, id) {
+  constructor(world, x, y, id, client = null) {
     this.world = world;
     this.id = id;
+    this.client = client;
     this.s_pos = new objects.Position(x, y);
     this.s_type = this.getType();
     this.world.addEntity(this);
