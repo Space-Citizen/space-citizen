@@ -10,6 +10,7 @@ class ServerEntityStargate extends BaseServerEntity {
         super(world, x, y, id);
         this.dest = null;
         this.s_stargate_open = false;
+        this.onInit();
     }
 
     openStargate(dest_world_name, dest_x, dest_y) {

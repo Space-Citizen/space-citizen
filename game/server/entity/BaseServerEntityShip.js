@@ -4,8 +4,8 @@ var BaseServerEntity = require("./BaseServerEntity");
 
 class BaseServerEntityShip extends BaseServerEntity {
     constructor(world, x, y, id,
-        speed, inertia_length, stop_target_dist = 2, client = null) {
-        super(world, x, y, id, client);
+        speed, inertia_length, stop_target_dist = 2) {
+        super(world, x, y, id);
         this.s_target = null;
         this.s_hp = 100;
         this.s_bearing = 0;

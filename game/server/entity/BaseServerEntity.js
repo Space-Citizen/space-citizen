@@ -3,13 +3,23 @@ var objects = require("../../common");
 var Events = require('../../common/Events');
 
 class BaseServerEntity {
-  constructor(world, x, y, id, client = null) {
+  constructor(world, x, y, id) {
     this.world = world;
     this.id = id;
-    this.client = client;
     this.s_pos = new objects.Position(x, y);
     this.s_type = this.getType();
+  }
+
+  onInit() {
     this.world.addEntity(this);
+  }
+
+  onUpdate() {
+    throw new Error("Method 'onUpdate()' must be implemented.");
+  }
+
+  getType() {
+    throw new Error("Method 'getType()' must be implemented.");
   }
 
   teleportTo(world, dest_x, dest_y) {
@@ -36,14 +46,6 @@ class BaseServerEntity {
 
   kill() {
     this.world.killEntity(this);
-  }
-
-  onUpdate() {
-    throw new Error("Method 'onUpdate()' must be implemented.");
-  }
-
-  getType() {
-    throw new Error("Method 'getType()' must be implemented.");
   }
 
   _getVarsWithPrefix(prefix) {
