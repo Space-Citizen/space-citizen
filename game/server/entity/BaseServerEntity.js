@@ -49,6 +49,7 @@ class BaseServerEntity {
   _getVarsWithPrefix(prefix) {
     var res = {};
     for (var key in this) {
+      //console.log(key);
       if (key.startsWith(prefix) || key == "id") {
         res[key] = this[key];
       }

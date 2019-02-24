@@ -30,10 +30,10 @@ class BaseWorld {
 
     addEntity(entity) {
         this.entities[entity.id] = entity;
-        this.sendEventNewEntity(entity);
         if (entity.getType() == "player") {
             this.sendEventResetMap(entity);
         }
+        this.sendEventNewEntity(entity);
     }
 
     _deleteEntity(entity) {

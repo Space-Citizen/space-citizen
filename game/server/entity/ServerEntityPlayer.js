@@ -11,7 +11,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
       20, 2, client);
     //this.client = client;
     this.listeners = {};
-    this.s_name = name; // TODO move name to ship?
+    this.c_name = name; // TODO move name to ship?
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
   }
