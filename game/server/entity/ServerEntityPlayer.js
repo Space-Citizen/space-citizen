@@ -8,8 +8,8 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   constructor(world, x, y, client, name) {
     super(world, x, y, client.id,
       60,
-      20);
-    this.client = client;
+      20, 2, client);
+    //this.client = client;
     this.listeners = {};
     this.s_name = name; // TODO move name to ship?
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
@@ -18,7 +18,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
   teleportTo(world, dest_x, dest_y) {
     super.teleportTo(world, dest_x, dest_y);
-    this.client.emit(Events.SERVER_RESET_MAP);
+    this.world.sendEventResetMap(this);
   }
 
   delete() {

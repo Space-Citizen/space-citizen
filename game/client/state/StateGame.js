@@ -12,6 +12,7 @@ class StateGame extends IState {
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
+        this.socket.on(Events.SERVER_NEW_ENTITY, this.eventNewEntity.bind(this));
         this.socket.on(Events.SERVER_UPDATE_ENTITIES, this.eventUpdateEntities.bind(this));
         this.socket.on(Events.SERVER_DELETE_ENTITY, this.eventDeleteEntity.bind(this));
         this.socket.on(Events.SERVER_KILL_ENTITY, this.eventKillEntity.bind(this));
@@ -35,6 +36,9 @@ class StateGame extends IState {
         this.self = null;
     }
 
+    eventNewEntity(entity_info) {
+        createEntity(entity_info, this);
+    }
 
     eventDeleteEntity(id) {
         if (id in this.entities) {
@@ -63,9 +67,12 @@ class StateGame extends IState {
         for (var x in entities_info) {
             var server_entity = entities_info[x];
             if (!(server_entity.id in this.entities)) {
-                createEntity(server_entity, this);
+                //createEntity(server_entity, this);
+                console.log("WARNING: Got update on a non-existing entity!");
+                console.log(">> entity_id: " + server_entity.id);
+            } else {
+                this.entities[server_entity.id].onServerUpdate(server_entity);
             }
-            this.entities[server_entity.id].onServerUpdate(server_entity);
         }
     }
 

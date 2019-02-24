@@ -4,6 +4,7 @@ var Events = {
     "DISCONNECT": "disconnect", // void
 
     // server >> client
+    "SERVER_NEW_ENTITY": 0,
     "SERVER_UPDATE_ENTITIES": 1, // list[Entity]
     "SERVER_DELETE_ENTITY": 2, // int
     "SERVER_KILL_ENTITY": 3, // int
