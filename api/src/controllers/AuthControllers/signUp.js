@@ -3,7 +3,7 @@ var bcrypt = require('bcryptjs');
 var { doQuery, mysqlError } = require('../../database/');
 
 module.exports = function (req, res, next) {
-    if (!req.body || !req.body.password || !req.body.username || !req.body.email) {
+    if (!req.body || !req.body.password || !req.body.username || !req.body.email || !req.body.faction) {
         res.status(400).json({ error: "Missing field(s)" });
         return;
     }
@@ -18,8 +18,8 @@ module.exports = function (req, res, next) {
             return;
         }
         //Creating user
-        doQuery("INSERT INTO `users`(username, email, password) VALUES(?,?,?)",
-            [req.body.username, req.body.email, hashedPassword]).then(function (insertResult) {
+        doQuery("INSERT INTO `users`(username, email, password, faction) VALUES(?,?,?,?)",
+            [req.body.username, req.body.email, hashedPassword, req.body.faction]).then(function (insertResult) {
                 //creating jwt token
                 var token = jwt.sign({ id: insertResult.insertId }, process.env.SPACE_CITIZEN_JWT_PASSWORD, {
                     expiresIn: 86400 // expires in 24 hours

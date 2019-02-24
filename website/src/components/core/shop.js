@@ -17,11 +17,15 @@ class Shop extends Component {
         });
     }
 
-    buy(itemId) {
-        post("/api/items/buy/" + itemId, []).then(response => {
+    buy(item) {
+        post("/api/items/buy/" + item.id, []).then(response => {
             createNotification("success", response.data.success);
+
             // re-display user's money
-            this.props.refreshUserInfo();
+            var userMoney = document.getElementById("user-info-money");
+            if (!userMoney)
+                return;
+            userMoney.innerHTML = userMoney.innerHTML - item.price;
         });
     }
 
@@ -45,7 +49,7 @@ class Shop extends Component {
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td>{item.price}</td>
-                                <td><button className="btn btn-warning" onClick={() => this.buy(item.id)}>Buy</button></td>
+                                <td><button className="btn btn-warning" onClick={() => this.buy(item)}>Buy</button></td>
                             </tr>
                         );
                     })}
