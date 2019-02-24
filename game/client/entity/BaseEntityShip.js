@@ -43,7 +43,7 @@ class BaseEntityShip extends BaseEntity {
             this.image_body.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             // draw name
             ressources.TEXT_MEDIUM.drawCenterAt(
-                this.s_name,
+                this.c_name,
                 screen_pos.x,
                 screen_pos.y + this.image_body.size().x
             );

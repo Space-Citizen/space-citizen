@@ -10,6 +10,7 @@ class ServerEntityStargate extends BaseServerEntity {
         super(world, x, y, id);
         this.dest = null;
         this.s_stargate_open = false;
+        this.onInit();
     }
 
     openStargate(dest_world_name, dest_x, dest_y) {
@@ -45,8 +46,6 @@ class ServerEntityStargate extends BaseServerEntity {
     }
 
     teleportPlayer(entity, world) {
-        var client = entity.client;
-        entity.client.emit(Events.SERVER_RESET_MAP);
         entity.teleportTo(world, this.dest.x, this.dest.y);
     }
 }
