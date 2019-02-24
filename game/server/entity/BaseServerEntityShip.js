@@ -14,6 +14,11 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.stop_target_dist = stop_target_dist; // stop at this target dist
     }
 
+    teleportTo(world, dest_x, dest_y) {
+        super.teleportTo(world, dest_x, dest_y);
+        this.s_target = null;
+    }
+
     setTarget(pos) {
         this.s_bearing = Helper.getDirection(this.s_pos, pos);
         this.s_target = pos;
