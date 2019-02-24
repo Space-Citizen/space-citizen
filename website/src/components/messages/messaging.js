@@ -71,7 +71,7 @@ class Messaging extends Component {
         var currentContactId = Number(this.getCurrentContactId());
 
         if (currentContactId >= 0 && ((contact && contact.id !== currentContactId) || (!contact))) {
-            get('/api/users/profile_info/' + this.getCurrentContactId()).then(response => {
+            get('/api/users/info/' + this.getCurrentContactId()).then(response => {
                 this.setState({ contact: response.data });
             });
             get('/api/messages/get_messages_from/' + this.getCurrentContactId()).then(response => {

@@ -12,16 +12,9 @@ class Core extends Component {
         this.state = {
             connectedUser: []
         };
-        this.refreshUser = this.refreshUser.bind(this);
     };
 
     componentDidMount() {
-        get('/api/me/info').then(response => {
-            this.setState({ connectedUser: response.data });
-        });
-    }
-
-    refreshUser() {
         get('/api/me/info').then(response => {
             this.setState({ connectedUser: response.data });
         });
@@ -40,7 +33,7 @@ class Core extends Component {
                     </div>
                     <div className="col-10">
                         <Route path="/core/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
-                        <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} refreshUserInfo={this.refreshUser} />} />
+                        <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} />} />
                     </div>
                 </div>
             </div>
