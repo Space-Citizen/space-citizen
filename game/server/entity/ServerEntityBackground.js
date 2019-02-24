@@ -7,6 +7,7 @@ class ServerEntityBackground extends BaseServerEntity {
     constructor(world, id, world_type_name) {
         super(world, 0, 0, id);
         this.s_world_type = WorldTypes[world_type_name];
+        this.onInit();
     }
 
     onUpdate(time_elapsed) {

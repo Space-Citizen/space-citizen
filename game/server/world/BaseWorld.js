@@ -1,5 +1,6 @@
 
 var Entity = require('../entity');
+var Helper = require("../../common/Helper");
 var Events = require('../../common/Events');
 
 class BaseWorld {
@@ -29,6 +30,10 @@ class BaseWorld {
 
     addEntity(entity) {
         this.entities[entity.id] = entity;
+        if (entity.getType() == "player") {
+            this.sendEventResetMap(entity);
+        }
+        this.sendEventNewEntity(entity);
     }
 
     _deleteEntity(entity) {
@@ -58,6 +63,24 @@ class BaseWorld {
             }
         }
         server_player.client.emit(Events.SERVER_UPDATE_ENTITIES, data);
+    }
+
+    sendEventNewEntity(entity) {
+        var entity_info = entity.getSharedVars();
+        Helper.updateDict(entity_info, entity.getConstVars());
+        this.runOnPlayers(function (player) {
+            //console.log(player.client);
+            player.client.emit(Events.SERVER_NEW_ENTITY, entity_info);
+        });
+    }
+
+    sendEventResetMap(player) {
+        player.client.emit(Events.SERVER_RESET_MAP);
+        this.runOnEntities(function (entity) {
+            var entity_info = entity.getSharedVars();
+            Helper.updateDict(entity_info, entity.getConstVars());
+            player.client.emit(Events.SERVER_NEW_ENTITY, entity_info);
+        });
     }
 
     runOnEntities(func) {
