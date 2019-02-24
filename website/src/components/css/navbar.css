@@ -8,24 +8,24 @@
     margin-right: 0;
 }
 
-.game-title-container {
+.core-title-container {
     display: table;
     height: 63px;
     overflow: hidden;
 }
 
-.game-title {
+.core-title {
     color: white;
     display: table-cell;
     vertical-align: middle;
 }
 
-.game-title-link {
+.core-title-link {
     color: white;
     text-decoration: none;
 }
 
-.game-title-link:hover {
+.core-title-link:hover {
     color: white;
     text-decoration: none;
 }

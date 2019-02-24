@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
-import { post } from '../../misc/axios';
+import { post, get } from '../../misc/axios';
 import { createNotification } from '../../misc/notification';
 import '../css/signup.css';
 
 class SignUp extends Component {
+    constructor() {
+        super();
+        this.state = {
+            factions: undefined
+        }
+    }
+
+    componentDidMount() {
+        get('/api/factions/list').then(factions => {
+            this.setState({ factions: factions.data });
+        })
+    }
 
     handleSubmit(e) {
         var username = document.getElementById("signupUsername").value;
         var email = document.getElementById("signupEmail").value;
         var password = document.getElementById("signupPassword").value;
         var confirmPassword = document.getElementById("signupConfirmPassword").value;
+        var faction = document.getElementById("signupFaction").value;
 
         e.preventDefault();
         if (!username || !email || !password || !confirmPassword) {
@@ -20,11 +33,22 @@ class SignUp extends Component {
             createNotification("error", "Passwords are different");
             return;
         }
-        post('/api/auth/signup', { email: email, password: password, username: username }).then(response => {
+        post('/api/auth/signup', { email: email, password: password, username: username, faction: faction }).then(response => {
             //store the token
             localStorage.setItem("x-access-token", response.data.token);
-            document.location = "/game";
+            document.location = "/core";
         });
+    }
+
+    displayFactions() {
+        const { factions } = this.state;
+
+        if (!factions)
+            return;
+        return factions.map(faction => {
+            return (<option key={faction.id} value={faction.id}>{faction.name}</option>);
+        });
+
     }
 
     render() {
@@ -36,6 +60,13 @@ class SignUp extends Component {
                         <div className="form-group">
                             <label htmlFor="signupUsername">Username</label>
                             <input type="text" className="form-control" id="signupUsername" placeholder="Enter username" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="signupFaction">Faction</label>
+                            <select id="signupFaction" className="form-control" defaultValue="2">
+                                <option value="">Select your faction</option>
+                                {this.displayFactions()}
+                            </select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="signupEmail">Email address</label>

@@ -5,9 +5,9 @@ import './css/home.css';
 
 class Home extends Component {
   render() {
-    // redirect to game if user is already connected
+    // redirect to core if user is already connected
     if (isConnected()) {
-      return <Redirect to='/game' />
+      return <Redirect to='/core' />
     }
     return (
       <div>

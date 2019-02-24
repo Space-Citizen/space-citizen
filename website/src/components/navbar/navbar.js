@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { get } from '../../misc/axios';
 import { isConnected } from '../../misc/token';
+import UserPersonalInfo from '../profile/userPersonalInfo';
 import "../css/navbar.css";
 
 class Navbar extends Component {
@@ -23,41 +24,6 @@ class Navbar extends Component {
     logout() {
         localStorage.removeItem("x-access-token");
         document.location = "/";
-    }
-
-    displayUserInfo() {
-        const { connected_user } = this.state;
-
-        if (!connected_user)
-            return;
-        return (
-            <div className="col-lg-2 col-md-4 col-sm-4 offset-lg-5 user-info-box">
-                <div className="float-right">
-                    <div className="row">
-                        <div className="col-6">
-                            <i className="fas fa-money-bill"></i>
-                            <span className="user-info-box-text">{connected_user.money}</span>
-                        </div>
-                        <div className="col-6">
-                            <div className="float-left">
-                                <i className="fas fa-trophy"></i>
-                                <span className="user-info-box-text">10</span>
-                            </div>
-                        </div>
-                        <div className="col-6">
-                            <i className="fas fa-globe-americas"></i>
-                            <span className="user-info-box-text">NA</span>
-                        </div>
-                        <div className="col-6">
-                            <div className="float-left">
-                                <i className="fas fa-user-friends"></i>
-                                <span className="user-info-box-text">Earth</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
     }
 
     displayProfileButton() {
@@ -86,8 +52,8 @@ class Navbar extends Component {
 
     displayHomeButton() {
         return (
-            <div className="col-lg-3 col-md-4 col-sm-4 game-title-container">
-                <h2 className="font-weight-bold col-12 offset-1 game-title text-center"><Link to="/game" className="game-title-link">Space Citizen</Link></h2>
+            <div className="col-lg-3 col-md-4 col-sm-4 core-title-container">
+                <h2 className="font-weight-bold col-12 offset-1 core-title text-center"><Link to="/core" className="core-title-link">Space Citizen</Link></h2>
             </div>
         )
     }
@@ -98,9 +64,9 @@ class Navbar extends Component {
             return (
                 <div>
                     <div className="col-12 row navbar-container">
-                        <div className="col-3 game-title-container">
-                            <h2 className="font-weight-bold col-12 offset-1 game-title text-center">
-                                <Link to="/" className="game-title-link">Space Citizen</Link>
+                        <div className="col-3 core-title-container">
+                            <h2 className="font-weight-bold col-12 offset-1 core-title text-center">
+                                <Link to="/" className="core-title-link">Space Citizen</Link>
                             </h2>
                         </div>
                         <div className="col-2 offset-7">
@@ -123,7 +89,7 @@ class Navbar extends Component {
             <div>
                 <div className="col-12 row navbar-container">
                     {this.displayHomeButton()}
-                    {this.displayUserInfo()}
+                    <UserPersonalInfo />
                     {this.displayProfileButton()}
                 </div>
                 <br />

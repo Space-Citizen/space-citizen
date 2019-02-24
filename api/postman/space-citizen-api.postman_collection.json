@@ -53,6 +53,11 @@
 											"key": "password",
 											"value": "{{password}}",
 											"type": "text"
+										},
+										{
+											"key": "faction",
+											"value": "1",
+											"type": "text"
 										}
 									]
 								},
@@ -742,14 +747,97 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{host}}/users/profile_info/{{otherUserId}}",
+									"raw": "{{host}}/users/info/{{otherUserId}}",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"users",
-										"profile_info",
+										"info",
 										"{{otherUserId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "factions",
+					"item": [
+						{
+							"name": "get connected user info",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x-access-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/factions/info/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"factions",
+										"info",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list factions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f06edb29-76c3-426e-879a-bd68d47bbf32",
+										"exec": [
+											"tests[\"Status code is 200\"] = responseCode.code === 200;",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/factions/list",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"factions",
+										"list"
 									]
 								}
 							},

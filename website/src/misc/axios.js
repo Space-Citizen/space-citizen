@@ -6,6 +6,7 @@ function catchInvalidToken(error) {
     if (error.code === window.ERROR_CODES.TOKEN_INVALID
         || error.code === window.ERROR_CODES.TOKEN_EXPIRED) {
         clearToken();
+        window.location = "/signin";
     }
 }
 

@@ -15,7 +15,12 @@ class Messaging extends Component {
             contact: undefined,
             contactList: undefined
         };
-        this.socket = openSocket('http://localhost:4001');
+        if (process.env.NODE_ENV === 'production') {
+            this.socketUrl = "https://35.235.82.216:4001";
+        }
+        else
+            this.socketUrl = "http://localhost:4001";
+        this.socket = openSocket(this.socketUrl, { secure: true });
         this.socket.on('message:authenticate:response', result => {
             if (result.error)
                 createNotification("warning", result.error);
@@ -66,7 +71,7 @@ class Messaging extends Component {
         var currentContactId = Number(this.getCurrentContactId());
 
         if (currentContactId >= 0 && ((contact && contact.id !== currentContactId) || (!contact))) {
-            get('/api/users/profile_info/' + this.getCurrentContactId()).then(response => {
+            get('/api/users/info/' + this.getCurrentContactId()).then(response => {
                 this.setState({ contact: response.data });
             });
             get('/api/messages/get_messages_from/' + this.getCurrentContactId()).then(response => {

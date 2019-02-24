@@ -1,10 +1,14 @@
-.profile-container
-{
-    background-color: rgb(240,240,240);
+.profile-container {
+    background-color: rgb(240, 240, 240);
     height: 100vh;
 }
 
-.profile-user-card
-{
+.profile-user-card {
     border-right: 2px solid;
+}
+
+/* User card */
+
+.user-card-game-info-title {
+    font-weight: bold;
 }

@@ -6,22 +6,15 @@ import Hangar from './hangar';
 import Shop from './shop';
 import { isConnected } from '../../misc/token';
 
-class Game extends Component {
+class Core extends Component {
     constructor() {
         super();
         this.state = {
             connectedUser: []
         };
-        this.refreshUser = this.refreshUser.bind(this);
     };
 
     componentDidMount() {
-        get('/api/me/info').then(response => {
-            this.setState({ connectedUser: response.data });
-        });
-    }
-
-    refreshUser() {
         get('/api/me/info').then(response => {
             this.setState({ connectedUser: response.data });
         });
@@ -39,8 +32,8 @@ class Game extends Component {
                         <Leftnav />
                     </div>
                     <div className="col-10">
-                        <Route path="/game/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
-                        <Route path="/game/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} refreshUserInfo={this.refreshUser} />} />
+                        <Route path="/core/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
+                        <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} />} />
                     </div>
                 </div>
             </div>
@@ -48,4 +41,4 @@ class Game extends Component {
     }
 };
 
-export default Game;
+export default Core;
