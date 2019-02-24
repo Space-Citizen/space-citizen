@@ -19,7 +19,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   delete() {
     super.delete();
     this.removeListeners();
-    this.world.deleteEntity(this.id);
   }
 
   playerMoveTo(world_pos) {

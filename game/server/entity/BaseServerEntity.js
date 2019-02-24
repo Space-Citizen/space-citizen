@@ -11,6 +11,14 @@ class BaseServerEntity {
     this.world.addEntity(this);
   }
 
+  teleportTo(world, dest_x, dest_y) {
+    this.world.deleteEntity(this);
+    this.world = world;
+    this.s_pos.x = dest_x;
+    this.s_pos.y = dest_y;
+    this.world.addEntity(this);
+  }
+
   serverCallFunction(func_name, ...args) {
     if (!func_name.startsWith("server")) {
       console.error("serverCallFunction: function name must start with 'server'");
