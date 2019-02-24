@@ -45,15 +45,24 @@ class BaseServerEntity {
     throw new Error("Method 'getType()' must be implemented.");
   }
 
-  getSharedVars() {
-    // TODO optimize (this func is run on all ents at every frames...)
+  _getVarsWithPrefix(prefix) {
     var res = {};
     for (var key in this) {
-      if (key.startsWith("s_") || key == "id") {
+      if (key.startsWith(prefix) || key == "id") {
         res[key] = this[key];
       }
     }
     return res;
+  }
+
+  getSharedVars() {
+    // TODO optimize (this func is run on all ents at every frames...)
+    return this._getVarsWithPrefix("s_");
+  }
+
+  getConstVars() {
+    // variables which will not be updated
+    return this._getVarsWithPrefix("c_");
   }
 }
 
