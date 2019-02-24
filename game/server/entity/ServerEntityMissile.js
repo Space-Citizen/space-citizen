@@ -12,24 +12,25 @@ class ServerEntityMissile extends BaseServerEntity {
         this.damage = 10;
         // this.warm_up_time = 2;
         // this.warm = 0;
-        this.target_entity = target_entity;
+        this.target_entity_id = target_entity.id;
         this.onInit();
     }
 
     onUpdate(time_elapsed) {
-        if (!this.target_entity) {
+        var target_entity = this.world.entities[this.target_entity_id];
+        if (!target_entity) {
             console.error("Missile got no entity");
             this.kill();
             return;
         }
-        var target_pos = this.target_entity.s_pos;
+        var target_pos = target_entity.s_pos;
         this.s_bearing = Helper.getDirection(this.s_pos, target_pos);
         Helper.moveInDirection(this.s_pos, this.s_bearing,
             this.speed, time_elapsed);
         var dist = Helper.dist(this.s_pos, target_pos);
         if (dist <= this.blow_distance) {
             // if target is closer than 1 meter, stop moving
-            this.target_entity.shipHit(this.attacker, this.damage);
+            target_entity.shipHit(this.attacker, this.damage);
             this.kill();
         }
     }
