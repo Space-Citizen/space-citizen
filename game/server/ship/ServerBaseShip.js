@@ -1,5 +1,5 @@
 
-class BaseShip {
+class ServerBaseShip {
 
     getSpeed() {
         // m/s
@@ -20,4 +20,4 @@ class BaseShip {
     }
 }
 
-module.exports = BaseShip;
+module.exports = ServerBaseShip;

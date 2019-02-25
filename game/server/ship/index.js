@@ -1,5 +1,5 @@
-var BC304 = require('./BC304');
+var ServerBC304 = require('./ServerBC304');
 
 module.exports = {
-    BC304,
+    ServerBC304,
 };
