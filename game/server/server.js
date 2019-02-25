@@ -15,6 +15,7 @@ var Events = require('../common/Events');
 
 var World = require('./world');
 var Entity = require('./entity');
+var Ship = require('./ship');
 
 class Server {
   constructor() {
@@ -43,7 +44,8 @@ class Server {
     var name = user_info.username;
     var pos_x = user_info.spawn_world_x;
     var pos_y = user_info.spawn_world_y;
-    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name);
+    var ship = new Ship.BC304();
+    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship);
   }
 
   eventConnection(client) {

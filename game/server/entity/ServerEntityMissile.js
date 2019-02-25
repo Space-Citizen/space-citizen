@@ -12,7 +12,12 @@ class ServerEntityMissile extends BaseServerEntity {
         this.damage = 10;
         // this.warm_up_time = 2;
         // this.warm = 0;
-        this.target_entity_id = target_entity.id;
+        if (target_entity) {
+            this.target_entity_id = target_entity.id;
+        } else {
+            this.target_entity_id = null;
+        }
+
         this.onInit();
     }
 
