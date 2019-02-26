@@ -18,6 +18,7 @@ function createShip(ship_type) {
     console.log(ship_type);
     var ShipClasses = {
         "BC304": BC304,
+        "ONeill": ONeill,
     }
     var res = new (ShipClasses[ship_type])();
     return res;
