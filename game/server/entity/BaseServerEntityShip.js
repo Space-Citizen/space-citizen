@@ -3,15 +3,17 @@ var Helper = require("../../common/Helper");
 var BaseServerEntity = require("./BaseServerEntity");
 
 class BaseServerEntityShip extends BaseServerEntity {
-    constructor(world, x, y, id,
-        speed, inertia_length, stop_target_dist = 2) {
+    constructor(world, x, y, id, name, ship) {
         super(world, x, y, id);
+        this.stop_target_dist = 2; // stop ship at this target dist
+        this.c_name = name;
         this.s_target = null;
         this.s_hp = 100;
         this.s_bearing = 0;
-        this.speed = speed; // m/s
-        this.inertia_length = inertia_length; // start slow down at
-        this.stop_target_dist = stop_target_dist; // stop at this target dist
+        // set ship variables:
+        this.c_ship_type = ship.getType();
+        this.speed = ship.getSpeed();
+        this.inertia_length = ship.getInertiaLength();
     }
 
     teleportTo(world, dest_x, dest_y) {

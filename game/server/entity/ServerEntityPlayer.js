@@ -5,13 +5,11 @@ var ServerEntityMissile = require("./ServerEntityMissile");
 var Events = require('../../common/Events');
 
 class ServerEntityPlayer extends BaseServerEntityShip {
-  constructor(world, x, y, client, name) {
-    super(world, x, y, client.id,
-      60,
-      20, 2);
+  constructor(world, x, y, client, name, ship) {
+    super(world, x, y, client.id, name, ship);
     this.client = client;
     this.listeners = {};
-    this.c_name = name; // TODO move name to ship?
+    this.ship = ship;
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
     this.onInit();

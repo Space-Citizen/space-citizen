@@ -14,7 +14,35 @@ function createEntity(server_entity, game) {
     return res;
 }
 
+function createShip(ship_type) {
+    console.log(ship_type);
+    var ShipClasses = {
+        "BC304": BC304,
+    }
+    var res = new (ShipClasses[ship_type])();
+    return res;
+}
+
 function convertSizeToScreen(size) {
     // convert size (in meters) to screen size
     return canvas.width * (size / Constants.X_VIEW_RANGE);
+}
+
+
+function drawHealthBar(x, y, size, hp_percent) {
+    var x_size = convertSizeToScreen(size);
+    var y_size = x_size / 30;
+
+    var x = x - x_size / 2;
+    var y = y - y_size / 2;
+
+    context.beginPath();
+    context.fillStyle = "grey"
+    context.fillRect(x, y, x_size, y_size);
+    context.stroke();
+
+    context.beginPath();
+    context.fillStyle = "green"
+    context.fillRect(x, y, x_size * hp_percent / 100, y_size);
+    context.stroke();
 }
