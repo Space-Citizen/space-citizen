@@ -8,7 +8,7 @@ class ServerBaseShip {
 
     getInertiaLength() {
         // start slow down at
-        return 20;
+        return 15;
     }
 
     getStopTargetDist() {
