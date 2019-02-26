@@ -65,10 +65,11 @@ class Server {
         if (response)
           user_info = JSON.parse(response.body);
         if (token === "test") {
+          var ip = client.request.connection.remoteAddress;
           user_info = {
             id: 1,
             username: "tester",
-            ship_type: "BC304",
+            ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
             spawn_world: "earth",
             spawn_world_x: 0,
             spawn_world_y: 0,
