@@ -13,11 +13,11 @@ class BaseShip {
     }
 
     getNameOffset() {
-        return new Position(0, this.getBodySize() * 1.2);
+        return new Position(0, this.getBodySize() * 1.1);
     }
 
     getHpOffset() {
-        return new Position(0, -this.getBodySize() * 1.2);
+        return new Position(0, -this.getBodySize() * 1.1);
     }
 
     drawName(pos, name) {
