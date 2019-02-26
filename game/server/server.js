@@ -44,7 +44,7 @@ class Server {
     var name = user_info.username;
     var pos_x = user_info.spawn_world_x;
     var pos_y = user_info.spawn_world_y;
-    var ship = new Ship.ServerBC304();
+    var ship = new Ship.ServerONeill();
     return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship);
   }
 
