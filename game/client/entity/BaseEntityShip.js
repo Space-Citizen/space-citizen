@@ -18,6 +18,7 @@ class BaseEntityShip extends BaseEntity {
         if (this.isAlive()) {
             var show_thrusters = this.s_target ? true : false;
             this.ship.draw(screen_pos, this.c_name, this.s_hp, this.bearing, show_thrusters);
+
         } else {
             this.sprite_explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             if (this.sprite_explosion.isFinished()) {

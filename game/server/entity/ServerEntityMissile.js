@@ -17,7 +17,6 @@ class ServerEntityMissile extends BaseServerEntity {
         } else {
             this.target_entity_id = null;
         }
-
         this.onInit();
     }
 
