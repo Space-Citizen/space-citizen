@@ -14,8 +14,8 @@ class BC304 extends BaseShip {
         return new Position(0, -this.image_body.size().y * 1.2);
     }
 
-    getHitCircle() {
-        return 20;
+    getBodySize() {
+        return this.image_body.size().y;
     }
 
     drawShipBody(pos, bearing, draw_thrusters) {

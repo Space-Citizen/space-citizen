@@ -4,20 +4,20 @@ class BaseShip {
 
     }
 
-    getNameOffset() {
-        throw new Error("Method 'getNameOffset()' must be implemented.");
-    }
-
-    getHpOffset() {
-        throw new Error("Method 'getHpOffset()' must be implemented.");
-    }
-
-    getHitCircle() {
-        throw new Error("Method 'getHitCircle()' must be implemented.");
+    getBodySize() {
+        throw new Error("Method 'getBodySize()' must be implemented.");
     }
 
     drawShipBody(pos, bearing, show_thrusters) {
         throw new Error("Method 'drawShipBody()' must be implemented.");
+    }
+
+    getNameOffset() {
+        return new Position(0, this.getBodySize() * 1.2);
+    }
+
+    getHpOffset() {
+        return new Position(0, -this.getBodySize() * 1.2);
     }
 
     drawName(pos, name) {
