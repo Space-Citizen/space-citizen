@@ -1,7 +1,7 @@
 class BaseEntityShip extends BaseEntity {
     onInit() {
         this.ship = createShip(this.c_ship_type);
-        this.hit_circle = this.ship.getBodySize();
+        this.hit_circle = this.ship.getBodySize() / 2;
         this.sprite_explosion = ressources.EXPLOSION_2.clone();
         this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
     }
