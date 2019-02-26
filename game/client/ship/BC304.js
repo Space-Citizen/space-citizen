@@ -6,14 +6,6 @@ class BC304 extends BaseShip {
         this.image_thruster = ressources.THRUSTER_2.clone(true);
     }
 
-    getNameOffset() {
-        return new Position(0, this.image_body.size().y * 1.2);
-    }
-
-    getHpOffset() {
-        return new Position(0, -this.image_body.size().y * 1.2);
-    }
-
     getBodySize() {
         return this.image_body.size().y;
     }
