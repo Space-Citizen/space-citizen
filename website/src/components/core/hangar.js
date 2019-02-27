@@ -9,7 +9,8 @@ class Hangar extends Component {
     this.state = {
       inventory: [],
       ships: [],
-      selectedShip: {}
+      selectedShip: undefined,
+      usedShip: undefined
     };
     // equipments type available on the ships
     this.shipComponents = ["guns", "shields"];
@@ -42,6 +43,16 @@ class Hangar extends Component {
     get("/api/me/ships").then(response => {
       this.setState({ ships: response.data });
     });
+    this.loadUsedShip();
+  }
+
+
+  ////////////// Load functions    //////////////
+
+  loadUsedShip() {
+    get("/api/me/usedship").then(response => {
+      this.setState({ usedShip: response.data });
+    });
   }
 
   ////////////// mics JS functions //////////////
@@ -71,16 +82,11 @@ class Hangar extends Component {
   }
 
   getItemTypeCapacityOnShip(itemType) {
+    const { selectedShip } = this.state;
     // check if a ship is selected
-    if (!this.isShipSelected())
+    if (!selectedShip)
       return (0);
-    return (JSON.parse(this.state.selectedShip.specifications)[itemType + "_slots"]);
-  }
-
-  isShipSelected() {
-    if (Object.keys(this.state.selectedShip).length === 0)
-      return (false);
-    return (true);
+    return (JSON.parse(selectedShip.specifications)[itemType + "_slots"]);
   }
 
   ////////////// Items movement functions //////////////
@@ -129,7 +135,9 @@ class Hangar extends Component {
   ////////////// Buttons onclick functions //////////////
 
   saveChanges() {
-    if (!this.isShipSelected()) {
+    const { selectedShip } = this.state;
+
+    if (!selectedShip) {
       createNotification('error', "No ship selected");
       return;
     }
@@ -150,21 +158,23 @@ class Hangar extends Component {
 
     // edit ship equipment
 
-    post("/api/ships/edit", { shipId: this.state.selectedShip.id, itemsToShip: shipItemsId, itemsToInventory: itemsToInventory }).then(response => {
+    post("/api/ships/edit", { shipId: selectedShip.id, itemsToShip: shipItemsId, itemsToInventory: itemsToInventory }).then(response => {
       createNotification('success', response.data.success);
     });
   }
 
   changeCurrentShip() {
-    if (!this.isShipSelected()) {
+    const { selectedShip } = this.state;
+
+    if (!selectedShip) {
       createNotification('error', "No ship selected");
       return;
     }
-    post("/api/me/changeship", { shipId: this.state.selectedShip.id }).then(response => {
+    post("/api/me/changeship", { shipId: selectedShip.id }).then(response => {
       createNotification('success', response.data.success);
+      this.loadUsedShip();
     });
   }
-
 
   // swap between ships
   swapShip(newShipId) {
@@ -217,27 +227,32 @@ class Hangar extends Component {
   }
 
   displayShipList() {
-    var selectedShipId = -1;
+    const { selectedShip, usedShip } = this.state;
 
-    if (this.isShipSelected()) {
-      selectedShipId = this.state.selectedShip.id;
-    }
     return this.state.ships.map(ship => {
       return (
-        <div key={ship.id} className={"hangar-ship" + (ship.id === selectedShipId ? " hangar-ship-selected" : "")}>
+        <div key={ship.id} className={
+          "hangar-ship"
+          + (selectedShip && ship.id === selectedShip.id ? " hangar-ship-selected" : "")
+        }>
           <button onClick={() => this.swapShip(ship.id)}>
             <div>
               <img src={ship.icon} className="hangar-ship-icon" alt={ship.name} />
-              <div className="hangar-ship-text">{ship.name}</div>
+              <div className="hangar-ship-text">
+                {ship.name}<br />
+                <label className={(usedShip && ship.id === usedShip.id ? "hangar-ship-used" : "hangar-ship-not-used")}>Current Ship</label>
+              </div>
             </div>
-          </button    >
+          </button>
         </div>
       );
     });
   }
 
   displayShipComponents() {
-    if (!this.isShipSelected())
+    const { selectedShip } = this.state;
+
+    if (!selectedShip)
       return;
     return this.shipComponents.map(componentName => {
       return (
@@ -245,7 +260,7 @@ class Hangar extends Component {
           <h2 className="text-center hangar-ship-inventory-title">Ship's {componentName}</h2>
           <div className="hangar-ship-inventory-container">
             <div className="hangar-item-placeholder-container">
-              {this.displayItemsPlaceholder(JSON.parse(this.state.selectedShip.specifications)[componentName + "_slots"])}
+              {this.displayItemsPlaceholder(JSON.parse(selectedShip.specifications)[componentName + "_slots"])}
             </div>
             {this.state["ship" + componentName].map((item) => (
               <div key={componentName + item.id} className="hangar-ship-item-container">
