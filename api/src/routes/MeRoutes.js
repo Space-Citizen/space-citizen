@@ -12,4 +12,13 @@ router.get('/inventory', requireUserToken(MeController.getInventory));
 // get connected user's ships
 router.get('/ships', requireUserToken(MeController.getShips));
 
+// get connected user's current ship
+router.get('/usedship', requireUserToken(MeController.getUsedShip));
+
+// change current ship
+router.post('/changeship', requireUserToken(MeController.changeShip));
+
+// change current position
+router.post('/changepos', requireUserToken(MeController.changePos));
+
 module.exports = router;

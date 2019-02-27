@@ -1,9 +1,7 @@
 
 var express = require('express');
 var http = require('http');
-var path = require('path');
 var socketIO = require('socket.io');
-const request = require('request');
 
 var app = express();
 var server = http.Server(app);
@@ -16,6 +14,9 @@ var Events = require('../common/Events');
 var World = require('./world');
 var Entity = require('./entity');
 var Ship = require('./ship');
+
+// API link
+const { getUserInfo, getUserShip } = require('./api');
 
 class Server {
   constructor() {
@@ -40,49 +41,50 @@ class Server {
   }
 
   spawnPlayer(client, user_info) {
-    var world = this.worlds[user_info.spawn_world];
+    var world = this.worlds[user_info.map];
     var name = user_info.username;
-    var pos_x = user_info.spawn_world_x;
-    var pos_y = user_info.spawn_world_y;
+    var pos_x = user_info.map_coordinate_x;
+    var pos_y = user_info.map_coordinate_y;
     var ships = {
       "BC304": Ship.ServerBC304,
       "ONeill": Ship.ServerONeill,
     };
     var ship = new ships[user_info.ship_type]();
-    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship);
+    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship, user_info.token);
   }
 
   eventConnection(client) {
     var that = this;
     client.on(Events.PLAYER_AUTH, function (token) {
 
-      // get the user's information from the api
-      request.get({
-        url: process.env.SPACE_CITIZEN_API_URL + '/api/me/info',
-        headers: { "x-access-token": token }
-      }, function (error, response) {
-        var user_info;
-        if (response)
-          user_info = JSON.parse(response.body);
-        if (token === "test") {
-          user_info = {
-            id: 1,
-            username: "tester",
-            ship_type: "BC304",
-            spawn_world: "earth",
-            spawn_world_x: 0,
-            spawn_world_y: 0,
-          };
-        }
-        // if authentication fail, abort
-        if ((error && token !== "test") || !user_info || user_info.error) {
-          //console.error(user_info.error);
-          return;
-        }
-        // create the player
+      //////// TO REMOVE FOR PROD ////////
+      if (token === "test") {
+        var user_info = {
+          id: 1,
+          username: "tester",
+          ship_type: "BC304",
+          map: "earth",
+          map_coordinate_x: 0,
+          map_coordinate_y: 0
+        };
         that.spawnPlayer(client, user_info);
-      });
+        return;
+      }
+      ///////////////////////////////////
 
+      // get the user's information from the api
+      getUserInfo(token).then((user_info_response) => {
+        const user_info = JSON.parse(user_info_response);
+        getUserShip(token).then((ship) => {
+          user_info.ship_type = JSON.parse(ship).name;
+          user_info.token = token;
+          that.spawnPlayer(client, user_info);
+        }).catch((error) => {
+          console.log(error);
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
     });
   }
 
