@@ -5,6 +5,7 @@ import Leftnav from '../navbar/leftnav';
 import Hangar from './hangar';
 import Shop from './shop';
 import { isConnected } from '../../misc/token';
+import '../css/core.css';
 
 class Core extends Component {
     constructor() {
@@ -26,7 +27,7 @@ class Core extends Component {
             return <Redirect to='/signIn' />
         }
         return (
-            <div>
+            <div className="core-container">
                 <div className="row">
                     <div className="col-2">
                         <Leftnav />
