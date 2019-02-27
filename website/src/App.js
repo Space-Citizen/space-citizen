@@ -6,17 +6,20 @@ import SignIn from './components/auth/signin';
 import SignUp from './components/auth/signup';
 import Core from './components/core/core';
 import Navbar from './components/navbar/navbar';
+import NavbarLoggedOut from './components/navbar/navbarLoggedOut';
 import Messages from './components/messages/messaging';
 import Profile from './components/profile/profile';
 import { NotificationContainer } from 'react-notifications';
+import { isConnected } from './misc/token';
 import 'react-notifications/lib/notifications.css';
 
 const NoMatch = () => <div><h1 style={{ color: "white" }}>No page. 404</h1></div>;
 
 const App = () => {
   return (
-    <div>
-      <Navbar />
+    <div style={{ backgroundColor: "#222930" }}>
+      {/* Display navbar */}
+      {isConnected() ? <Navbar /> : <NavbarLoggedOut />}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/signin" component={SignIn} />
