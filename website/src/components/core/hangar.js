@@ -303,10 +303,12 @@ class Hangar extends Component {
             <div className="hangar-ship-container">
               {this.displayShipList()}
             </div>
+            <br />
           </div>
-          <br />
-          <button className="btn btn-primary" onClick={() => this.saveChanges()}><i className="fas fa-save"></i> Save changes</button>
-          <button className="btn btn-success" onClick={() => this.changeCurrentShip()}><i className="fas fa-warehouse"></i> Use this ship</button>
+          <div className="col-6">
+            <button className="btn btn-primary hangar-save-button" onClick={() => this.saveChanges()}><i className="fas fa-save"></i> Save changes</button>
+            <button className="btn btn-success" onClick={() => this.changeCurrentShip()}><i className="fas fa-warehouse"></i> Use this ship</button>
+          </div>
           <div className="row">
             <div className="col-8 ship-inventory">
               <div>
