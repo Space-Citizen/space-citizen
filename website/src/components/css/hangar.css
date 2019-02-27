@@ -160,3 +160,7 @@
     border: 1px solid transparent;
     cursor: pointer;
 }
+
+.hangar-save-button {
+    margin: 1em;
+}
