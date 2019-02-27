@@ -70,11 +70,6 @@ class Hangar extends Component {
     })
   }
 
-  getInventoryCapacity() {
-    // to implement
-    return (20);
-  }
-
   getItemTypeCapacityOnShip(itemType) {
     // check if a ship is selected
     if (!this.isShipSelected())
@@ -95,10 +90,6 @@ class Hangar extends Component {
     var { inventory } = this.state;
     var arraySource = this.state[arraySourceName]
 
-    if (inventory.length + 1 > this.getInventoryCapacity()) {
-      createNotification('warning', "Inventory is full");
-      return;
-    }
     // get item
     const itemToMove = arraySource.find(function (elem) { return (elem.id === itemId) });
     // remove item from current location
@@ -160,6 +151,16 @@ class Hangar extends Component {
     // edit ship equipment
 
     post("/api/ships/edit", { shipId: this.state.selectedShip.id, itemsToShip: shipItemsId, itemsToInventory: itemsToInventory }).then(response => {
+      createNotification('success', response.data.success);
+    });
+  }
+
+  changeCurrentShip() {
+    if (!this.isShipSelected()) {
+      createNotification('error', "No ship selected");
+      return;
+    }
+    post("/api/me/changeship", { shipId: this.state.selectedShip.id }).then(response => {
       createNotification('success', response.data.success);
     });
   }
@@ -290,7 +291,7 @@ class Hangar extends Component {
           </div>
           <br />
           <button className="btn btn-primary" onClick={() => this.saveChanges()}><i className="fas fa-save"></i> Save changes</button>
-          <button className="btn btn-success"><i className="fas fa-warehouse"></i> Use this ship</button>
+          <button className="btn btn-success" onClick={() => this.changeCurrentShip()}><i className="fas fa-warehouse"></i> Use this ship</button>
           <div className="row">
             <div className="col-8 ship-inventory">
               <div>
