@@ -20,8 +20,8 @@ class EntityBackground extends BaseEntity {
             this.game.pos.x / div,
             this.game.pos.y / div
         );
-        var background_pos = this.game.relPos(off);
-        this.image.drawCenterAt(
+        var background_pos = this.game.relPos({ x: 0, y: 0 });
+        this.image.drawAt(
             background_pos.x,
             background_pos.y
         );
