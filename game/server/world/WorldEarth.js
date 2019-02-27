@@ -1,6 +1,7 @@
 
 var Entity = require('../entity');
 var BaseWorld = require('./BaseWorld');
+var Constants = require('../../common/Constants');
 
 class WorldEarth extends BaseWorld {
     onInit() {
@@ -13,10 +14,10 @@ class WorldEarth extends BaseWorld {
         var sg = new Entity.ServerEntityStargate(this, 50, 0, "sg1");
         sg.openStargate("mars", 0, 0);
 
-        var sg = new Entity.ServerEntityStargate(this, 250, 250, "sg5");
-        var sg = new Entity.ServerEntityStargate(this, -250, -250, "sg2");
-        var sg = new Entity.ServerEntityStargate(this, -250, 250, "sg3");
-        var sg = new Entity.ServerEntityStargate(this, 250, -250, "sg4");
+        var sg = new Entity.ServerEntityStargate(this, 0, 0, "sg5");
+        var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, 0, "sg2");
+        var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, Constants.WORLD_SIZE_Y, "sg3");
+        var sg = new Entity.ServerEntityStargate(this, 0, Constants.WORLD_SIZE_Y, "sg4");
     }
 
     getWorldName() {
