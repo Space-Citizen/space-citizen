@@ -42,6 +42,10 @@ class Server {
 
   spawnPlayer(client, user_info) {
     var world = this.worlds[user_info.map];
+    if (!world) {
+      console.log("Invalid world : " + user_info.map);
+      return;
+    }
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
@@ -59,10 +63,11 @@ class Server {
 
       //////// TO REMOVE FOR PROD ////////
       if (token === "test") {
+        var ip = client.request.connection.remoteAddress;
         var user_info = {
           id: 1,
           username: "tester",
-          ship_type: "BC304",
+          ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
           map: "earth",
           map_coordinate_x: 0,
           map_coordinate_y: 0
