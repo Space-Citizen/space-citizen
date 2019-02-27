@@ -16,7 +16,7 @@ var Entity = require('./entity');
 var Ship = require('./ship');
 
 // API link
-const { getUserInfo, getUserShip } = require('./api');
+const api = require('./api');
 
 class Server {
   constructor() {
@@ -73,9 +73,9 @@ class Server {
       ///////////////////////////////////
 
       // get the user's information from the api
-      getUserInfo(token).then((user_info_response) => {
+      api.getUserInfo(token).then((user_info_response) => {
         const user_info = JSON.parse(user_info_response);
-        getUserShip(token).then((ship) => {
+        api.getUserShip(token).then((ship) => {
           user_info.ship_type = JSON.parse(ship).name;
           user_info.token = token;
           that.spawnPlayer(client, user_info);

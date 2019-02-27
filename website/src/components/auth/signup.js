@@ -53,37 +53,35 @@ class SignUp extends Component {
 
     render() {
         return (
-            <div>
-                <div className="container sign-up-form-container">
-                    <form onSubmit={this.handleSubmit}>
-                        <h2>Sign up</h2>
-                        <div className="form-group">
-                            <label htmlFor="signupUsername">Username</label>
-                            <input type="text" className="form-control" id="signupUsername" placeholder="Enter username" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="signupFaction">Faction</label>
-                            <select id="signupFaction" className="form-control" defaultValue="2">
-                                <option value="">Select your faction</option>
-                                {this.displayFactions()}
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="signupEmail">Email address</label>
-                            <input type="email" className="form-control" id="signupEmail" aria-describedby="emailHelp" placeholder="Enter email" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="signupPassword">Password</label>
-                            <input type="password" className="form-control" id="signupPassword" placeholder="Enter password" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="signupConfirmPassword">Confirm Password</label>
-                            <input type="password" className="form-control" id="signupConfirmPassword" placeholder="Confirm password" />
-                        </div>
-                        <p>Already have an account ? <a href="/signin"><u>Click here !</u></a></p>
-                        <button type="submit" className="btn btn-primary">Sign up !</button>
-                    </form>
-                </div>
+            <div className="container sign-up-form-container">
+                <form onSubmit={this.handleSubmit}>
+                    <h2>Sign up</h2>
+                    <div className="form-group">
+                        <label htmlFor="signupUsername">Username</label>
+                        <input type="text" className="form-control" id="signupUsername" placeholder="Enter username" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="signupFaction">Faction</label>
+                        <select id="signupFaction" className="form-control" defaultValue="2">
+                            <option value="">Select your faction</option>
+                            {this.displayFactions()}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="signupEmail">Email address</label>
+                        <input type="email" className="form-control" id="signupEmail" aria-describedby="emailHelp" placeholder="Enter email" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="signupPassword">Password</label>
+                        <input type="password" className="form-control" id="signupPassword" placeholder="Enter password" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="signupConfirmPassword">Confirm Password</label>
+                        <input type="password" className="form-control" id="signupConfirmPassword" placeholder="Confirm password" />
+                    </div>
+                    <p>Already have an account ? <a href="/signin"><u>Click here !</u></a></p>
+                    <button type="submit" className="btn btn-primary">Sign up !</button>
+                </form>
             </div>
         );
     }
