@@ -108,6 +108,18 @@
     opacity: 1;
 }
 
+.hangar-ship-not-used {
+    visibility: hidden;
+}
+
+.hangar-ship-used {
+    visibility: visible;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 .hangar-ship-icon {
     max-width: 200px;
 }
