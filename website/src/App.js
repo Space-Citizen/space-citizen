@@ -17,7 +17,7 @@ const NoMatch = () => <div><h1 style={{ color: "white" }}>No page. 404</h1></div
 
 const App = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: "#222930" }}>
       {/* Display navbar */}
       {isConnected() ? <Navbar /> : <NavbarLoggedOut />}
       <Switch>

@@ -5,7 +5,7 @@ var ServerEntityMissile = require("./ServerEntityMissile");
 var Events = require('../../common/Events');
 
 // API
-const { setUserPos } = require('../api');
+const api = require('../api');
 
 class ServerEntityPlayer extends BaseServerEntityShip {
   constructor(world, x, y, client, name, ship, token) {
@@ -54,7 +54,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   }
 
   eventDisconnect() {
-    setUserPos(this.token, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
+    api.setUserPos(this.token, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
     this.delete();
   }
 
