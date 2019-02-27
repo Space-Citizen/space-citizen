@@ -23,8 +23,7 @@ class BaseServerEntity {
   }
 
   teleportTo(world, dest_x, dest_y) {
-    if (this.world)
-      this.world.deleteEntity(this);
+    this.world.deleteEntity(this);
     this.world = world;
     this.s_pos.x = dest_x;
     this.s_pos.y = dest_y;
