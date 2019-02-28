@@ -125,8 +125,10 @@ class UiMinimap extends BaseUi {
         switch (entity.type) {
             case "stargate":
                 this.displayStargate(entity, entity_pos);
+                break;
             case "player":
                 this.displayPlayer(entity, entity_pos);
+                break;
         }
     }
 
