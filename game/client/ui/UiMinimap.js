@@ -33,10 +33,7 @@ class UiMinimap extends BaseUi {
                 x: mouse.x - this.minimap_pos_top_left.x,
                 y: mouse.y - this.minimap_pos_top_left.y
             };
-            var worldPos = {
-                x: (Constants.WORLD_SIZE_X * mousePosInMinimap.x) / this.minimap_size.x,
-                y: (Constants.WORLD_SIZE_Y * mousePosInMinimap.y) / this.minimap_size.y
-            };
+            var worldPos = this.minimapPosToWorld(mousePosInMinimap);
             this.game.playerCallFunction("playerMoveTo", worldPos);
             this.current_destination = { x: mouse.x, y: mouse.y };
             return (true);
@@ -68,41 +65,37 @@ class UiMinimap extends BaseUi {
         context.stroke();
     }
 
-    displayMinimap() {
-        if (!this.game.self)
-            return;
-        // display minimap background
-        ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
-        // for each entity
-        for (var index in this.game.entities) {
-            const entity = this.game.entities[index];
-            var ressource = null;
-            // get the ressource
-            switch (entity.type) {
-                case "stargate":
-                    ressource = ressources.MINIMAP_STARGATE;
-                    break;
-                case "player":
-                    ressource = ressources.MINIMAP_PLAYER;
-                    break
-                default:
-                    break;
-            }
-            if (!ressource)
-                continue;
-            var entity_pos = {
-                x: ((this.minimap_size.x * entity.s_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,
-                y: ((this.minimap_size.y * entity.s_pos.y) / Constants.WORLD_SIZE_Y) + this.minimap_pos_top_left.y
-            }
-            // draw the ressource
-            ressource.drawCenterAt(entity_pos.x, entity_pos.y)
-            // if entity is self, draw the view distance
-            if (entity.id === this.game.self.id) {
-                this.current_self_position = entity_pos;
-                this.displayViewDistance(entity_pos);
-            }
+    displayEntityOnMinimap(entity) {
+        var ressource = null;
+        // get the ressource
+        switch (entity.type) {
+            case "stargate":
+                ressource = ressources.MINIMAP_STARGATE;
+                break;
+            case "player":
+                ressource = ressources.MINIMAP_PLAYER;
+                break
+            default:
+                return;
+        }
+        var entity_pos = this.worldPosToMinimap(entity.s_pos);
+        ressource.drawCenterAt(entity_pos.x, entity_pos.y)
+    }
+
+    worldPosToMinimap(world_pos) {
+        var pos = {
+            x: ((this.minimap_size.x * world_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,
+            y: ((this.minimap_size.y * world_pos.y) / Constants.WORLD_SIZE_Y) + this.minimap_pos_top_left.y
+        }
+        return pos;
+    }
+
+    minimapPosToWorld(minimap_pos) {
+        var world_pos = {
+            x: (Constants.WORLD_SIZE_X * minimap_pos.x) / this.minimap_size.x,
+            y: (Constants.WORLD_SIZE_Y * minimap_pos.y) / this.minimap_size.y
         };
-        this.displayCurrentDestination();
+        return world_pos;
     }
 
     onResize() {
@@ -111,6 +104,20 @@ class UiMinimap extends BaseUi {
     }
 
     onUpdate(time_elapsed) {
-        this.displayMinimap();
+        if (!this.game.self)
+            return;
+        // display minimap background
+        ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
+        // for each entity
+        var that = this;
+        this.game.runOnEntities(function (entity) {
+            /*
+            if (entity.id === that.game.self.id) {
+                that.current_self_position = entity_pos;
+                that.displayViewDistance(entity_pos);
+            }*/
+            that.displayEntityOnMinimap(entity);
+        });
+        this.displayCurrentDestination();
     }
 }
