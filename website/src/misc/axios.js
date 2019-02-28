@@ -3,6 +3,8 @@ import { getTokenInHeader, clearToken } from './token';
 import { createNotification } from './notification';
 
 function catchInvalidToken(error) {
+    if (!window || !window.ERROR_CODES)
+        return;
     if (error.code === window.ERROR_CODES.TOKEN_INVALID
         || error.code === window.ERROR_CODES.TOKEN_EXPIRED) {
         clearToken();
