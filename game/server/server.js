@@ -56,7 +56,7 @@ class Server {
       return;
     }
     var ship = new NewShip();
-    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship, user_info.token);
+    return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship, user_info.token, user_info.faction);
   }
 
   eventConnection(client) {
