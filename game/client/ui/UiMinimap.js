@@ -3,11 +3,11 @@ class UiMinimap extends BaseUi {
         this.game = this.state;
         // constants
         this.minimap_margin = 10;
-        this.minimap_pos_top_left = undefined;
-        this.minimap_size = undefined;
-        this.minimap_pos_bottom_right = undefined;
-        this.current_destination = undefined;
-        this.current_self_position = undefined;
+        this.minimap_pos_top_left = null;
+        this.minimap_size = null;
+        this.minimap_pos_bottom_right = null;
+        this.current_destination = null;
+        this.current_self_position = null;
         this.setMinimapPosition();
 
         window.addEventListener("resize", this.onResize.bind(this));
@@ -41,7 +41,8 @@ class UiMinimap extends BaseUi {
             this.current_destination = { x: mouse.x, y: mouse.y };
             return (true);
         }
-        this.current_destination = undefined;
+        this.current_destination = null;
+        return false;
     }
 
     onMouseRightClick() {
@@ -75,7 +76,7 @@ class UiMinimap extends BaseUi {
         // for each entity
         for (var index in this.game.entities) {
             const entity = this.game.entities[index];
-            var ressource = undefined;
+            var ressource = null;
             // get the ressource
             switch (entity.type) {
                 case "stargate":
