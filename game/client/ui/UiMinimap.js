@@ -91,10 +91,10 @@ class UiMinimap extends BaseUi {
     }
 
     displayCurrentDestination() {
-        var self_pos = this.worldPosToMinimap(this.game.self.s_pos);
-        if (!this.current_destination || this.isOutsideMap(self_pos))
+        if (!this.current_destination || this.isOutsideMap(this.game.self.s_pos))
             return;
 
+        var self_pos = this.worldPosToMinimap(this.game.self.s_pos);
         context.beginPath();
         context.moveTo(self_pos.x, self_pos.y);
         context.lineTo(this.current_destination.x, this.current_destination.y);
@@ -102,9 +102,10 @@ class UiMinimap extends BaseUi {
     }
 
     displayViewDistance() {
-        if (this.isPlayerOutsideTheMap())
+        var self_pos = this.game.self.s_pos;
+        if (this.isOutsideMap(self_pos))
             return;
-        var entity_pos = this.worldPosToMinimap(this.game.self.s_pos);
+        var entity_pos = this.worldPosToMinimap(self_pos);
         var viewDistance = {
             x: (this.minimap_size.x * Constants.X_VIEW_RANGE) / Constants.WORLD_SIZE_X,
             y: (this.minimap_size.y * Constants.X_VIEW_RANGE / Constants.SCREEN_RATIO) / Constants.WORLD_SIZE_Y,
@@ -115,8 +116,6 @@ class UiMinimap extends BaseUi {
     }
 
     displayEntity(entity) {
-        if (!this.display_functions[entity.type])
-            return;
         // get world position to minimap
         const entity_pos = this.worldPosToMinimap(entity.s_pos);
         switch (entity.type) {
