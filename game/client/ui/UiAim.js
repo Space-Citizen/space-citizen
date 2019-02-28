@@ -48,11 +48,7 @@ class UiAim extends BaseUi {
         return this.targetEntityAt(this.game.worldPos(mouse));
     }
 
-    onResize() {
-    }
-
     onUpdate(time_elapsed) {
-        super.onUpdate(time_elapsed);
         if (this.game.self && this.target) {
             if (!(this.target.id in this.game.entities)) {
                 this.target = null;

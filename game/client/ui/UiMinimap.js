@@ -9,6 +9,8 @@ class UiMinimap extends BaseUi {
         this.current_destination = undefined;
         this.current_self_position = undefined;
         this.setMinimapPosition();
+
+        window.addEventListener("resize", this.onResize.bind(this));
     }
 
     setMinimapPosition() {
@@ -55,18 +57,18 @@ class UiMinimap extends BaseUi {
         context.stroke();
     }
 
-    displayViewDistance(entityPos) {
+    displayViewDistance(entity_pos) {
         var viewDistance = {
             x: (this.minimap_size.x * Constants.X_VIEW_RANGE) / Constants.WORLD_SIZE_X,
             y: (this.minimap_size.y * Constants.X_VIEW_RANGE / Constants.SCREEN_RATIO) / Constants.WORLD_SIZE_Y,
         };
         context.strokeStyle = "white";
-        context.rect(entityPos.x - viewDistance.x / 2, entityPos.y - viewDistance.y / 2, viewDistance.x, viewDistance.y);
+        context.rect(entity_pos.x - viewDistance.x / 2, entity_pos.y - viewDistance.y / 2, viewDistance.x, viewDistance.y);
         context.stroke();
     }
 
     displayMinimap() {
-        if (!this.game.entities)
+        if (!this.game.self)
             return;
         // display minimap background
         ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
@@ -87,27 +89,27 @@ class UiMinimap extends BaseUi {
             }
             if (!ressource)
                 continue;
-            var entityPos = {
+            var entity_pos = {
                 x: ((this.minimap_size.x * entity.s_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,
                 y: ((this.minimap_size.y * entity.s_pos.y) / Constants.WORLD_SIZE_Y) + this.minimap_pos_top_left.y
             }
             // draw the ressource
-            ressource.drawCenterAt(entityPos.x, entityPos.y)
+            ressource.drawCenterAt(entity_pos.x, entity_pos.y)
             // if entity is self, draw the view distance
             if (entity.id === this.game.self.id) {
-                this.current_self_position = entityPos;
-                this.displayViewDistance(entityPos);
+                this.current_self_position = entity_pos;
+                this.displayViewDistance(entity_pos);
             }
         };
         this.displayCurrentDestination();
     }
+
     onResize() {
         console.log("resized");
         this.setMinimapPosition();
     }
 
     onUpdate(time_elapsed) {
-        super.onUpdate(time_elapsed);
         this.displayMinimap();
     }
 }
