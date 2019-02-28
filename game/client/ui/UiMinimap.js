@@ -1,6 +1,7 @@
 class UiMinimap extends BaseUi {
     onInit() {
         this.game = this.state;
+        this.minimap_size_x = 20;
         this.minimap_margin = 10;
         this.minimap_pos_top_left = null;
         this.minimap_size = null;
@@ -105,7 +106,14 @@ class UiMinimap extends BaseUi {
         if (!this.game.self)
             return;
         // display minimap background
-        ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
+        var background_entity = this.game.entities.background;
+        if (background_entity) {
+            var background = background_entity.image.resize(
+                convertScreenPercentToWorldSize(this.minimap_size_x)
+            );
+            background.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
+        }
+        //ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
         var that = this;
         this.game.runOnEntities(function (entity) {
             that.displayEntityOnMinimap(entity);

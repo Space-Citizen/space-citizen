@@ -29,6 +29,10 @@ function convertSizeToScreen(size) {
     return canvas.width * (size / Constants.X_VIEW_RANGE);
 }
 
+function convertScreenPercentToWorldSize(size) {
+    return Constants.WORLD_SIZE_X / Constants.X_VIEW_RANGE * size;
+}
+
 
 function drawHealthBar(x, y, size, hp_percent) {
     var x_size = convertSizeToScreen(size);

@@ -6,8 +6,8 @@ var ressources = {
     TEXT_MEDIUM: new ResText("blue", "18px Arial"),
     // Images
     BACKGROUND_EARTH: new ResWorldImage("static_background_earth.jpg", Constants.WORLD_SIZE_X),
-    BACKGROUND_MARS: new ResUiImage("static_background_mars.jpg", 200),
-    BACKGROUND_SPACE: new ResUiImage("static_background_space.png", 200),
+    BACKGROUND_MARS: new ResWorldImage("static_background_mars.jpg", Constants.WORLD_SIZE_X),
+    BACKGROUND_SPACE: new ResWorldImage("static_background_space.png", Constants.WORLD_SIZE_X),
     // Minimap
     MINIMAP_BACKGROUND_EARTH: new ResUiImage("static_background_earth.jpg", 20),
     MINIMAP_STARGATE: new ResUiImage("stargate_closed.png", 1),
