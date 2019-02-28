@@ -55,7 +55,8 @@ class UiMinimap extends BaseUi {
         context.stroke();
     }
 
-    displayViewDistance(entity_pos) {
+    displayViewDistance() {
+        var entity_pos = this.worldPosToMinimap(this.game.self.s_pos);
         var viewDistance = {
             x: (this.minimap_size.x * Constants.X_VIEW_RANGE) / Constants.WORLD_SIZE_X,
             y: (this.minimap_size.y * Constants.X_VIEW_RANGE / Constants.SCREEN_RATIO) / Constants.WORLD_SIZE_Y,
@@ -119,5 +120,6 @@ class UiMinimap extends BaseUi {
             that.displayEntityOnMinimap(entity);
         });
         this.displayCurrentDestination();
+        this.displayViewDistance();
     }
 }
