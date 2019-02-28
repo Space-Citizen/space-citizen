@@ -9,39 +9,7 @@ class UiMinimap extends BaseUi {
         this.current_destination = null;
         this.resetMinimapPosition();
         window.addEventListener("resize", this.onResize.bind(this));
-        this.displayStargate = this.displayStargate.bind(this);
-        this.displayPlayer = this.displayPlayer.bind(this);
-        this.display_functions = {
-            "stargate": this.displayStargate,
-            "player": this.displayPlayer
-        };
     }
-
-    // Display functions
-
-    displayStargate(entity, entity_pos) {
-        ressources.MINIMAP_STARGATE.drawCenterAt(entity_pos.x, entity_pos.y)
-    }
-
-    displayPlayer(entity, entity_pos) {
-        var ressource = null;
-
-        // if self
-        if (entity.id === this.game.self.id)
-            ressource = ressources.MINIMAP_PLAYER;
-        // if same faction
-        else if (entity.s_faction === this.game.self.s_faction) {
-            ressource = ressources.MINIMAP_ALLY;
-        }
-        // if enemy faction
-        else if (entity.s_faction !== this.game.self.s_faction)
-            ressource = ressources.MINIMAP_HOSTILE;
-
-        if (ressource)
-            ressource.drawCenterAt(entity_pos.x, entity_pos.y);
-    }
-
-    //
 
     worldPosToMinimap(world_pos) {
         var pos = {
@@ -74,6 +42,25 @@ class UiMinimap extends BaseUi {
         };
     }
 
+    displayStargate(entity, entity_pos) {
+        ressources.MINIMAP_STARGATE.drawCenterAt(entity_pos.x, entity_pos.y)
+    }
+
+    displayPlayer(entity, entity_pos) {
+        var ressource = null;
+        var self = this.game.self;
+        // if self
+        if (entity.id === self.id)
+            ressource = ressources.MINIMAP_PLAYER;
+        else if (entity.s_faction === self.s_faction) {
+            ressource = ressources.MINIMAP_ALLY;
+        }
+        else {
+            ressource = ressources.MINIMAP_HOSTILE;
+        }
+        ressource.drawCenterAt(entity_pos.x, entity_pos.y);
+    }
+
     onMouseLeftClick() {
         // check if click is in the minimap
         if (mouse.x >= this.minimap_pos_top_left.x && mouse.y >= this.minimap_pos_top_left.y
@@ -95,19 +82,19 @@ class UiMinimap extends BaseUi {
         // return bool (true to override click)
     }
 
-    isPlayerOutsideTheMap() {
-        const player_pos = this.game.self.s_pos;
-
-        if (player_pos.x < 0 || player_pos.x >= Constants.WORLD_SIZE_X
-            || player_pos.y < 0 || player_pos.y >= Constants.WORLD_SIZE_Y)
+    isOutsideMap(world_pos) {
+        if (world_pos.x <= 0 || world_pos.x > Constants.WORLD_SIZE_X
+            || world_pos.y <= 0 || world_pos.y > Constants.WORLD_SIZE_Y) {
             return (true);
+        }
         return (false);
     }
 
     displayCurrentDestination() {
-        if (!this.current_destination || this.isPlayerOutsideTheMap())
-            return;
         var self_pos = this.worldPosToMinimap(this.game.self.s_pos);
+        if (!this.current_destination || this.isOutsideMap(self_pos))
+            return;
+
         context.beginPath();
         context.moveTo(self_pos.x, self_pos.y);
         context.lineTo(this.current_destination.x, this.current_destination.y);
@@ -127,12 +114,17 @@ class UiMinimap extends BaseUi {
         context.stroke();
     }
 
-    displayEntityOnMinimap(entity) {
+    displayEntity(entity) {
         if (!this.display_functions[entity.type])
             return;
         // get world position to minimap
         const entity_pos = this.worldPosToMinimap(entity.s_pos);
-        this.display_functions[entity.type](entity, entity_pos);
+        switch (entity.type) {
+            case "stargate":
+                this.displayStargate(entity, entity_pos);
+            case "player":
+                this.displayPlayer(entity, entity_pos);
+        }
     }
 
     onResize() {
@@ -152,7 +144,7 @@ class UiMinimap extends BaseUi {
         }
         var that = this;
         this.game.runOnEntities(function (entity) {
-            that.displayEntityOnMinimap(entity);
+            that.displayEntity(entity);
         });
 
         this.displayViewDistance();
