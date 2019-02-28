@@ -34,7 +34,6 @@
     font-size: 20px;
     opacity: 0.8;
     white-space: nowrap;
-    overflow: hidden;
 }
 
 .hangar-inventory-item:hover {
@@ -161,6 +160,6 @@
     cursor: pointer;
 }
 
-.hangar-save-button {
-    margin: 1em;
+.hangar-button {
+    margin: .5em;
 }

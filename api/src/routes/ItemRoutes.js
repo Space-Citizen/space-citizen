@@ -12,4 +12,7 @@ router.get('/info/:itemId', requireUserToken(ItemController.getInfo));
 //Buy an item
 router.post('/buy/:itemId', requireUserToken(ItemController.buy));
 
+//Sell an item
+router.post('/sell/:itemId', requireUserToken(ItemController.sell));
+
 module.exports = router;
