@@ -40,15 +40,19 @@ class UiAim extends BaseUi {
     }
 
     onMouseLeftClick() {
-        return this.targetEntityAt(this.game.worldPos(mouse));
-    }
-
-    onMouseRightClick() {
         this.game.playerCallFunction("playerMoveTo", this.game.worldPos(mouse));
         return true;
     }
 
+    onMouseRightClick() {
+        return this.targetEntityAt(this.game.worldPos(mouse));
+    }
+
+    onResize() {
+    }
+
     onUpdate(time_elapsed) {
+        super.onUpdate(time_elapsed);
         if (this.game.self && this.target) {
             if (!(this.target.id in this.game.entities)) {
                 this.target = null;

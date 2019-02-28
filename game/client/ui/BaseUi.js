@@ -2,6 +2,7 @@
 class BaseUi {
     constructor(state) {
         this.state = state;
+        this.canvas_size = null;
         this.onInit();
     }
 
@@ -19,7 +20,23 @@ class BaseUi {
         throw new Error("Method 'onMouseRightClick()' must be implemented.");
     }
 
+    onResize() {
+        // return bool (true to override click)
+        throw new Error("Method 'onResize()' must be implemented.");
+    }
+
     onUpdate(time_elapsed) {
-        throw new Error("Method 'onUpdate()' must be implemented.");
+        var { canvas_size } = this;
+
+        if (canvas_size &&
+            (canvas_size.width !== canvas.width || canvas_size.height !== canvas.height)) {
+            // update canvas_size
+            this.canvas_size = { width: canvas.width, height: canvas.height };
+            this.onResize();
+        }
+        // set canvas_size if it's not set
+        if (!canvas_size) {
+            this.canvas_size = { width: canvas.width, height: canvas.height };
+        }
     }
 }

@@ -49,11 +49,13 @@ class Server {
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
-    var ships = {
-      "BC304": Ship.ServerBC304,
-      "ONeill": Ship.ServerONeill,
-    };
-    var ship = new ships[user_info.ship_type]();
+
+    const NewShip = Ship.ship_list[user_info.ship_type];
+    if (!NewShip) {
+      console.log("This ship type does not exist: " + user_info.ship_type);
+      return;
+    }
+    var ship = new NewShip();
     return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship, user_info.token);
   }
 
