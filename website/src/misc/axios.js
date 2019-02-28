@@ -13,7 +13,7 @@ function catchInvalidToken(error) {
 function handleError(error) {
     var response = undefined;
 
-    if (error.response)
+    if (error && error.response)
         response = error.response;
     if (!response || !response.data) {
         return ("An error was catched");

@@ -122,6 +122,9 @@ class UiMinimap extends BaseUi {
     displayEntity(entity) {
         // get world position to minimap
         const entity_pos = this.worldPosToMinimap(entity.pos);
+        // do not display if the position is outside of the map
+        if (this.isOutsideMap(entity.pos))
+            return;
         switch (entity.type) {
             case "stargate":
                 this.displayStargate(entity, entity_pos);
