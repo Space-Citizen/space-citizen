@@ -1,10 +1,10 @@
 class UiMinimap extends BaseUi {
     onInit() {
         this.game = this.state;
-        this.minimap_size_x = 20;
+        this.minimap_percent_x = 20;
         this.minimap_margin = 10;
-        this.minimap_pos_top_left = null;
         this.minimap_size = null;
+        this.minimap_pos_top_left = null;
         this.minimap_pos_bottom_right = null;
         this.current_destination = null;
         this.resetMinimapPosition();
@@ -28,11 +28,14 @@ class UiMinimap extends BaseUi {
     }
 
     resetMinimapPosition() {
+        this.minimap_size = new Position(
+            convertPercentToScreen(this.minimap_percent_x),
+            convertPercentToScreen(this.minimap_percent_x / Constants.SCREEN_RATIO),
+        )
         this.minimap_pos_top_left = {
-            x: canvas.width - ressources.MINIMAP_BACKGROUND_EARTH.size().x - this.minimap_margin,
-            y: canvas.height - ressources.MINIMAP_BACKGROUND_EARTH.size().y - this.minimap_margin
+            x: canvas.width - this.minimap_size.x - this.minimap_margin,
+            y: canvas.height - this.minimap_size.y - this.minimap_margin
         };
-        this.minimap_size = ressources.MINIMAP_BACKGROUND_EARTH.size();
         this.minimap_pos_bottom_right = {
             x: this.minimap_pos_top_left.x + this.minimap_size.x,
             y: this.minimap_pos_top_left.y + this.minimap_size.y
@@ -49,7 +52,7 @@ class UiMinimap extends BaseUi {
             };
             var world_pos = this.minimapPosToWorld(mousePosInMinimap);
             this.game.playerCallFunction("playerMoveTo", world_pos);
-            this.current_destination = { x: mouse.x, y: mouse.y };
+            this.current_destination = new Position(mouse.x, mouse.y);
             return (true);
         }
         this.current_destination = null;
@@ -109,11 +112,10 @@ class UiMinimap extends BaseUi {
         var background_entity = this.game.entities.background;
         if (background_entity) {
             var background = background_entity.image.resize(
-                convertScreenPercentToWorldSize(this.minimap_size_x)
+                convertScreenPercentToWorldSize(this.minimap_percent_x)
             );
             background.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
         }
-        //ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
         var that = this;
         this.game.runOnEntities(function (entity) {
             that.displayEntityOnMinimap(entity);
