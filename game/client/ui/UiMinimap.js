@@ -9,7 +9,39 @@ class UiMinimap extends BaseUi {
         this.current_destination = null;
         this.resetMinimapPosition();
         window.addEventListener("resize", this.onResize.bind(this));
+        this.displayStargate = this.displayStargate.bind(this);
+        this.displayPlayer = this.displayPlayer.bind(this);
+        this.display_functions = {
+            "stargate": this.displayStargate,
+            "player": this.displayPlayer
+        };
     }
+
+    // Display functions
+
+    displayStargate(entity, entity_pos) {
+        ressources.MINIMAP_STARGATE.drawCenterAt(entity_pos.x, entity_pos.y)
+    }
+
+    displayPlayer(entity, entity_pos) {
+        var ressource = null;
+
+        // if self
+        if (entity.id === this.game.self.id)
+            ressource = ressources.MINIMAP_PLAYER;
+        // if same faction
+        else if (entity.s_faction === this.game.self.s_faction) {
+            ressource = ressources.MINIMAP_ALLY;
+        }
+        // if enemy faction
+        else if (entity.s_faction !== this.game.self.s_faction)
+            ressource = ressources.MINIMAP_HOSTILE;
+
+        if (ressource)
+            ressource.drawCenterAt(entity_pos.x, entity_pos.y);
+    }
+
+    //
 
     worldPosToMinimap(world_pos) {
         var pos = {
@@ -63,8 +95,17 @@ class UiMinimap extends BaseUi {
         // return bool (true to override click)
     }
 
+    isPlayerOutsideTheMap() {
+        const player_pos = this.game.self.s_pos;
+
+        if (player_pos.x < 0 || player_pos.x >= Constants.WORLD_SIZE_X
+            || player_pos.y < 0 || player_pos.y >= Constants.WORLD_SIZE_Y)
+            return (true);
+        return (false);
+    }
+
     displayCurrentDestination() {
-        if (!this.current_destination)
+        if (!this.current_destination || this.isPlayerOutsideTheMap())
             return;
         var self_pos = this.worldPosToMinimap(this.game.self.s_pos);
         context.beginPath();
@@ -74,6 +115,8 @@ class UiMinimap extends BaseUi {
     }
 
     displayViewDistance() {
+        if (this.isPlayerOutsideTheMap())
+            return;
         var entity_pos = this.worldPosToMinimap(this.game.self.s_pos);
         var viewDistance = {
             x: (this.minimap_size.x * Constants.X_VIEW_RANGE) / Constants.WORLD_SIZE_X,
@@ -85,20 +128,11 @@ class UiMinimap extends BaseUi {
     }
 
     displayEntityOnMinimap(entity) {
-        var ressource = null;
-        // get the ressource
-        switch (entity.type) {
-            case "stargate":
-                ressource = ressources.MINIMAP_STARGATE;
-                break;
-            case "player":
-                ressource = ressources.MINIMAP_PLAYER;
-                break
-            default:
-                return;
-        }
-        var entity_pos = this.worldPosToMinimap(entity.s_pos);
-        ressource.drawCenterAt(entity_pos.x, entity_pos.y)
+        if (!this.display_functions[entity.type])
+            return;
+        // get world position to minimap
+        const entity_pos = this.worldPosToMinimap(entity.s_pos);
+        this.display_functions[entity.type](entity, entity_pos);
     }
 
     onResize() {
