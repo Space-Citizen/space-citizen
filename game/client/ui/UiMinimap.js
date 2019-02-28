@@ -52,7 +52,7 @@ class UiMinimap extends BaseUi {
         // if self
         if (entity.id === self.id)
             ressource = ressources.MINIMAP_PLAYER;
-        else if (entity.s_faction === self.s_faction) {
+        else if (entity.c_faction === self.c_faction) {
             ressource = ressources.MINIMAP_ALLY;
         }
         else {
@@ -83,8 +83,8 @@ class UiMinimap extends BaseUi {
     }
 
     isOutsideMap(world_pos) {
-        if (world_pos.x <= 0 || world_pos.x > Constants.WORLD_SIZE_X
-            || world_pos.y <= 0 || world_pos.y > Constants.WORLD_SIZE_Y) {
+        if (world_pos.x < 0 || world_pos.x >= Constants.WORLD_SIZE_X
+            || world_pos.y < 0 || world_pos.y >= Constants.WORLD_SIZE_Y) {
             return (true);
         }
         return (false);
@@ -105,13 +105,17 @@ class UiMinimap extends BaseUi {
         var self_pos = this.game.self.s_pos;
         if (this.isOutsideMap(self_pos))
             return;
-        var entity_pos = this.worldPosToMinimap(self_pos);
-        var viewDistance = {
-            x: (this.minimap_size.x * Constants.X_VIEW_RANGE) / Constants.WORLD_SIZE_X,
-            y: (this.minimap_size.y * Constants.X_VIEW_RANGE / Constants.SCREEN_RATIO) / Constants.WORLD_SIZE_Y,
-        };
+        var top_left = this.worldPosToMinimap(
+            this.game.worldPos(new Position(0, 0))
+        );
+        var bottom_right = this.worldPosToMinimap(
+            this.game.worldPos(new Position(canvas.width, canvas.height))
+        );
         context.strokeStyle = "white";
-        context.rect(entity_pos.x - viewDistance.x / 2, entity_pos.y - viewDistance.y / 2, viewDistance.x, viewDistance.y);
+        context.rect(
+            top_left.x, top_left.y,
+            bottom_right.x - top_left.x, bottom_right.y - top_left.y
+        );
         context.stroke();
     }
 
