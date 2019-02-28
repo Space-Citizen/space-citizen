@@ -1,15 +1,12 @@
 class UiMinimap extends BaseUi {
     onInit() {
         this.game = this.state;
-        // constants
         this.minimap_margin = 10;
         this.minimap_pos_top_left = null;
         this.minimap_size = null;
         this.minimap_pos_bottom_right = null;
         this.current_destination = null;
-        this.current_self_position = null;
         this.resetMinimapPosition();
-
         window.addEventListener("resize", this.onResize.bind(this));
     }
 
