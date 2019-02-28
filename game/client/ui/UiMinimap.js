@@ -8,12 +8,28 @@ class UiMinimap extends BaseUi {
         this.minimap_pos_bottom_right = null;
         this.current_destination = null;
         this.current_self_position = null;
-        this.setMinimapPosition();
+        this.resetMinimapPosition();
 
         window.addEventListener("resize", this.onResize.bind(this));
     }
 
-    setMinimapPosition() {
+    worldPosToMinimap(world_pos) {
+        var pos = {
+            x: ((this.minimap_size.x * world_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,
+            y: ((this.minimap_size.y * world_pos.y) / Constants.WORLD_SIZE_Y) + this.minimap_pos_top_left.y
+        }
+        return pos;
+    }
+
+    minimapPosToWorld(minimap_pos) {
+        var world_pos = {
+            x: (Constants.WORLD_SIZE_X * minimap_pos.x) / this.minimap_size.x,
+            y: (Constants.WORLD_SIZE_Y * minimap_pos.y) / this.minimap_size.y
+        };
+        return world_pos;
+    }
+
+    resetMinimapPosition() {
         this.minimap_pos_top_left = {
             x: canvas.width - ressources.MINIMAP_BACKGROUND_EARTH.size().x - this.minimap_margin,
             y: canvas.height - ressources.MINIMAP_BACKGROUND_EARTH.size().y - this.minimap_margin
@@ -33,8 +49,8 @@ class UiMinimap extends BaseUi {
                 x: mouse.x - this.minimap_pos_top_left.x,
                 y: mouse.y - this.minimap_pos_top_left.y
             };
-            var worldPos = this.minimapPosToWorld(mousePosInMinimap);
-            this.game.playerCallFunction("playerMoveTo", worldPos);
+            var world_pos = this.minimapPosToWorld(mousePosInMinimap);
+            this.game.playerCallFunction("playerMoveTo", world_pos);
             this.current_destination = { x: mouse.x, y: mouse.y };
             return (true);
         }
@@ -47,10 +63,11 @@ class UiMinimap extends BaseUi {
     }
 
     displayCurrentDestination() {
-        if (!this.current_destination || !this.current_self_position)
+        if (!this.current_destination)
             return;
+        var self_pos = this.worldPosToMinimap(this.game.self.s_pos);
         context.beginPath();
-        context.moveTo(this.current_self_position.x, this.current_self_position.y);
+        context.moveTo(self_pos.x, self_pos.y);
         context.lineTo(this.current_destination.x, this.current_destination.y);
         context.stroke();
     }
@@ -83,25 +100,8 @@ class UiMinimap extends BaseUi {
         ressource.drawCenterAt(entity_pos.x, entity_pos.y)
     }
 
-    worldPosToMinimap(world_pos) {
-        var pos = {
-            x: ((this.minimap_size.x * world_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,
-            y: ((this.minimap_size.y * world_pos.y) / Constants.WORLD_SIZE_Y) + this.minimap_pos_top_left.y
-        }
-        return pos;
-    }
-
-    minimapPosToWorld(minimap_pos) {
-        var world_pos = {
-            x: (Constants.WORLD_SIZE_X * minimap_pos.x) / this.minimap_size.x,
-            y: (Constants.WORLD_SIZE_Y * minimap_pos.y) / this.minimap_size.y
-        };
-        return world_pos;
-    }
-
     onResize() {
-        console.log("resized");
-        this.setMinimapPosition();
+        this.resetMinimapPosition();
     }
 
     onUpdate(time_elapsed) {
@@ -109,17 +109,12 @@ class UiMinimap extends BaseUi {
             return;
         // display minimap background
         ressources.MINIMAP_BACKGROUND_EARTH.drawAt(this.minimap_pos_top_left.x, this.minimap_pos_top_left.y);
-        // for each entity
         var that = this;
         this.game.runOnEntities(function (entity) {
-            /*
-            if (entity.id === that.game.self.id) {
-                that.current_self_position = entity_pos;
-                that.displayViewDistance(entity_pos);
-            }*/
             that.displayEntityOnMinimap(entity);
         });
-        this.displayCurrentDestination();
+
         this.displayViewDistance();
+        this.displayCurrentDestination();
     }
 }
