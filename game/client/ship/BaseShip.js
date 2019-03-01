@@ -43,4 +43,8 @@ class BaseShip {
         this.drawHp(pos, hp_percent);
         this.drawName(pos, name);
     }
+
+    onUpdate(time_elapsed) {
+        // can be overriden
+    }
 }

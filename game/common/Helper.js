@@ -52,6 +52,10 @@ class Helper {
     static isInt(n) {
         return n % 1 === 0;
     }
+
+    static randint(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 }
 
 if (typeof module != 'undefined') {

@@ -9,6 +9,7 @@ function createEntity(server_entity, game) {
         "stargate": EntityStargate,
         "background": EntityBackground,
         "missile": EntityMissile,
+        "hatak": EntityHatak,
     }
     var res = new EntityClasses[server_entity.s_type](server_entity, game);
     return res;
@@ -19,6 +20,7 @@ function createShip(ship_type) {
     var ShipClasses = {
         "BC304": BC304,
         "ONeill": ONeill,
+        "Hatak": Hatak,
     }
     var res = new (ShipClasses[ship_type])();
     return res;
