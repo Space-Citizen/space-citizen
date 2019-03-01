@@ -13,12 +13,28 @@ class WorldMars extends BaseWorld {
         var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, Constants.WORLD_SIZE_Y, "sg3");
         var sg = new Entity.ServerEntityStargate(this, 0, Constants.WORLD_SIZE_Y, "sg4");
 
-        var hatak = new Entity.ServerEntityHatak(
-            this,
-            Constants.WORLD_SIZE_X / 2,
-            Constants.WORLD_SIZE_Y / 2,
-            "hatak1"
-        );
+    }
+
+    countHataks() {
+        var res = 0;
+        this.runOnEntities(function (entity) {
+            if (entity instanceof Entity.ServerEntityHatak) {
+                res += 1;
+            }
+        });
+        return res;
+    }
+
+    onUpdate(time_elapsed) {
+        super.onUpdate(time_elapsed);
+        if (this.countHataks() < 50) {
+            var hatak = new Entity.ServerEntityHatak(
+                this,
+                Constants.WORLD_SIZE_X / 2,
+                Constants.WORLD_SIZE_Y / 2,
+                this.getFreeId()
+            );
+        }
     }
 
     getWorldName() {

@@ -37,12 +37,9 @@ class ServerEntityHatak extends BaseServerEntityShip {
         var time = Date.now() / 1000;
         if (!this.time_changed_target
             || time - this.time_changed_target > this.change_target_time) {
-            //console.log("new target");
             this.setRandomTarget();
             this.time_changed_target = time;
         }
-
-        console.log(Helper.randint(0, Constants.WORLD_SIZE_X));
     }
 
     getType() {
