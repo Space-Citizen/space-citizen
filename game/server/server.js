@@ -50,7 +50,7 @@ class Server {
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
 
-    const NewShip = Ship.ship_list[user_info.ship_type];
+    const NewShip = Ship[user_info.ship_type];
     if (!NewShip) {
       console.log("This ship type does not exist: " + user_info.ship_type);
       return;
