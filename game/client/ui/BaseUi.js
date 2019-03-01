@@ -2,6 +2,7 @@
 class BaseUi {
     constructor(state) {
         this.state = state;
+        this.canvas_size = null;
         this.onInit();
     }
 

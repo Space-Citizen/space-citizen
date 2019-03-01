@@ -5,9 +5,16 @@ var ressources = {
     // Fonts
     TEXT_MEDIUM: new ResText("blue", "18px Arial"),
     // Images
-    BACKGROUND_EARTH: new ResUiImage("static_background_earth.jpg", 200),
-    BACKGROUND_MARS: new ResUiImage("static_background_mars.jpg", 200),
-    BACKGROUND_SPACE: new ResUiImage("static_background_space.png", 200),
+    BACKGROUND_EARTH: new ResWorldImage("static_background_earth.jpg", Constants.WORLD_SIZE_X),
+    BACKGROUND_MARS: new ResWorldImage("static_background_mars.jpg", Constants.WORLD_SIZE_X),
+    BACKGROUND_SPACE: new ResWorldImage("static_background_space.png", Constants.WORLD_SIZE_X),
+    // Minimap
+    MINIMAP_BACKGROUND_EARTH: new ResUiImage("static_background_earth.jpg", 20),
+    MINIMAP_STARGATE: new ResUiImage("stargate_closed.png", 1),
+    MINIMAP_PLAYER: new ResUiImage("minimap_player.jpg", 0.3),
+    MINIMAP_HOSTILE: new ResUiImage("minimap_hostile.jpg", 0.3),
+    MINIMAP_ALLY: new ResUiImage("minimap_ally.jpg", 0.3),
+
     NO_SIGNAL: new ResUiImage("no_signal.jpg", 100),
     FIGHTER_1: new ResWorldImage("fighter_1.png", 5),
     FIGHTER_2: new ResWorldImage("fighter_2.png", 5),

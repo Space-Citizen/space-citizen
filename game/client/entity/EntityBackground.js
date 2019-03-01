@@ -15,13 +15,8 @@ class EntityBackground extends BaseEntity {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-        var div = 1.5;
-        var off = new Position(
-            this.game.pos.x / div,
-            this.game.pos.y / div
-        );
-        var background_pos = this.game.relPos(off);
-        this.image.drawCenterAt(
+        var background_pos = this.game.relPos(new Position(0, 0));
+        this.image.drawAt(
             background_pos.x,
             background_pos.y
         );

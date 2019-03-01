@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SCO Game</title>
+  <title>Space Citizen</title>
   <style>
     body {
       background-color: black;
@@ -15,7 +15,12 @@
     }
 
     canvas {
+      border: 0px;
       position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
       margin: auto;
     }
   </style>
@@ -50,6 +55,7 @@
   <script src="/game/entity/EntityBackground.js"></script>
   <script src="/game/ui/BaseUi.js"></script>
   <script src="/game/ui/UiAim.js"></script>
+  <script src="/game/ui/UiMinimap.js"></script>
   <script src="/game/state/IState.js"></script>
   <script src="/game/state/StateGame.js"></script>
   <script src="/game/state/StateLoading.js"></script>

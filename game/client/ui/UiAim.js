@@ -40,12 +40,12 @@ class UiAim extends BaseUi {
     }
 
     onMouseLeftClick() {
-        return this.targetEntityAt(this.game.worldPos(mouse));
+        this.game.playerCallFunction("playerMoveTo", this.game.worldPos(mouse));
+        return true;
     }
 
     onMouseRightClick() {
-        this.game.playerCallFunction("playerMoveTo", this.game.worldPos(mouse));
-        return true;
+        return this.targetEntityAt(this.game.worldPos(mouse));
     }
 
     onUpdate(time_elapsed) {
