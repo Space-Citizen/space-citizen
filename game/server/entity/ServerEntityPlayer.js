@@ -12,7 +12,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     super(world, x, y, client.id, name, ship);
     this.client = client;
     this.listeners = {};
-    this.ship = ship;
     this.token = token;
     this.c_faction = faction;
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
