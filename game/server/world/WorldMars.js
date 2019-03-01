@@ -4,6 +4,7 @@ var BaseWorld = require('./BaseWorld');
 
 class WorldMars extends BaseWorld {
     onInit() {
+        this.max_hataks = 5;
         new Entity.ServerEntityBackground(this, "background", "MARS");
         var sg = new Entity.ServerEntityStargate(this, 50, 50, "sga");
         sg.openStargate("earth", 0, 0);
@@ -27,7 +28,7 @@ class WorldMars extends BaseWorld {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-        if (this.countHataks() < 50) {
+        if (this.countHataks() < this.max_hataks) {
             var hatak = new Entity.ServerEntityHatak(
                 this,
                 Constants.WORLD_SIZE_X / 2,
