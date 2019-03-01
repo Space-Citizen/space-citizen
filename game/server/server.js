@@ -71,8 +71,8 @@ class Server {
           username: "tester",
           ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
           map: "earth",
-          map_coordinate_x: 0,
-          map_coordinate_y: 0
+          map_coordinate_x: Constants.WORLD_SIZE_X / 2,
+          map_coordinate_y: Constants.WORLD_SIZE_Y / 2
         };
         that.spawnPlayer(client, user_info);
         return;
