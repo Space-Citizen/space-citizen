@@ -1,0 +1,1 @@
+essaye de mettre la minimap a 1000  de taille
