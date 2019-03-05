@@ -83,8 +83,8 @@ class UiMinimap extends BaseUi {
     }
 
     isOutsideMap(world_pos) {
-        if (world_pos.x < 0 || world_pos.x >= Constants.WORLD_SIZE_X
-            || world_pos.y < 0 || world_pos.y >= Constants.WORLD_SIZE_Y) {
+        if (world_pos.x < 0 || world_pos.x > Constants.WORLD_SIZE_X
+            || world_pos.y < 0 || world_pos.y > Constants.WORLD_SIZE_Y) {
             return (true);
         }
         return (false);

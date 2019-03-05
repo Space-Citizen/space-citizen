@@ -12,6 +12,7 @@ class BaseEntityShip extends BaseEntity {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
+        this.ship.onUpdate(time_elapsed);
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
 

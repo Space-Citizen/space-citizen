@@ -5,6 +5,7 @@ var BaseServerEntity = require("./BaseServerEntity");
 class BaseServerEntityShip extends BaseServerEntity {
     constructor(world, x, y, id, name, ship) {
         super(world, x, y, id);
+        this.ship = ship;
         this.stop_target_dist = 2; // stop ship at this target dist
         this.c_name = name;
         this.s_target = null;

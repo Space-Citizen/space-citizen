@@ -50,7 +50,7 @@ class Server {
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
 
-    const NewShip = Ship.ship_list[user_info.ship_type];
+    const NewShip = Ship[user_info.ship_type];
     if (!NewShip) {
       console.log("This ship type does not exist: " + user_info.ship_type);
       return;
@@ -71,8 +71,8 @@ class Server {
           username: "tester",
           ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
           map: "earth",
-          map_coordinate_x: 0,
-          map_coordinate_y: 0
+          map_coordinate_x: Constants.WORLD_SIZE_X / 2,
+          map_coordinate_y: Constants.WORLD_SIZE_Y / 2
         };
         that.spawnPlayer(client, user_info);
         return;

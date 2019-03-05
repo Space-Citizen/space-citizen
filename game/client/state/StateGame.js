@@ -23,7 +23,7 @@ class StateGame extends IState {
 
 
     eventConnect() {
-        this.playerAuth();
+        this.sendEventPlayerAuth();
         this.initWorld();
         this.id = this.socket.io.engine.id;
         console.log("connected as " + this.id);
@@ -81,7 +81,7 @@ class StateGame extends IState {
         this.initWorld();
     }
 
-    playerAuth() {
+    sendEventPlayerAuth() {
         // get the token from the url
         var url_params = {}
         window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {

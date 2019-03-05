@@ -1,3 +1,5 @@
 module.exports = {
-    ship_list: require('./shipList')
-};
+    "BC304": require('./ServerBC304'),
+    "ONeill": require('./ServerONeill'),
+    "Hatak": require('./ServerHatak')
+}
