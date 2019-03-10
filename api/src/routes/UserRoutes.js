@@ -6,4 +6,6 @@ const { requireUserToken } = require("../tokens/");
 //Get information about a user according to it's ID or username
 router.get('/info/:id', requireUserToken(UserController.getProfileInfo));
 
+router.get('/', UserController.getUsers);
+
 module.exports = router;
