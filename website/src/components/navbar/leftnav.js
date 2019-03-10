@@ -30,15 +30,15 @@ class Leftnav extends Component {
 
         if (usedShip === -1) {
             return (
-                <a className="play-button-disabled"
-                    target="_blank" rel="noopener noreferrer">
+                <div className="play-button-disabled"
+                    rel="noopener noreferrer">
                     <div className="thumbnail-selected">
                         <img src="/images/launch.jpg" alt="launch" className="img-responsive leftnav-element-image" />
                         <div className="leftnav-element-text">
                             <label className="text-danger">No ship selected</label>
                         </div>
                     </div>
-                </a>
+                </div>
             );
         }
         return (
@@ -70,7 +70,7 @@ class Leftnav extends Component {
                         </div>
                     </div>
                 </Link>
-                <Link className={"leftnav-element" + (document.location.toString().search("/shop") === -1 ? "" : "-selected")} to="/core/shop">
+                <Link className={"leftnav-element"} to="/core/shop">
                     <div className={"thumbnail" + (shopSelected ? "" : "-selected")}>
                         <img src="/images/shop.jpg" alt="shop" className="img-responsive leftnav-element-image" />
                         <div className="leftnav-element-text">
