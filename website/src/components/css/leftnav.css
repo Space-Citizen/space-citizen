@@ -1,16 +1,12 @@
-.button-menu-image {
+.leftnav-element-image {
     width: 100%;
-    height: 100%;
 }
 
-.button-menu-selected {
-    position: relative;
-    opacity: 1;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
+/* Take off button */
 
-@keyframes blink {
+/* Take off animations */
+
+@keyframes play-button-blink {
     0% {
         border-color: #1df500;
     }
@@ -19,6 +15,18 @@
     }
     100% {
         border-color: #1df500;
+    }
+}
+
+@keyframes play-button-disabled {
+    0% {
+        border-color: #000000;
+    }
+    50% {
+        border-color: #888888;
+    }
+    100% {
+        border-color: #ffffff;
     }
 }
 
@@ -33,30 +41,96 @@
     opacity: 1;
 }
 
-.play-button .button-menu-image {
+.play-button .leftnav-element-image {
     border-width: 3px;
     border-style: solid;
-    animation: blink 3s ease alternate infinite;
+    animation: play-button-blink 3s ease alternate infinite;
 }
 
-.button-menu {
+.play-button-disabled {
+    color: red;
     position: relative;
-    opacity: 0.5;
-    transition: 0.3s ease;
+    opacity: 0.9;
+}
+
+.play-button-disabled .leftnav-element-image {
+    border-width: 3px;
+    border-style: solid;
+    animation: play-button-disabled 3s ease alternate infinite;
+}
+
+/* Leftnav buttons */
+
+.leftnav-element {
+    margin: 1em;
     cursor: pointer;
 }
 
-.button-menu:hover {
+.thumbnail:hover {
     opacity: 1;
 }
 
-.button-menu-text {
+.leftnav-element-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: bold;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
+}
+
+@media only screen and (max-width: 800px) {
+    .leftnav-element-text {
+        font-size: 15px;
+    }
+}
+
+.thumbnail {
+    position: relative;
+    text-align: center;
+    color: white;
+    opacity: 0.5;
+    transition: 0.3s ease;
+}
+
+.thumbnail-selected {
+    position: relative;
+    text-align: center;
+    color: white;
+    opacity: 1;
+    transition: 0.3s ease;
+}
+
+/* User info */
+
+.leftnav-user-info-box {
+    margin-top: 2em;
+    background-color: rgba(40, 40, 40);
+    color: white;
+    padding: 1em;
+}
+
+.leftnav-user-info-box-value {
+    left: 0;
+}
+
+.leftnav-user-info-box-text {
+    padding: 4px
+}
+
+.leftnav-user-info-title {
+    background-color: rgba(255, 200, 0, 0.5);
+    font-weight: bold;
+}
+
+.leftnav-user-info {
+    padding: .5em;
+}
+
+@media only screen and (max-width: 800px) {
+    .leftnav-user-info-box {
+        font-size: 12px;
+    }
 }

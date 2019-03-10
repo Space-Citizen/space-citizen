@@ -1,4 +1,5 @@
-var { doQuery, mysqlError } = require('../../database/');
+var { doQuery } = require('../../database/');
+var { reduceBalance } = require('../../balanceFunctions');
 var waterfall = require('async-waterfall');
 
 // get item's informations from the api
@@ -12,45 +13,6 @@ function getItemInfo(itemId, waterfallNext) {
         itemInfo = itemInfo[0];
         // call next function
         waterfallNext(null, itemInfo);
-    }, function (error) { waterfallNext(error) });
-}
-
-function getUserBalance(userId, itemInfo, waterfallNext) {
-    doQuery("SELECT `money` FROM `users` WHERE `id` = ?", [userId]).then(function (userBalance) {
-        if (userBalance.length === 0) {
-            waterfallNext("Your account doesn't seems to exist, contact an administrator");
-            return;
-        }
-        //get first element in array with money attribute
-        userBalance = userBalance[0].money;
-
-        // check if user has enough money
-        if (userBalance < itemInfo.price) {
-            waterfallNext("You don't have enough money to buy this item.");
-            return;
-        }
-        // update user's balance
-        var newBalance = userBalance - itemInfo.price;
-        // call next function
-        waterfallNext(null, itemInfo, newBalance);
-    }, function (error) { waterfallNext(error) });
-}
-
-function updateUserBalance(itemInfo, newBalance, userId, waterfallNext) {
-    doQuery("UPDATE `users` SET `money` = ? WHERE `id` = ?", [newBalance, userId]).then(function (result) {
-        //if item is a ship
-        if (JSON.parse(itemInfo.specifications).type === "ship") {
-            // add ship to user ships
-            addNewShip(itemInfo, userId).then(function (result) {
-                waterfallNext(null, { success: itemInfo.name + " added to your hangar", newBalance: newBalance, itemId: result.insertId });
-            }, function (error) { waterfallNext(error) });;
-        }
-        else {
-            // add item to user's inventory
-            addItemToInventory(itemInfo, userId).then(function (result) {
-                waterfallNext(null, { success: itemInfo.name + " added to your inventory", newBalance: newBalance, itemId: result.insertId });
-            }, function (error) { waterfallNext(error) });;
-        }
     }, function (error) { waterfallNext(error) });
 }
 
@@ -74,12 +36,22 @@ module.exports = function (req, res, next, userId) {
             getItemInfo(req.params.itemId, waterfallNext);
         },
         function (itemInfo, waterfallNext) {
-            // get user's balance
-            getUserBalance(userId, itemInfo, waterfallNext);
-        },
-        function (itemInfo, newBalance, waterfallNext) {
-            // update user's balance
-            updateUserBalance(itemInfo, newBalance, userId, waterfallNext);
+            // change the user's balance
+            reduceBalance(userId, itemInfo.price).then((result) => {
+                //if item is a ship
+                if (JSON.parse(itemInfo.specifications).type === "ship") {
+                    // add ship to user ships
+                    addNewShip(itemInfo, userId).then(function (result) {
+                        waterfallNext(null, { success: itemInfo.name + " added to your hangar" });
+                    }, function (error) { waterfallNext(error) });;
+                }
+                else {
+                    // add item to user's inventory
+                    addItemToInventory(itemInfo, userId).then(function (result) {
+                        waterfallNext(null, { success: itemInfo.name + " added to your inventory" });
+                    }, function (error) { waterfallNext(error) });;
+                }
+            }).catch((error) => { waterfallNext(error) });
         }
     ],
         function (error, result) {
