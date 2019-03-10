@@ -45,6 +45,14 @@ function convertScreenPercentToWorldSize(size) {
     return percentWidthToScreen(size) / canvas.width * Constants.X_VIEW_RANGE
 }
 
+function isOutsideMap(world_pos) {
+    if (world_pos.x < 0 || world_pos.x > Constants.WORLD_SIZE_X
+        || world_pos.y < 0 || world_pos.y > Constants.WORLD_SIZE_Y) {
+        return (true);
+    }
+    return (false);
+}
+
 
 function drawHealthBar(x, y, size, hp_percent) {
     var x_size = convertSizeToScreen(size);

@@ -12,43 +12,6 @@ class BaseUi {
         this.calcScreenPos();
     }
 
-    calcScreenPos() {
-        var p_size = this.getPercentSize();
-        var p_pos = this.getPercentPos();
-        this.size = new Position(
-            percentWidthToScreen(p_size.x),
-            percentHeightToScreen(p_size.y),
-        );
-        this.pos_top_left = new Position(
-            percentWidthToScreen(p_pos.x),
-            percentHeightToScreen(p_pos.y),
-        );
-        this.pos_bottom_right = {
-            x: this.pos_top_left.x + this.size.x,
-            y: this.pos_top_left.y + this.size.y
-        };
-        console.log(canvas.width);
-        console.log(canvas.height);
-        console.log(this.pos_top_left);
-        console.log(p_size);
-    }
-
-    relMousePos() {
-        // mouse pos relative to pos_top_left
-        return new Position(
-            mouse.x - this.pos_top_left.x,
-            mouse.y - this.pos_top_left.y
-        );
-    }
-
-    isMouseInsideUi() {
-        if (mouse.x >= this.pos_top_left.x && mouse.y >= this.pos_top_left.y
-            && mouse.x <= this.pos_bottom_right.x && mouse.y <= this.pos_bottom_right.y) {
-            return true;
-        }
-        return false;
-    }
-
     onInit() {
         throw new Error("Method 'onInit()' must be implemented.");
     }
@@ -75,5 +38,38 @@ class BaseUi {
     getPercentSize() {
         // Size in screen percent
         throw new Error("Method 'getPercentSize()' must be implemented.");
+    }
+
+    calcScreenPos() {
+        var p_size = this.getPercentSize();
+        var p_pos = this.getPercentPos();
+        this.size = new Position(
+            percentWidthToScreen(p_size.x),
+            percentHeightToScreen(p_size.y),
+        );
+        this.pos_top_left = new Position(
+            percentWidthToScreen(p_pos.x),
+            percentHeightToScreen(p_pos.y),
+        );
+        this.pos_bottom_right = {
+            x: this.pos_top_left.x + this.size.x,
+            y: this.pos_top_left.y + this.size.y
+        };
+    }
+
+    relMousePos() {
+        // mouse pos relative to pos_top_left
+        return new Position(
+            mouse.x - this.pos_top_left.x,
+            mouse.y - this.pos_top_left.y
+        );
+    }
+
+    isMouseInsideUi() {
+        if (mouse.x >= this.pos_top_left.x && mouse.y >= this.pos_top_left.y
+            && mouse.x <= this.pos_bottom_right.x && mouse.y <= this.pos_bottom_right.y) {
+            return true;
+        }
+        return false;
     }
 }

@@ -67,16 +67,8 @@ class UiMinimap extends BaseUi {
         // return bool (true to override click)
     }
 
-    isOutsideMap(world_pos) {
-        if (world_pos.x < 0 || world_pos.x > Constants.WORLD_SIZE_X
-            || world_pos.y < 0 || world_pos.y > Constants.WORLD_SIZE_Y) {
-            return (true);
-        }
-        return (false);
-    }
-
     displayCurrentDestination() {
-        if (!this.current_destination || this.isOutsideMap(this.game.self.pos))
+        if (!this.current_destination || isOutsideMap(this.game.self.pos))
             return;
         var self_screen_pos = this.worldPosToMinimap(this.game.self.pos);
         var dest_screen_pos = this.worldPosToMinimap(this.current_destination);
@@ -88,7 +80,7 @@ class UiMinimap extends BaseUi {
 
     displayViewDistance() {
         var self_pos = this.game.self.pos;
-        if (this.isOutsideMap(self_pos))
+        if (isOutsideMap(self_pos))
             return;
         var top_left = this.worldPosToMinimap(
             this.game.worldPos(new Position(0, 0))
@@ -108,7 +100,7 @@ class UiMinimap extends BaseUi {
         // get world position to minimap
         const entity_pos = this.worldPosToMinimap(entity.pos);
         // do not display if the position is outside of the map
-        if (this.isOutsideMap(entity.pos))
+        if (isOutsideMap(entity.pos))
             return;
         switch (entity.type) {
             case "stargate":
