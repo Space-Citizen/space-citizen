@@ -5,22 +5,3 @@
 .navbar-profile-btn-text {
     padding-left: 1em;
 }
-
-/* User info */
-
-.navbar-user-info-box {
-    background-color: rgba(40, 40, 40, 0.8);
-    border-color: rgba(255, 200, 0, 0.5);
-    border-width: 2px;
-    border-style: solid;
-    color: white;
-    height: 100%;
-}
-
-.navbar-user-info-box-value {
-    left: 0;
-}
-
-.navbar-user-info-box-text {
-    padding: 4px
-}

@@ -178,6 +178,7 @@ class Hangar extends Component {
     post("/api/me/changeship", { shipId: selectedShip.id }).then(response => {
       createNotification('success', response.data.success);
       this.loadUsedShip();
+      window.location.reload();
     });
   }
 
@@ -226,6 +227,13 @@ class Hangar extends Component {
         inventory.splice(itemToRemoveIndex, 1);
         this.setState({ inventory: inventory });
       }
+    });
+  }
+
+  sellShip(shipId) {
+    post('/api/ships/sell/' + shipId, []).then(response => {
+      createNotification("success", response.data.success);
+      window.location.reload();
     });
   }
 
@@ -322,7 +330,7 @@ class Hangar extends Component {
       <div className="col-6">
         <button className="btn btn-primary hangar-button" onClick={() => this.saveChanges()}><i className="fas fa-save"></i> Save changes</button>
         <button className="btn btn-success hangar-button" onClick={() => this.changeCurrentShip()}><i className="fas fa-warehouse"></i> Use this ship</button>
-        <button className="btn btn-warning hangar-button"><i className="fas fa-warehouse"></i> Sell this ship</button>
+        <button className="btn btn-warning hangar-button" onClick={() => this.sellShip(selectedShip.id)}><i className="fas fa-dollar-sign"></i> Sell this ship</button>
       </div>
     );
   }
