@@ -2,6 +2,8 @@ class UiMinimap extends BaseUi {
     onInit() {
         this.game = this.state;
         this.current_destination = null;
+        this.current_world_type = null;
+        this.minimap_background = null;
     }
 
     getPercentPos() {
@@ -116,13 +118,19 @@ class UiMinimap extends BaseUi {
         if (!this.game.self)
             return;
         // display minimap background
-        var background_entity = this.game.entities.background;
-        if (background_entity) {
-            var background = background_entity.image.resize(
-                convertScreenPercentToWorldSize(this.getPercentSize().x)
-            );
-            background.drawAt(this.pos_top_left.x, this.pos_top_left.y);
+        if (this.game.entities.background) {
+            var background_entity = this.game.entities.background;
+            if (this.current_world_type != background_entity.world_type) {
+                this.current_world_type = background_entity.world_type;
+                this.minimap_background = background_entity.image.resize(
+                    convertScreenPercentToWorldSize(this.getPercentSize().x)
+                );
+            }
         }
+        if (this.minimap_background) {
+            this.minimap_background.drawAt(this.pos_top_left.x, this.pos_top_left.y);
+        }
+        // update other elements:
         var that = this;
         this.game.runOnEntities(function (entity) {
             that.displayEntity(entity);
