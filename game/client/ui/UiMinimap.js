@@ -71,7 +71,7 @@ class UiMinimap extends BaseUi {
             };
             var world_pos = this.minimapPosToWorld(mousePosInMinimap);
             this.game.playerCallFunction("playerMoveTo", world_pos);
-            this.current_destination = new Position(mouse.x, mouse.y);
+            this.current_destination = world_pos;
             return (true);
         }
         this.current_destination = null;
@@ -93,11 +93,11 @@ class UiMinimap extends BaseUi {
     displayCurrentDestination() {
         if (!this.current_destination || this.isOutsideMap(this.game.self.pos))
             return;
-
-        var self_pos = this.worldPosToMinimap(this.game.self.pos);
+        var self_screen_pos = this.worldPosToMinimap(this.game.self.pos);
+        var dest_screen_pos = this.worldPosToMinimap(this.current_destination);
         context.beginPath();
-        context.moveTo(self_pos.x, self_pos.y);
-        context.lineTo(this.current_destination.x, this.current_destination.y);
+        context.moveTo(self_screen_pos.x, self_screen_pos.y);
+        context.lineTo(dest_screen_pos.x, dest_screen_pos.y);
         context.stroke();
     }
 
