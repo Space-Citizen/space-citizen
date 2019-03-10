@@ -23,4 +23,14 @@ class BaseUi {
     onUpdate(time_elapsed) {
         throw new Error("Method 'onUpdate()' must be implemented.");
     }
+
+    getPos() {
+        // Position in screen percent
+        throw new Error("Method 'getPos()' must be implemented.");
+    }
+
+    getSize() {
+        // Size in screen percent
+        throw new Error("Method 'getSize()' must be implemented.");
+    }
 }

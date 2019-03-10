@@ -11,6 +11,17 @@ class UiMinimap extends BaseUi {
         window.addEventListener("resize", this.onResize.bind(this));
     }
 
+    getPos() {
+        var size = this.getSize();
+        // bottom right of screen
+        return new Position(100 - size.x, 100 - size.y);
+    }
+
+    getSize() {
+        var size = 20;
+        return new Position(size, size / Constants.SCREEN_RATIO);
+    }
+
     worldPosToMinimap(world_pos) {
         var pos = {
             x: ((this.minimap_size.x * world_pos.x) / Constants.WORLD_SIZE_X) + this.minimap_pos_top_left.x,

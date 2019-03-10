@@ -8,6 +8,15 @@ class UiAim extends BaseUi {
         this.game = this.state;
     }
 
+    getPos() {
+        return new Position(0, 0);
+    }
+
+    getSize() {
+        // This UI uses the all screen, fake values here
+        return new Position(1, 1);
+    }
+
     targetEntityAt(world_pos) {
         // target closest entity from mouse pos
         var min_dist = null;
