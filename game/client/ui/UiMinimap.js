@@ -125,6 +125,7 @@ class UiMinimap extends BaseUi {
                 this.minimap_background = background_entity.image.resize(
                     convertScreenPercentToWorldSize(this.getPercentSize().x)
                 );
+                this.current_destination = null;
             }
         }
         if (this.minimap_background) {
