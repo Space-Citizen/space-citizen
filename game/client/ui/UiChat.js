@@ -10,7 +10,13 @@ class UiChat extends BaseUi {
         this.connected = false;
 
         // Chat input
-        this.chat_pos = { x: 0, y: canvas.height - 200, width: 150, height: 200 };
+        // Chat contants
+        this.chat_pos = { x: 0, y: canvas.height - 200, width: 250, height: 200 };
+        this.input_height = 30;
+        this.charsPerLine = 33;
+        this.line_height = 15;
+        this.max_lines = 10;
+        this.max_message_length = this.charsPerLine * 5; // 5 lines maximum
         this.onMessageSubmit.bind(this);
         this.chatInput = new CanvasInput({
             canvas: canvas,
@@ -19,7 +25,7 @@ class UiChat extends BaseUi {
             fontColor: '#fff',
             fontWeight: 'bold',
             width: this.chat_pos.width,
-            y: this.chat_pos.y + this.chat_pos.height - 30,
+            y: this.chat_pos.y + this.chat_pos.height - this.input_height,
             x: this.chat_pos.x,
             padding: 8,
             borderWidth: 1,
@@ -52,7 +58,8 @@ class UiChat extends BaseUi {
     onMessageSubmit(input) {
         const message = input.value();
 
-        if (message.length === 0 || !this.socket || !this.game.user_token)
+        if (message.length === 0 || message.length > this.max_message_length
+            || !this.socket || !this.game.user_token)
             return;
         // Send message
         this.socket.emit('message:send:ingame', {
@@ -67,21 +74,39 @@ class UiChat extends BaseUi {
             && mouse.x <= this.chat_pos.x + this.chat_pos.width && mouse.y <= this.chat_pos.y + this.chat_pos.height) {
             return (true);
         }
-        return (false);
     }
 
     onMouseRightClick() {
     }
 
     displayMessages() {
+        var lines_to_display = [];
+        // Get all messages in line, if a message is too long he will be cut in multiple lines
+        this.messages.map((message) => {
+            var text_to_display = message.username + ": " + message.content;
+            var line = "";
+            for (var i = 0; i < text_to_display.length; i++) {
+                line += text_to_display[i];
+                if (i > 0 && i % this.charsPerLine === 0) {
+                    lines_to_display.push(line)
+                    line = "";
+                }
+            }
+            if (line.length > 0)
+                lines_to_display.push(line);
+        });
+
+        // Remove exessive lines
+        if (lines_to_display.length > this.max_lines)
+            lines_to_display = lines_to_display.splice(lines_to_display.length - 10, lines_to_display.length - 1);
+        // Display
         context.font = "15px Arial";
         context.textAlign = "left";
-        this.messages.map((message, index) => {
-            var text_to_display = message.username + ": " + message.content;
-            context.strokeText(text_to_display,
+        lines_to_display.map((line, index) => {
+            context.strokeText(line,
                 this.chat_pos.x + 5,
-                this.chat_pos.y + ((index + 1) * 15));
-        });
+                this.chat_pos.y + ((index + 1) * this.line_height));
+        })
     }
 
     displayBackground() {
