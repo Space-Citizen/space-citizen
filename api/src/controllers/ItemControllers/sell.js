@@ -1,18 +1,8 @@
-var { doQuery, mysqlError } = require('../../database/');
+var { doQuery } = require('../../database/');
 var waterfall = require('async-waterfall');
+var { increaseBalance } = require('../../balanceFunctions');
 
-function getUserBalance(userId, waterfallNext) {
-    doQuery("SELECT `money` FROM `users` WHERE `id` = ?", [userId]).then(function (userBalance) {
-        if (userBalance.length === 0) {
-            waterfallNext("Unable to find your balance");
-            return;
-        }
-        //get first element in array with money attribute
-        userBalance = userBalance[0].money;
-        waterfallNext(null, userBalance)
-    }, function (error) { waterfallNext(error) });
-}
-function getItemInfo(itemId, userId, balance, waterfallNext) {
+function getItemInfo(itemId, userId, waterfallNext) {
     doQuery("SELECT items.`price` FROM `inventory` INNER JOIN `items` ON inventory.`item_type` = items.`id`\
 WHERE inventory.`id` = ? AND inventory.`owner` = ?", [itemId, userId]).then(function (itemInfo) {
         if (itemInfo.length === 0) {
@@ -22,31 +12,17 @@ WHERE inventory.`id` = ? AND inventory.`owner` = ?", [itemId, userId]).then(func
         //get first element in array
         itemInfo = itemInfo[0];
         // call next function
-        waterfallNext(null, itemInfo, balance);
+        waterfallNext(null, itemInfo);
     }, function (error) { waterfallNext(error) });
 }
 
-function deleteItemFromInventory(itemId, itemInfo, balance, waterfallNext) {
+function deleteItemFromInventory(itemId, itemInfo, waterfallNext) {
     doQuery("DELETE FROM `inventory` WHERE `id` = ?", [itemId]).then(function (deleteResult) {
         if (deleteResult.affectedRows === 0) {
-            waterfallNext("An error occured while deleting your account");
+            waterfallNext("An error occured while selling your item");
             return;
         }
-        waterfallNext(null, itemInfo, balance);
-    }, function (error) { waterfallNext(error) });
-}
-
-function updateUserBalance(itemInfo, balance, userId, waterfallNext) {
-    // update user's balance
-    // selling the item give back half of the original value
-    var newBalance = balance + (itemInfo.price / 2);
-
-    doQuery("UPDATE `users` SET `money` = ? WHERE `id` = ?", [newBalance, userId]).then(function (result) {
-        if (result.affectedRows === 0) {
-            waterfallNext("An error occured while updating your balance");
-            return;
-        }
-        waterfallNext(null);
+        waterfallNext(null, itemInfo);
     }, function (error) { waterfallNext(error) });
 }
 
@@ -59,26 +35,25 @@ module.exports = function (req, res, next, userId) {
     }
     waterfall([
         function (waterfallNext) {
-            // get the user's balance
-            getUserBalance(userId, waterfallNext);
-        },
-        function (balance, waterfallNext) {
             // get informations about the item (price ..)
-            getItemInfo(req.params.itemId, userId, balance, waterfallNext);
+            getItemInfo(req.params.itemId, userId, waterfallNext);
         },
-        function (itemInfo, balance, waterfallNext) {
+        function (itemInfo, waterfallNext) {
             // delete the item from the inventory
-            deleteItemFromInventory(req.params.itemId, itemInfo, balance, waterfallNext);
+            deleteItemFromInventory(req.params.itemId, itemInfo, waterfallNext);
         },
-        function (itemInfo, balance, waterfallNext) {
+        function (itemInfo, waterfallNext) {
             // update the user's balance
-            updateUserBalance(itemInfo, balance, userId, waterfallNext);
+            // increase the balance by half the price of the item
+            increaseBalance(userId, itemInfo.price / 2).then((result) => {
+                waterfallNext(null, "Item sold for " + itemInfo.price / 2);
+            }).catch((error) => { waterfallNext(error) })
         }
     ], function (error, result) {
         if (error) {
             res.status(400).json({ error: error });
             return;
         }
-        res.status(200).json({ success: "Item sold" });
+        res.status(200).json({ success: result });
     });
 }

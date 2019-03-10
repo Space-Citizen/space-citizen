@@ -1,4 +1,5 @@
 module.exports = {
     edit: require('./edit'),
-    getInventory: require('./getInventory')
+    getInventory: require('./getInventory'),
+    sell: require('./sell')
 }
