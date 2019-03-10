@@ -9,6 +9,7 @@ import Navbar from './components/navbar/navbar';
 import NavbarLoggedOut from './components/navbar/navbarLoggedOut';
 import Messages from './components/messages/messaging';
 import Profile from './components/profile/profile';
+import Changelog from './components/changelog/changelog';
 import { NotificationContainer } from 'react-notifications';
 import { isConnected } from './misc/token';
 import 'react-notifications/lib/notifications.css';
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/changelog" component={Changelog} />
         <Route path="/messages/:contactId?" component={Messages} />
         <Route path="/core" component={Core} />
         <Route path="/profile/:userId" component={Profile} />

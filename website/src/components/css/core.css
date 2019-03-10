@@ -5,3 +5,7 @@
 .core-container .row {
     margin: 0;
 }
+
+.core-leftnav-container {
+    padding: 0;
+}

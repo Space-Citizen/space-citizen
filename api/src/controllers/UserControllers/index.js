@@ -1,3 +1,4 @@
 module.exports = {
-    getProfileInfo: require('./getProfileInfo')
+    getProfileInfo: require('./getProfileInfo'),
+    getUsers: require('./getUsers')
 }

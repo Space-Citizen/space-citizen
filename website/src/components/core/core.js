@@ -29,7 +29,7 @@ class Core extends Component {
         return (
             <div className="core-container">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-2 core-leftnav-container">
                         <Leftnav />
                     </div>
                     <div className="col-10">

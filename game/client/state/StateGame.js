@@ -9,6 +9,7 @@ class StateGame extends IState {
         this.self = null;
         this.pos = null;
         this.minimap = this.addUi("minimap", new UiMinimap(this));
+        this.chat = this.addUi("chat", new UiChat(this));
         this.aim = this.addUi("aim", new UiAim(this));
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
@@ -23,7 +24,7 @@ class StateGame extends IState {
 
 
     eventConnect() {
-        this.playerAuth();
+        this.sendEventPlayerAuth();
         this.initWorld();
         this.id = this.socket.io.engine.id;
         console.log("connected as " + this.id);
@@ -81,7 +82,7 @@ class StateGame extends IState {
         this.initWorld();
     }
 
-    playerAuth() {
+    sendEventPlayerAuth() {
         // get the token from the url
         var url_params = {}
         window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
@@ -89,6 +90,8 @@ class StateGame extends IState {
         });
         // send it to the server
         this.socket.emit(Events.PLAYER_AUTH, url_params['x-access-token']);
+        // save user's token
+        this.user_token = url_params['x-access-token'];
     }
 
     initWorld() {
