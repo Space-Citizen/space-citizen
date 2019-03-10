@@ -43,7 +43,6 @@ class UiChat extends BaseUi {
 
         this.socket.on('message:receive:ingame', result => {
             // If there is too much messages, remove the oldest
-            console.log(result);
             if (this.messages.length > 10)
                 this.messages.shift();
             this.messages.push({ username: result.sender_username, content: result.content });
