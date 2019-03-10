@@ -34,7 +34,7 @@ class UiChat extends BaseUi {
         this.messages = [];
 
         // Socket
-        this.socket = io.connect("http://localhost:4001");
+        this.socket = io.connect(":4001");
 
         // Receivers
         this.socket.on('message:authenticate:response', result => {
