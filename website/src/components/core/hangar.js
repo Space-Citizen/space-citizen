@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createNotification } from '../../misc/notification';
 import { get, post } from '../../misc/axios';
+import ReactTooltip from 'react-tooltip'
 import '../css/hangar.css';
 
 class Hangar extends Component {
@@ -42,8 +43,9 @@ class Hangar extends Component {
     this.getUserInventory();
     get("/api/me/ships").then(response => {
       this.setState({ ships: response.data });
+      if (response.data.length > 0)
+        this.loadUsedShip();
     });
-    this.loadUsedShip();
   }
 
 
@@ -307,13 +309,10 @@ class Hangar extends Component {
         {this.state.inventory.map((item) => {
           return (
             <div className="dropdown hangar-inventory-item" key={"inventory" + item.id} title={item.description}>
-              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button className="btn btn-secondary" type="button"
+                onClick={() => this.addItemToShip(item.id)} onContextMenu={(e) => { e.preventDefault(); this.sellItem(item.id) }}>
                 {item.content}
               </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <button className="dropdown-item" onClick={() => this.addItemToShip(item.id)}>Move to ship</button>
-                <button className="dropdown-item" onClick={() => this.sellItem(item.id)}>Sell</button>
-              </div>
             </div>
           );
         })
@@ -357,8 +356,10 @@ class Hangar extends Component {
               </div>
             </div>
             <div className="col-4 hangar-inventory">
-              <h2 className="text-center">Inventory</h2>
+              <h2 className="text-center">Inventory <i className="fas fa-question-circle"
+                data-html={true} data-tip='<label style="font-size:17px;"><b>Left</b> click to move an item to the ship.<br/><b>Right</b> click to sell it</label>'></i></h2>
               {this.displayinventory()}
+              <ReactTooltip />
             </div>
           </div>
         </div>
