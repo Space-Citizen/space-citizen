@@ -1,3 +1,4 @@
 module.exports = {
-    sendMessage: require('./sendMessage')
+    sendMessage: require('./sendMessage'),
+    sendMessageInGame: require('./sendMessageInGame')
 }
