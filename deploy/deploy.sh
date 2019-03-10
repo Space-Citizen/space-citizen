@@ -211,12 +211,12 @@ cd $SERVERS_ROOT
 
 # start api
 echo "Starting the api"
-screen node ./api/index.js
+screen -S api -d -m node ./api/index.js
 
 # start message service
 echo "Starting the message service"
-screen node ./message_service/index.js
+screen -S message -d -m node ./message_service/index.js
 
 # start game
 echo "Starting the game"
-screen node ./game/server/server.js
+screen -S game -d -m node ./game/server/server.js
