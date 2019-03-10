@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { get } from '../../misc/axios';
 import Loading from '../misc/loading';
-// import "../css/navbar.css";
 
 class Navbar extends Component {
     constructor() {
