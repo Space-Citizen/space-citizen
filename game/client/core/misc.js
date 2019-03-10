@@ -31,13 +31,18 @@ function convertSizeToScreen(size) {
     return canvas.width * (size / Constants.X_VIEW_RANGE);
 }
 
-function convertPercentToScreen(size) {
+function percentWidthToScreen(size) {
     // convert size percent to screen size
-    return canvas.width * (size / 100)
+    return canvas.width * (size / 100);
+}
+
+function percentHeightToScreen(size) {
+    // convert size percent to screen size
+    return canvas.height * (size / 100);
 }
 
 function convertScreenPercentToWorldSize(size) {
-    return convertPercentToScreen(size) / canvas.width * Constants.X_VIEW_RANGE
+    return percentWidthToScreen(size) / canvas.width * Constants.X_VIEW_RANGE
 }
 
 

@@ -8,11 +8,11 @@ class UiAim extends BaseUi {
         this.game = this.state;
     }
 
-    getPos() {
+    getPercentPos() {
         return new Position(0, 0);
     }
 
-    getSize() {
+    getPercentSize() {
         // This UI uses the all screen, fake values here
         return new Position(1, 1);
     }
