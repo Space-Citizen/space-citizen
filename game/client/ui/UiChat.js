@@ -9,12 +9,18 @@ class UiChat extends BaseUi {
         this.connected = false;
 
         // Chat constants
-        this.chat_size = { width: 250, height: 200 };
+        this.chat_size = { width: convertPercentToScreen(20), height: convertPercentToScreen(13) };
         this.chat_pos = { x: 0, y: canvas.height - this.chat_size.height };
-        this.input_height = 30;
-        this.line_height = 15;
-        this.max_lines = 10;
-        this.font_size = 12;
+
+        // Font size is the chat height / 15
+        this.font_size = this.chat_size.height / 15;
+        // The input bar height is 1/5 of the chat height
+        this.input_height = this.chat_size.height / 5;
+        // Line height is the font size + a margin of 1 px
+        this.line_height = this.font_size + 1;
+        // maximum lines is the height of the chat - the height of the input bar / the height of a line. 
+        this.max_lines = Math.floor((this.chat_size.height - this.input_height) / this.line_height);
+        // Number of chars per line depends on the font size and the chat width
         this.chars_per_line = Math.round(this.chat_size.width / this.font_size);
         // Number of characters max per message: 5 lines
         this.max_message_length = this.chars_per_line * 5;
@@ -27,6 +33,7 @@ class UiChat extends BaseUi {
             fontColor: '#fff',
             fontWeight: 'bold',
             width: this.chat_size.width,
+            height: this.input_height,
             y: this.chat_pos.y + this.chat_size.height - this.input_height,
             x: this.chat_pos.x,
             padding: 8,
@@ -35,7 +42,7 @@ class UiChat extends BaseUi {
             backgroundColor: "#000",
             borderRadius: 3,
             innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)',
-            placeHolder: 'Enter message here...',
+            placeHolder: 'Enter a message here...',
             onsubmit: (e, input) => { this.onMessageSubmit(input) },
             onkeydown: (e, input) => { this.onKeyDown(input) }
         });
@@ -119,7 +126,13 @@ class UiChat extends BaseUi {
         messages.forEach((message) => {
             // Create message to display
             var text = message.username + ": " + message.content;
-            lines_to_display = lines_to_display.concat(this.splitStringByLength(text, chars_per_line));
+            // If the message is too long to be displayed
+            if (text.length > chars_per_line) {
+                // Split the message in lines
+                lines_to_display = lines_to_display.concat(this.splitStringByLength(text, chars_per_line));
+            }
+            else
+                lines_to_display.push(text);
         });
         return (lines_to_display);
     }
@@ -143,7 +156,7 @@ class UiChat extends BaseUi {
         context.fillStyle = "white";
         // for each line
         lines_to_display.map((line, index) => {
-            // Draw line of text
+            // Draw a line of text
             context.fillText(line,
                 this.chat_pos.x + x_padding,
                 this.chat_pos.y + ((index + 1) * this.line_height));
