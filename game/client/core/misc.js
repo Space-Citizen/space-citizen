@@ -37,7 +37,7 @@ function convertPercentToScreen(size) {
 }
 
 function convertScreenPercentToWorldSize(size) {
-    return Constants.WORLD_SIZE_X / Constants.X_VIEW_RANGE * size;
+    return convertPercentToScreen(size) / canvas.width * Constants.X_VIEW_RANGE
 }
 
 
