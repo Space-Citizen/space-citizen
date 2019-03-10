@@ -23,7 +23,7 @@ class Leftnav extends Component {
 
     displayTakeOffButton() {
         const { usedShip } = this.state;
-        const gameUrl = (process.env.NODE_ENV === 'production' ? "/game/" : "localhost:12345/game/") + "?x-access-token=" + getToken();
+        const gameUrl = (process.env.NODE_ENV === 'production' ? "http://35.235.82.216:12345/game/" : "localhost:12345/game/") + "?x-access-token=" + getToken();
 
         if (usedShip === undefined)
             return (<Loading />);
