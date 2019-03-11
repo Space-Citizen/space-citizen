@@ -9,7 +9,7 @@ class StateGame extends IState {
         this.self = null;
         this.pos = null;
         this.minimap = this.addUi("minimap", new UiMinimap(this));
-        //this.chat = this.addUi("chat", new UiChat(this));
+        this.chat = this.addUi("chat", new UiChat(this));
         this.aim = this.addUi("aim", new UiAim(this));
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));

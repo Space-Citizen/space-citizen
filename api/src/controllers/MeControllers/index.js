@@ -3,6 +3,6 @@ module.exports = {
     getInventory: require('./getInventory'),
     getShips: require('./getShips'),
     getUsedShip: require('./getUsedShip'),
-    changeShip: require('./changeShip'),
-    changePos: require('./changePos')
+    getOnlineStatus: require('./getOnlineStatus'),
+    changeShip: require('./changeShip')
 }
