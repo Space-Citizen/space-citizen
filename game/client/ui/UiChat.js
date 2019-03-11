@@ -20,6 +20,7 @@ class UiChat extends BaseUi {
         this.max_message_length = this.chars_per_line * 5;
 
         // Create the input field
+        /*
         this.chatInput = new CanvasInput({
             canvas: canvas,
             fontSize: this.font_size,
@@ -39,6 +40,7 @@ class UiChat extends BaseUi {
             onsubmit: (e, input) => { this.onMessageSubmit(input) },
             onkeydown: (e, input) => { this.onKeyDown(input) }
         });
+        */
 
         // Message list
         this.messages = [];
@@ -168,7 +170,7 @@ class UiChat extends BaseUi {
             this.connected = true;
         }
         this.displayBackground();
-        this.chatInput.render();
+        //this.chatInput.render();
         this.displayMessages();
     }
 }
