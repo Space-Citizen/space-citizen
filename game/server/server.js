@@ -18,6 +18,9 @@ var Ship = require('./ship');
 // API link
 const api = require('./api');
 
+// Reset online status for all players to 0
+api.resetOnlineStatus().catch(error => console.log(error));
+
 class Server {
   constructor() {
     this.running = false;

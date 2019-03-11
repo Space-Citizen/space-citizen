@@ -1,5 +1,5 @@
-const { httpPost } = require('./request');
-const getServerToken = require('./getServerToken');
+const { httpPost } = require('../request');
+const getServerToken = require('../getServerToken');
 
 // Change online status, true = online, false = offline
 module.exports = function (user_id, online_status) {
