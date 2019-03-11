@@ -71,6 +71,11 @@ if [ -z "$SPACE_CITIZEN_JWT_PASSWORD" ]; then
     exit 1
 fi
 
+if [ -z "$SPACE_CITIZEN_SERVER_JWT_PASSWORD" ]; then
+    echo "Variable SPACE_CITIZEN_SERVER_JWT_PASSWORD not found"
+    exit 1
+fi
+
 if [ -z "$SPACE_CITIZEN_DB_USERNAME" ]; then
     echo "Variable SPACE_CITIZEN_DB_USERNAME not found"
     exit 1
