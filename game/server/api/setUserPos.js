@@ -5,7 +5,7 @@ module.exports = function (user_id, map, map_coordinate) {
     const server_token = getServerToken();
 
     return (new Promise(function (resolve, reject) {
-        httpPost(process.env.SPACE_CITIZEN_API_URL + '/api/user/changepos',
+        httpPost(process.env.SPACE_CITIZEN_API_URL + '/api/users/changepos',
             {
                 map: map,
                 map_coordinate_x: map_coordinate.x,
