@@ -43,12 +43,36 @@ class Server {
     this.worlds[world.getWorldName()] = world;
   }
 
+  // Check if a player is currently playing
+  isPlayerAlreadyPlaying(player_id) {
+    // For each world
+    for (const world_index in this.worlds) {
+      // Get the world's entities
+      const world_entities = this.worlds[world_index].entities;
+      // For each entity in this world
+      for (const entity_index in world_entities) {
+        // If the entity is a player and it's id is the same as player_id
+        if (world_entities[entity_index].s_type === "player"
+          && world_entities[entity_index].user_id === player_id) {
+          // The player already exist, return true
+          return (true);
+        }
+      }
+    }
+    // The player was not found
+    return (false);
+  }
+
   spawnPlayer(client, user_info) {
     var world = this.worlds[user_info.map];
     if (!world) {
       console.log("Invalid world : " + user_info.map);
       return;
     }
+    // Check if the player is already playing. If so, leave
+    if (this.isPlayerAlreadyPlaying(user_info.id))
+      return;
+
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
