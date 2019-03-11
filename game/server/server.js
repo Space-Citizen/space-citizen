@@ -55,8 +55,6 @@ class Server {
       console.log("This ship type does not exist: " + user_info.ship_type);
       return;
     }
-    // Change user's status to online
-    api.changeUserOnlineStatus(user_info.id, 1);
     var ship = new NewShip();
     return new Entity.ServerEntityPlayer(world, pos_x, pos_y, client, name, ship, user_info.token, user_info.faction, user_info.id);
   }
@@ -64,13 +62,30 @@ class Server {
   eventConnection(client) {
     var that = this;
     client.on(Events.PLAYER_AUTH, function (token) {
+
+      if (token === "test") {
+        var ip = client.request.connection.remoteAddress;
+        var user_info = {
+          id: 1,
+          username: "tester",
+          ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
+          map: "earth",
+          map_coordinate_x: Constants.WORLD_SIZE_X / 2,
+          map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
+          token: "abc"
+        };
+        that.spawnPlayer(client, user_info);
+        return;
+      }
       // get the user's information from the api
       api.getUserInfo(token).then((user_info_response) => {
         const user_info = JSON.parse(user_info_response);
         api.getUserShip(token).then((ship) => {
           user_info.ship_type = JSON.parse(ship).name;
           user_info.token = token;
-          that.spawnPlayer(client, user_info);
+          if (that.spawnPlayer(client, user_info)) {
+            api.changeUserOnlineStatus(user_info.id, 1);
+          }
         }).catch((error) => {
           console.log(error);
         });
