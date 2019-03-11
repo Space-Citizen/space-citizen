@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/AuthControllers');
-const { requireUserToken } = require("../tokens/");
+const { requireUserToken } = require("../routesRestrictions/");
 
 //Sign in
 router.post('/signin', AuthController.signIn);

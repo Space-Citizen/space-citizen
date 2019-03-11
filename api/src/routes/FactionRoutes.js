@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const FactionController = require('../controllers/FactionControllers');
-const { requireUserToken } = require("../tokens/");
+const { requireUserToken } = require("../routesRestrictions/");
 
 // get information about a faction
 router.get('/info/:factionId', requireUserToken(FactionController.getInfo));

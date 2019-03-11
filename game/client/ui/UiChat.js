@@ -7,21 +7,23 @@ class UiChat extends BaseUi {
         this.target = null;
         this.game = this.state;
         this.connected = false;
+        this.chatInitialized = false;
+        this.margin = 1;
+    }
 
+    initChat() {
         // Chat constants
-        this.chat_size = { width: convertPercentToScreen(20), height: convertPercentToScreen(13) };
-        this.chat_pos = { x: 0, y: canvas.height - this.chat_size.height };
 
         // Font size is the chat height / 15
-        this.font_size = this.chat_size.height / 15;
+        this.font_size = this.size.y / 15;
         // The input bar height is 1/5 of the chat height
-        this.input_height = this.chat_size.height / 5;
+        this.input_height = this.size.y / 5;
         // Line height is the font size + a margin of 1 px
         this.line_height = this.font_size + 1;
         // maximum lines is the height of the chat - the height of the input bar / the height of a line. 
-        this.max_lines = Math.floor((this.chat_size.height - this.input_height) / this.line_height);
+        this.max_lines = Math.floor((this.size.y - this.input_height) / this.line_height);
         // Number of chars per line depends on the font size and the chat width
-        this.chars_per_line = Math.round(this.chat_size.width / this.font_size);
+        this.chars_per_line = Math.round(this.size.x / this.font_size);
         // Number of characters max per message: 5 lines
         this.max_message_length = this.chars_per_line * 5;
 
@@ -32,20 +34,21 @@ class UiChat extends BaseUi {
             fontFamily: 'monospace',
             fontColor: '#fff',
             fontWeight: 'bold',
-            width: this.chat_size.width,
-            height: this.input_height,
-            y: this.chat_pos.y + this.chat_size.height - this.input_height,
-            x: this.chat_pos.x,
-            padding: 8,
+            width: this.size.x - percentWidthToScreen(this.margin),
+            height: this.input_height - percentWidthToScreen(this.margin),
+            y: this.pos_top_left.y + this.size.y - this.input_height,
+            x: this.pos_top_left.x,
             borderWidth: 1,
             borderColor: '#000',
-            backgroundColor: "#000",
             borderRadius: 3,
-            innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)',
+            padding: 8,
+            backgroundColor: "#000",
             placeHolder: 'Enter a message here...',
             onsubmit: (e, input) => { this.onMessageSubmit(input) },
             onkeydown: (e, input) => { this.onKeyDown(input) }
         });
+
+        console.log(this.chatInput.width(), this.size.x);
 
         // Message list
         this.messages = [];
@@ -61,6 +64,20 @@ class UiChat extends BaseUi {
             // add the new message to the list
             this.messages.push({ username: result.sender_username, content: result.content });
         });
+        this.chatInitialized = true;
+    }
+
+    getPercentPos() {
+        const size = this.getPercentSize();
+        // bottom right of screen
+        return new Position(this.margin, 100 - size.y - this.margin);
+    }
+
+    getPercentSize() {
+        const size_x = 20;
+        const size_y = 20;
+
+        return new Position(size_x, size_y);
     }
 
     onKeyDown(input) {
@@ -91,8 +108,7 @@ class UiChat extends BaseUi {
 
     onMouseLeftClick() {
         // check if the user click in the chat box
-        if (mouse.x >= this.chat_pos.x && mouse.y >= this.chat_pos.y
-            && mouse.x <= this.chat_pos.x + this.chat_size.width && mouse.y <= this.chat_pos.y + this.chat_size.height) {
+        if (this.isMouseInsideUi()) {
             return (true);
         }
     }
@@ -158,8 +174,8 @@ class UiChat extends BaseUi {
         lines_to_display.map((line, index) => {
             // Draw a line of text
             context.fillText(line,
-                this.chat_pos.x + x_padding,
-                this.chat_pos.y + ((index + 1) * this.line_height));
+                this.pos_top_left.x + x_padding,
+                this.pos_top_left.y + ((index + 1) * this.line_height));
         })
     }
 
@@ -169,10 +185,12 @@ class UiChat extends BaseUi {
         // grey
         context.fillStyle = "#333";
         // Create background rectangle
-        context.fillRect(this.chat_pos.x, this.chat_pos.y, this.chat_size.width + leftMargin, this.chat_size.height);
+        context.fillRect(this.pos_top_left.x, this.pos_top_left.y, this.size.x, this.size.y);
     }
 
     onUpdate(time_elapsed) {
+        if (this.size && !this.chatInitialized)
+            this.initChat();
         // Authenticate to the message server
         if (!this.connected && this.game.user_token) {
             this.socket.emit('message:authenticate', {

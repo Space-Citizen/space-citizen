@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MessageController = require('../controllers/MessageControllers/');
-const { requireUserToken } = require("../tokens/");
+const { requireUserToken } = require("../routesRestrictions/");
 
 // send a message to a user
 router.post('/send', requireUserToken(MessageController.send));

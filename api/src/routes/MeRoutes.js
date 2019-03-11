@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MeController = require('../controllers/MeControllers/');
-const { requireUserToken } = require("../tokens/");
+const { requireUserToken } = require("../routesRestrictions/");
 
 // get connected user's info
 router.get('/info', requireUserToken(MeController.getInfo));
@@ -15,10 +15,10 @@ router.get('/ships', requireUserToken(MeController.getShips));
 // get connected user's current ship
 router.get('/usedship', requireUserToken(MeController.getUsedShip));
 
-// change current ship
-router.post('/changeship', requireUserToken(MeController.changeShip));
+// get connected user's  online status
+router.get('/online_status', requireUserToken(MeController.getOnlineStatus));
 
-// change current position
-router.post('/changepos', requireUserToken(MeController.changePos));
+// change current ship
+router.post('/changeship', requireUserToken(MeController.changeShip, true));
 
 module.exports = router;
