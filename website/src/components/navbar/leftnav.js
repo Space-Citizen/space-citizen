@@ -16,6 +16,7 @@ class Leftnav extends Component {
         };
         this.getOnlineStatus = this.getOnlineStatus.bind(this);
     }
+
     componentDidMount() {
         get("/api/me/usedship").then(response => {
             this.setState({ usedShip: response.data });
@@ -23,6 +24,8 @@ class Leftnav extends Component {
             this.setState({ usedShip: -1 });
         });
         this.getOnlineStatus();
+        // Start an interval to check if the user is online or not every 5 seconds
+        setInterval(this.getOnlineStatus, 5000);
     }
 
     // Get the user's online status
@@ -31,29 +34,12 @@ class Leftnav extends Component {
             const { onlineStatusIntervalId } = this.state;
             // set the new status
             this.setState({ onlineStatus: response.data });
-            // if offline and an interval is started, clear the interval
-            if (response.data === 0 && onlineStatusIntervalId) {
-                clearInterval(onlineStatusIntervalId);
-            }
-            // If online and no interval is started, start a new one
-            else if (response.data === 1 && !onlineStatusIntervalId)
-                this.startOnlineStatusInterval();
         });
     }
-
-    // Start an interval to check if the user is online or not every 5 seconds
-    startOnlineStatusInterval() {
-        var onlineStatusIntervalId = setInterval(this.getOnlineStatus, 5000);
-        // save the interval Id
-        this.setState({ onlineStatusIntervalId: onlineStatusIntervalId });
-    }
-
     // When the play game button is pressed
     onPlayGame() {
         // Set online status to online
         this.setState({ onlineStatus: 1 });
-        // Start the interval
-        this.startOnlineStatusInterval();
     }
 
     displayTakeOffButton() {
