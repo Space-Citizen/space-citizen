@@ -45,19 +45,21 @@ class Server {
 
   // Check if a player is currently playing
   isPlayerAlreadyPlaying(player_id) {
+    var player_found = false;
     // For each world
     for (const world_index in this.worlds) {
       // Get the world's entities
-      const world_entities = this.worlds[world_index].entities;
-      // For each entity in this world
-      for (const entity_index in world_entities) {
-        // If the entity is a player and it's id is the same as player_id
-        if (world_entities[entity_index].s_type === "player"
-          && world_entities[entity_index].user_id === player_id) {
-          // The player already exist, return true
-          return (true);
+      this.worlds[world_index].runOnPlayers((player) => {
+        // Check if the player id correspond to the player_id
+        if (player.user_id === player_id) {
+          // if so, set player_found to true
+          player_found = true;
+          return;
         }
-      }
+      });
+      // The player already exist, return true
+      if (player_found)
+        return (true);
     }
     // The player was not found
     return (false);
