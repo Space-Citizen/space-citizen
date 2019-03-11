@@ -11,8 +11,7 @@ class Leftnav extends Component {
         super();
         this.state = {
             usedShip: undefined,
-            onlineStatus: undefined,
-            onlineStatusIntervalId: undefined
+            onlineStatus: undefined
         };
         this.getOnlineStatus = this.getOnlineStatus.bind(this);
     }
@@ -31,7 +30,6 @@ class Leftnav extends Component {
     // Get the user's online status
     getOnlineStatus() {
         get("/api/me/online_status").then(response => {
-            const { onlineStatusIntervalId } = this.state;
             // set the new status
             this.setState({ onlineStatus: response.data });
         });

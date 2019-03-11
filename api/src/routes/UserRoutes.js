@@ -13,6 +13,9 @@ router.get('/', UserController.getUsers);
 // Change the online status of a player
 router.post('/change_online_status', requireServerToken(UserController.changeOnlineStatus));
 
+// Reset the online status to 0 for all players
+router.post('/reset_online_status', requireServerToken(UserController.resetAllOnlineStatus));
+
 // Change the player position
 router.post('/changepos', requireServerToken(UserController.changePos));
 

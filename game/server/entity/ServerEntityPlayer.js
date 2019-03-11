@@ -27,6 +27,10 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
   delete() {
     super.delete();
+    // Update player's pos
+    api.setUserPos(this.user_id, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
+    // Change user's status to offline
+    api.changeUserOnlineStatus(this.user_id, 0).catch(error => { console.log(error) });
     this.removeListeners();
   }
 
@@ -55,10 +59,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   }
 
   eventDisconnect() {
-    // Update player's pos
-    api.setUserPos(this.user_id, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
-    // Change user's status to offline
-    api.changeUserOnlineStatus(this.user_id, 0).catch(error => { console.log(error) });
     this.delete();
   }
 
