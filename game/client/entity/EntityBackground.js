@@ -1,7 +1,8 @@
 
 class EntityBackground extends BaseEntity {
     onInit() {
-        switch (this.s_world_type) {
+        this.world_type = this.s_world_type;
+        switch (this.world_type) {
             case WorldTypes.EARTH:
                 this.image = ressources.BACKGROUND_EARTH;
                 break;
