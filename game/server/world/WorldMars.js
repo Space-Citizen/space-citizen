@@ -28,7 +28,8 @@ class WorldMars extends BaseWorld {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-        if (this.countHataks() < this.max_hataks) {
+        if (this.onInterval("hatak_respawn", 10)
+            && this.countHataks() < this.max_hataks) {
             var hatak = new Entity.ServerEntityHatak(
                 this,
                 Constants.WORLD_SIZE_X / 2,

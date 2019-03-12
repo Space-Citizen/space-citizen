@@ -56,6 +56,18 @@ class Helper {
     static randint(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    static onInterval(self, name, time_sec) {
+        // returns true every 'time_sec', else return false
+        // name will be used as an identifier
+        // self, must be an object which will be used to store variables (use 'this')
+        var id = "__interval_" + name;
+        if (!(id in self) || Date.now() > self[id]) {
+            self[id] = Date.now() + time_sec * 1000;
+            return true;
+        }
+        return false;
+    }
 }
 
 if (typeof module != 'undefined') {

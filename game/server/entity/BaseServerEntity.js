@@ -1,6 +1,7 @@
 
 var objects = require("../../common");
 var Events = require('../../common/Events');
+var Helper = require('../../common/Helper');
 
 class BaseServerEntity {
   constructor(world, x, y, id) {
@@ -11,14 +12,7 @@ class BaseServerEntity {
   }
 
   onInterval(name, time_sec) {
-    // returns true every 'time_sec', else return false
-    // name will be used as an identifier
-    var id = "__interval_" + name;
-    if (!(id in this) || Date.now() > this[id]) {
-      this[id] = Date.now() + time_sec * 1000;
-      return true;
-    }
-    return false;
+    return Helper.onInterval(this, name, time_sec);
   }
 
   onInit() {
