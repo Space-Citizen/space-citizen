@@ -30,14 +30,22 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.removeListeners();
   }
 
-  playerMoveTo(world_pos) {
-    // TODO check args
+  // shared functions
+  s_playerMoveTo(world_pos) {
+    if (!world_pos || !('x' in world_pos && 'y' in world_pos)) {
+      console.error("s_playerMoveTo invalid pos : " + world_pos);
+      return;
+    }
     this.setTarget(world_pos);
   }
 
-  playerLaunchMissile(entity_id) {
-    new ServerEntityMissile(this.world, this.world.getFreeId(), this,
-      this.world.entities[entity_id]);
+  s_launchMissile(entity_id) {
+    new ServerEntityMissile(
+      this.world,
+      this.world.getFreeId(),
+      this,
+      this.world.entities[entity_id]
+    );
   }
 
   eventPlayerCallFunction(func_name, ...args) {
@@ -74,7 +82,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     var names = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
     for (var x in names) {
       var key = names[x];
-      if (key.startsWith("player")) {
+      if (key.startsWith("s_")) {
         res[key] = this[key];
       }
     }

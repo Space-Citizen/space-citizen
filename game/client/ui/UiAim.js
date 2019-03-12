@@ -38,7 +38,7 @@ class UiAim extends BaseUi {
 
         //
         if (res != null) {
-            this.game.playerCallFunction("playerLaunchMissile", res.id);
+            this.game.playerCallFunction("s_launchMissile", res.id);
         }
         //
         return res != null; // if target found, returns true
@@ -49,7 +49,7 @@ class UiAim extends BaseUi {
     }
 
     onMouseLeftClick() {
-        this.game.playerCallFunction("playerMoveTo", this.game.worldPos(mouse));
+        this.game.playerCallFunction("s_playerMoveTo", this.game.worldPos(mouse));
         return true;
     }
 

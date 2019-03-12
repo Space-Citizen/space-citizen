@@ -10,6 +10,7 @@ var io = socketIO(server);
 var objects = require('../common');
 var Constants = objects.Constants;
 var Events = require('../common/Events');
+var Helper = require('../common/Helper');
 
 var World = require('./world');
 var Entity = require('./entity');
@@ -34,7 +35,7 @@ class Client {
   spawnTestShip() {
     var ip = this.socket.request.connection.remoteAddress;
     var user_info = {
-      id: 1,
+      id: ip,
       username: "tester",
       ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
       map: "earth",
