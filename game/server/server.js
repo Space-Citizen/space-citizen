@@ -43,26 +43,27 @@ class Server {
     this.worlds[world.getWorldName()] = world;
   }
 
-  // Check if a player is currently playing
-  isPlayerAlreadyPlaying(player_id) {
-    var player_found = false;
-    // For each world
-    for (const world_index in this.worlds) {
-      // Get the world's entities
-      this.worlds[world_index].runOnPlayers((player) => {
-        // Check if the player id correspond to the player_id
-        if (player.user_id === player_id) {
-          // if so, set player_found to true
-          player_found = true;
-          return;
-        }
-      });
-      // The player already exist, return true
-      if (player_found)
-        return (true);
+  runOnWorlds(func) {
+    for (var key in this.worlds) {
+      var world = this.worlds[key];
+      func(world);
     }
-    // The player was not found
-    return (false);
+  }
+
+  runOnPlayers(func) {
+    this.runOnWorlds(function (world) {
+      world.runOnPlayers(func);
+    });
+  }
+
+  playerExists(player_id) {
+    var exists = false;
+    this.runOnPlayers(function (player) {
+      if (player.user_id === player_id) {
+        exists = true;
+      }
+    });
+    return exists;
   }
 
   spawnPlayer(client, user_info) {
@@ -72,7 +73,7 @@ class Server {
       return;
     }
     // Check if the player is already playing. If so, leave
-    if (this.isPlayerAlreadyPlaying(user_info.id))
+    if (this.playerExists(user_info.id))
       return;
 
     var name = user_info.username;
@@ -125,10 +126,9 @@ class Server {
   }
 
   onUpdate(time_elapsed) {
-    for (var key in this.worlds) {
-      var world = this.worlds[key];
+    this.runOnWorlds(function (world) {
       world.onUpdate(time_elapsed);
-    }
+    });
   }
 
   start() {
