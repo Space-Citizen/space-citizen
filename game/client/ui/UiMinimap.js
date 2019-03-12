@@ -58,7 +58,7 @@ class UiMinimap extends BaseUi {
         if (this.isMouseInsideUi()) {
             var rel_mouse_pos = this.relMousePos();
             this.current_destination = this.minimapPosToWorld(rel_mouse_pos);;
-            this.game.playerCallFunction("playerMoveTo", this.current_destination);
+            this.game.playerCallFunction("s_playerMoveTo", this.current_destination);
             return true;
         }
         this.current_destination = null;
