@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { get } from '../../misc/axios';
 import '../css/leaderboard.css';
 
@@ -20,15 +21,16 @@ class Leaderboard extends Component {
   }
 
   displayPlayers() {
-    var rank = 0;
     return (
-      this.state.users.map(user => {
-        rank++;
-        var picture = '/public/profile_pictures/' + user.profile_picture;
+      this.state.users.map((user, index) => {
         return (
           <tr key={user.id}>
-            <th scope="raw">#{rank}</th>
-            <td><img src={picture} className="img-thumbnail h-25 mr-2" alt="" /> {user.username}</td>
+            <th scope="raw">#{index + 1}</th>
+            <td>
+              <Link to={"/profile/" + user.id} >
+                <img src={'/public/profile_pictures/' + user.profile_picture} className="img-thumbnail h-25 mr-2" alt="profile" /> {user.username}
+              </Link>
+            </td>
             <td>{user.money}</td>
           </tr>
         );
