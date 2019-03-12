@@ -21,10 +21,78 @@ const api = require('./api');
 // Reset online status for all players to 0
 api.resetOnlineStatus().catch(error => console.log(error));
 
+class Client {
+  constructor(server, socket) {
+    this.id = socket.id;
+    this.server = server;
+    this.socket = socket;
+    this.user_id = null;
+    this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
+    this.socket.on(Events.PLAYER_AUTH, this.eventPlayerAuth.bind(this));
+  }
+
+  spawnTestShip() {
+    var ip = this.socket.request.connection.remoteAddress;
+    var user_info = {
+      id: 1,
+      username: "tester",
+      ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
+      map: "earth",
+      map_coordinate_x: Constants.WORLD_SIZE_X / 2,
+      map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
+      user_id: "tester",
+      token: "abc"
+    };
+    this.server.spawnPlayer(this.socket, user_info);
+  }
+
+  eventPlayerAuth(token) {
+    if (token === "test") {
+      this.spawnTestShip();
+      return;
+    }
+    // get the user's information from the api
+    api.getUserInfo(token).then((user_info_response) => {
+      var user_info = JSON.parse(user_info_response);
+      user_info.token = token;
+      api.getUserShip(token).then((ship) => {
+        user_info.ship_type = JSON.parse(ship).name;
+        if (this.server.spawnPlayer(this.socket, user_info)) {
+          api.changeUserOnlineStatus(user_info.id, 1);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  eventDisconnect() {
+    var player = this.server.getPlayerById(this.id);
+    if (player != null) {
+      // Tell where player disconnected
+      api.setUserPos(
+        player.user_id, player.world.getWorldName(), player.s_pos
+      ).catch(error => {
+        console.log(error)
+      });
+      // Change user's status to offline
+      api.changeUserOnlineStatus(
+        player.user_id, 0
+      ).catch(error => {
+        console.log(error)
+      });
+    }
+    this.server.deleteClient(this);
+  }
+}
+
 class Server {
   constructor() {
     this.running = false;
-    this.worlds = {}
+    this.worlds = {};
+    this.clients = {};
     //app.set('port', port);
     app.use('/game/', express.static(__dirname + '/../client'));
     app.use('/game/common', express.static(__dirname + '/../common'));
@@ -41,6 +109,14 @@ class Server {
 
   addWorld(world) {
     this.worlds[world.getWorldName()] = world;
+  }
+
+  addClient(client) {
+    this.clients[client.id] = client;
+  }
+
+  deleteClient(client) {
+    delete this.clients[client.id];
   }
 
   runOnWorlds(func) {
@@ -85,11 +161,9 @@ class Server {
     // Check if the player is already playing. If so, leave
     if (this.playerExists(user_info.id))
       return;
-
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
-
     const NewShip = Ship[user_info.ship_type];
     if (!NewShip) {
       console.log("This ship type does not exist: " + user_info.ship_type);
@@ -106,58 +180,8 @@ class Server {
   }
 
   eventConnection(socket) {
-    var that = this;
-    socket.on(Events.DISCONNECT, function () {
-      var player = that.getPlayerById(socket.id);
-      if (player == null) {
-        return;
-      }
-      // Tell where player disconnected
-      api.setUserPos(
-        player.user_id, player.world.getWorldName(), player.s_pos
-      ).catch(error => {
-        console.log(error)
-      });
-      // Change user's status to offline
-      api.changeUserOnlineStatus(
-        player.user_id, 0
-      ).catch(error => {
-        console.log(error)
-      });
-    });
-
-    socket.on(Events.PLAYER_AUTH, function (token) {
-
-      if (token === "test") {
-        var ip = socket.request.connection.remoteAddress;
-        var user_info = {
-          id: 1,
-          username: "tester",
-          ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
-          map: "earth",
-          map_coordinate_x: Constants.WORLD_SIZE_X / 2,
-          map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
-          token: "abc"
-        };
-        that.spawnPlayer(socket, user_info);
-        return;
-      }
-      // get the user's information from the api
-      api.getUserInfo(token).then((user_info_response) => {
-        const user_info = JSON.parse(user_info_response);
-        api.getUserShip(token).then((ship) => {
-          user_info.ship_type = JSON.parse(ship).name;
-          user_info.token = token;
-          if (that.spawnPlayer(socket, user_info)) {
-            api.changeUserOnlineStatus(user_info.id, 1);
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
-      }).catch((error) => {
-        console.log(error);
-      });
-    });
+    var client = new Client(this, socket);
+    this.addClient(client);
   }
 
   onUpdate(time_elapsed) {
