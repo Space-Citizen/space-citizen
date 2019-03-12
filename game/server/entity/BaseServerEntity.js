@@ -36,7 +36,7 @@ class BaseServerEntity {
     }
     var that = this;
     this.world.runOnPlayers(function (player) {
-      player.client.emit(Events.SERVER_CALL_FUNCTION, that.id, func_name, ...args);
+      player.socket.emit(Events.SERVER_CALL_FUNCTION, that.id, func_name, ...args);
     });
   }
 
