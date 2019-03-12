@@ -43,12 +43,39 @@ class Server {
     this.worlds[world.getWorldName()] = world;
   }
 
+  runOnWorlds(func) {
+    for (var key in this.worlds) {
+      var world = this.worlds[key];
+      func(world);
+    }
+  }
+
+  runOnPlayers(func) {
+    this.runOnWorlds(function (world) {
+      world.runOnPlayers(func);
+    });
+  }
+
+  playerExists(player_id) {
+    var exists = false;
+    this.runOnPlayers(function (player) {
+      if (player.user_id === player_id) {
+        exists = true;
+      }
+    });
+    return exists;
+  }
+
   spawnPlayer(client, user_info) {
     var world = this.worlds[user_info.map];
     if (!world) {
       console.log("Invalid world : " + user_info.map);
       return;
     }
+    // Check if the player is already playing. If so, leave
+    if (this.playerExists(user_info.id))
+      return;
+
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
@@ -99,10 +126,9 @@ class Server {
   }
 
   onUpdate(time_elapsed) {
-    for (var key in this.worlds) {
-      var world = this.worlds[key];
+    this.runOnWorlds(function (world) {
       world.onUpdate(time_elapsed);
-    }
+    });
   }
 
   start() {
