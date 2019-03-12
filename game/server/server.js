@@ -56,10 +56,20 @@ class Server {
     });
   }
 
-  playerExists(player_id) {
+  getPlayerById(id) {
+    var res = null;
+    this.runOnPlayers(function (player) {
+      if (player.id === id) {
+        res = player;
+      }
+    });
+    return res;
+  }
+
+  playerExists(user_id) {
     var exists = false;
     this.runOnPlayers(function (player) {
-      if (player.user_id === player_id) {
+      if (player.user_id === user_id) {
         exists = true;
       }
     });
@@ -97,6 +107,25 @@ class Server {
 
   eventConnection(client) {
     var that = this;
+    client.on(Events.DISCONNECT, function () {
+      var player = that.getPlayerById(client.id);
+      if (player == null) {
+        return;
+      }
+      // Tell where player disconnected
+      api.setUserPos(
+        player.user_id, player.world.getWorldName(), player.s_pos
+      ).catch(error => {
+        console.log(error)
+      });
+      // Change user's status to offline
+      api.changeUserOnlineStatus(
+        player.user_id, 0
+      ).catch(error => {
+        console.log(error)
+      });
+    });
+
     client.on(Events.PLAYER_AUTH, function (token) {
 
       if (token === "test") {
