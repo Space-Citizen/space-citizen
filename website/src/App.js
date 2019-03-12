@@ -13,6 +13,7 @@ import Changelog from './components/changelog/changelog';
 import { NotificationContainer } from 'react-notifications';
 import { isConnected } from './misc/token';
 import 'react-notifications/lib/notifications.css';
+import Leaderboard from './components/leaderboard/leaderboard';
 
 const NoMatch = () => <div><h1 style={{ color: "white" }}>No page. 404</h1></div>;
 
@@ -26,6 +27,7 @@ const App = () => {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/changelog" component={Changelog} />
+        <Route exact path="/leaderboard" component={Leaderboard} />
         <Route path="/messages/:contactId?" component={Messages} />
         <Route path="/core" component={Core} />
         <Route path="/profile/:userId" component={Profile} />
