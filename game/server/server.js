@@ -76,7 +76,7 @@ class Server {
     return exists;
   }
 
-  spawnPlayer(client, user_info) {
+  spawnPlayer(socket, user_info) {
     var world = this.worlds[user_info.map];
     if (!world) {
       console.log("Invalid world : " + user_info.map);
@@ -99,16 +99,16 @@ class Server {
     var entity = new Entity.ServerEntityPlayer(
       world,
       pos_x, pos_y,
-      client, name, ship,
+      socket, name, ship,
       user_info.token, user_info.faction, user_info.id
     );
     return entity;
   }
 
-  eventConnection(client) {
+  eventConnection(socket) {
     var that = this;
-    client.on(Events.DISCONNECT, function () {
-      var player = that.getPlayerById(client.id);
+    socket.on(Events.DISCONNECT, function () {
+      var player = that.getPlayerById(socket.id);
       if (player == null) {
         return;
       }
@@ -126,10 +126,10 @@ class Server {
       });
     });
 
-    client.on(Events.PLAYER_AUTH, function (token) {
+    socket.on(Events.PLAYER_AUTH, function (token) {
 
       if (token === "test") {
-        var ip = client.request.connection.remoteAddress;
+        var ip = socket.request.connection.remoteAddress;
         var user_info = {
           id: 1,
           username: "tester",
@@ -139,7 +139,7 @@ class Server {
           map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
           token: "abc"
         };
-        that.spawnPlayer(client, user_info);
+        that.spawnPlayer(socket, user_info);
         return;
       }
       // get the user's information from the api
@@ -148,7 +148,7 @@ class Server {
         api.getUserShip(token).then((ship) => {
           user_info.ship_type = JSON.parse(ship).name;
           user_info.token = token;
-          if (that.spawnPlayer(client, user_info)) {
+          if (that.spawnPlayer(socket, user_info)) {
             api.changeUserOnlineStatus(user_info.id, 1);
           }
         }).catch((error) => {

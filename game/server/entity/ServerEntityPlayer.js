@@ -8,9 +8,9 @@ var Events = require('../../common/Events');
 const api = require('../api');
 
 class ServerEntityPlayer extends BaseServerEntityShip {
-  constructor(world, x, y, client, name, ship, token, faction, user_id) {
-    super(world, x, y, client.id, name, ship);
-    this.client = client;
+  constructor(world, x, y, socket, name, ship, token, faction, user_id) {
+    super(world, x, y, socket.id, name, ship);
+    this.socket = socket;
     this.listeners = {};
     this.token = token;
     this.user_id = user_id;
@@ -60,12 +60,12 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
   addListener(event_name, func) {
     this.listeners[event_name] = func;
-    this.client.on(event_name, func);
+    this.socket.on(event_name, func);
   }
 
   removeListeners() {
     for (var listener in this.listeners) {
-      this.client.off(listener, this.listeners[listener]);
+      this.socket.off(listener, this.listeners[listener]);
     }
   }
 
