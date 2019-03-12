@@ -1,11 +1,9 @@
 
 class TextInput {
     constructor(
-        canvas,
         x, y,
         size_x, size_y
     ) {
-        this.canvas = canvas;
         this.pos = {
             x: x,
             y: y
