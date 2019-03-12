@@ -5,7 +5,7 @@ module.exports = function (userId, reduceAmount) {
     return (new Promise(function (resolve, reject) {
         getBalance(userId).then((balance) => {
             // calculate new balance
-            const newBalance = balance + reduceAmount;
+            const newBalance = balance - reduceAmount;
             // update balance
             if (newBalance < 0) {
                 reject("You don't have enough money");
