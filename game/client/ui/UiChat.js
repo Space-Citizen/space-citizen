@@ -28,9 +28,10 @@ class UiChat extends BaseUi {
 
         // Create the input field
         this.input = new TextInput(
-            this.chat_pos.x,
-            this.chat_pos.y,
-
+            this.pos_top_left.x,
+            this.pos_top_left.y,
+            this.size.x,
+            0,
         );
         /*
         this.chatInput = new CanvasInput({
@@ -54,7 +55,7 @@ class UiChat extends BaseUi {
         });
         */
 
-        console.log(this.chatInput.width(), this.size.x);
+        //console.log(this.chatInput.width(), this.size.x);
 
         // Message list
         this.messages = [];
