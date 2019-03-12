@@ -5,7 +5,7 @@ class ServerONeill extends ServerBaseShip {
 
     getSpeed() {
         // m/s
-        return 100;
+        return 70;
     }
 
     getType() {
