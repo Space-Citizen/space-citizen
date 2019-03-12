@@ -32,7 +32,7 @@ class BaseServerEntity {
 
   serverCallFunction(func_name, ...args) {
     if (!func_name.startsWith("s_")) {
-      console.error("serverCallFunction: function name must start with 's_'");
+      console.error("serverCallFunction: function name must start with 's_' : " + func_name);
     }
     var that = this;
     this.world.runOnPlayers(function (player) {

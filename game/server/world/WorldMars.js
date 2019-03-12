@@ -6,8 +6,8 @@ class WorldMars extends BaseWorld {
     onInit() {
         this.max_hataks = 5;
         new Entity.ServerEntityBackground(this, "background", "MARS");
-        var sg = new Entity.ServerEntityStargate(this, 50, 50, "sga");
-        sg.openStargate("earth", 0, 0);
+        var sg = new Entity.ServerEntityStargate(this, 100, 100, "sga");
+        sg.openStargate("earth", 150, 150);
 
         var sg = new Entity.ServerEntityStargate(this, 0, 0, "sg5");
         var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, 0, "sg2");

@@ -18,7 +18,7 @@ class EntityStargate extends BaseEntity {
         image.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
     }
 
-    serverStargateUsed() {
+    s_stargateUsed() {
         this.sound_hyper_window.clone().play();
     }
 

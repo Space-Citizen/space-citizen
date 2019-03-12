@@ -101,6 +101,22 @@ class BaseWorld {
         });
     }
 
+    getClosestPlayer(world_pos, max_dist = 0) {
+        var res = null;
+        var closest_dist = null;
+        this.runOnPlayers(function (player) {
+            var dist = Helper.dist(world_pos, player.s_pos);
+            if (res == null || dist < closest_dist) {
+                res = player;
+                closest_dist = dist;
+            }
+        });
+        if (max_dist && closest_dist > max_dist) {
+            return null;
+        }
+        return res;
+    }
+
     onUpdate(time_elapsed) {
         var that = this;
         this.runOnEntities(function (entity) {
