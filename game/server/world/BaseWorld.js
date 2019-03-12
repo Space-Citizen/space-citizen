@@ -42,14 +42,14 @@ class BaseWorld {
 
     deleteEntity(entity) {
         this.runOnPlayers(function (player) {
-            player.client.emit(Events.SERVER_DELETE_ENTITY, entity.id);
+            player.socket.emit(Events.SERVER_DELETE_ENTITY, entity.id);
         });
         this._deleteEntity(entity);
     }
 
     killEntity(entity) {
         this.runOnPlayers(function (player) {
-            player.client.emit(Events.SERVER_KILL_ENTITY, entity.id);
+            player.socket.emit(Events.SERVER_KILL_ENTITY, entity.id);
         });
         this._deleteEntity(entity);
     }
@@ -62,24 +62,24 @@ class BaseWorld {
                 data.push(entity.getSharedVars());
             }
         }
-        server_player.client.emit(Events.SERVER_UPDATE_ENTITIES, data);
+        server_player.socket.emit(Events.SERVER_UPDATE_ENTITIES, data);
     }
 
     sendEventNewEntity(entity) {
         var entity_info = entity.getSharedVars();
         Helper.updateDict(entity_info, entity.getConstVars());
         this.runOnPlayers(function (player) {
-            //console.log(player.client);
-            player.client.emit(Events.SERVER_NEW_ENTITY, entity_info);
+            //console.log(player.socket);
+            player.socket.emit(Events.SERVER_NEW_ENTITY, entity_info);
         });
     }
 
     sendEventResetMap(player) {
-        player.client.emit(Events.SERVER_RESET_MAP);
+        player.socket.emit(Events.SERVER_RESET_MAP);
         this.runOnEntities(function (entity) {
             var entity_info = entity.getSharedVars();
             Helper.updateDict(entity_info, entity.getConstVars());
-            player.client.emit(Events.SERVER_NEW_ENTITY, entity_info);
+            player.socket.emit(Events.SERVER_NEW_ENTITY, entity_info);
         });
     }
 
