@@ -8,11 +8,12 @@ var Events = require('../../common/Events');
 const api = require('../api');
 
 class ServerEntityPlayer extends BaseServerEntityShip {
-  constructor(world, x, y, client, name, ship, token, faction) {
+  constructor(world, x, y, client, name, ship, token, faction, user_id) {
     super(world, x, y, client.id, name, ship);
     this.client = client;
     this.listeners = {};
     this.token = token;
+    this.user_id = user_id;
     this.c_faction = faction;
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
@@ -26,6 +27,10 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
   delete() {
     super.delete();
+    // Update player's pos
+    api.setUserPos(this.user_id, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
+    // Change user's status to offline
+    api.changeUserOnlineStatus(this.user_id, 0).catch(error => { console.log(error) });
     this.removeListeners();
   }
 
@@ -54,7 +59,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   }
 
   eventDisconnect() {
-    api.setUserPos(this.token, this.world.getWorldName(), this.s_pos).catch(error => { console.log(error) });
     this.delete();
   }
 

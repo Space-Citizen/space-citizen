@@ -1,17 +1,7 @@
-const { sendMessage } = require('./controllers');
+const { sendMessage, sendMessageInGame } = require('./controllers');
 const User = require('./classes/User');
 const request = require('request');
 const port = 4001;
-var ca, certificate, privateKey;
-try {
-    privateKey = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/privkey.pem').toString();
-    certificate = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/cert.pem').toString();
-    ca = fs.readFileSync('/etc/letsencrypt/live/space-citizen.cf/chain.pem').toString();
-}
-catch (e) {
-    console.log("Failed to load ssl keys");
-}
-
 var io = require('socket.io').listen(port);
 
 global.users = [];
@@ -36,11 +26,15 @@ io.sockets.on('connection', function (socket) {
                 return;
             }
             // create the user
+            console.log(user_info.username + " authenticated");
             users.push(new User(user_info, socket, data.token));
         });
     });
 
     socket.on('message:send', sendMessage.bind(this));
+
+    // Send message in game
+    socket.on('message:send:ingame', sendMessageInGame.bind(this));
 
     // delete client
     socket.on('disconnect', function () {
