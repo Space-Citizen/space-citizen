@@ -9,7 +9,6 @@ class EntityStargate extends BaseEntity {
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
         var screen_pos = this.game.relPos(this.pos);
-        //context.stroke();
         var image = this.image_closed;
         if (this.s_stargate_open) {
             image = this.image_open;

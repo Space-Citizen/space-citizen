@@ -11,6 +11,10 @@ class BaseWorld {
         this._id_count = 0;
     }
 
+    onInterval(name, time_sec) {
+        return Helper.onInterval(this, name, time_sec);
+    }
+
     getFreeId() {
         this._id_count += 1;
         return "FID_" + this._id_count;
