@@ -105,6 +105,7 @@ class Server {
 
     this.addWorld(new World.WorldEarth(this));
     this.addWorld(new World.WorldMars(this));
+    this.addWorld(new World.WorldNebula(this));
     io.on('connection', this.eventConnection.bind(this));
   }
 
