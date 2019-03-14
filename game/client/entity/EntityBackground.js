@@ -9,6 +9,9 @@ class EntityBackground extends BaseEntity {
             case WorldTypes.MARS:
                 this.image = ressources.BACKGROUND_MARS;
                 break;
+            case WorldTypes.NEBULA:
+                this.image = ressources.BACKGROUND_NEBULA;
+                break;
             default:
                 this.image = ressources.BACKGROUND_SPACE;
         }
