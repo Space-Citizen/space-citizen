@@ -73,17 +73,7 @@ class Client {
     var player = this.server.getPlayerById(this.id);
     if (player != null) {
       // Tell where player disconnected
-      api.setUserPos(
-        player.user_id, player.world.getWorldName(), player.s_pos
-      ).catch(error => {
-        console.log(error)
-      });
-      // Change user's status to offline
-      api.changeUserOnlineStatus(
-        player.user_id, 0
-      ).catch(error => {
-        console.log(error)
-      });
+      player.delete();
     }
     this.server.deleteClient(this);
   }
