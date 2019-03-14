@@ -70,11 +70,6 @@ class Client {
   }
 
   eventDisconnect() {
-    var player = this.server.getPlayerById(this.id);
-    if (player != null) {
-      // Tell where player disconnected
-      player.delete();
-    }
     this.server.deleteClient(this);
   }
 }
@@ -96,7 +91,8 @@ class Server {
     this.addWorld(new World.WorldEarth(this));
     this.addWorld(new World.WorldMars(this));
     this.addWorld(new World.WorldNebula(this));
-    io.on('connection', this.eventConnection.bind(this));
+    io.on("connection", this.eventConnection.bind(this));
+
   }
 
   addWorld(world) {
