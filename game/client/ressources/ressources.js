@@ -8,8 +8,8 @@ var ressources = {
     BACKGROUND_EARTH: new ResWorldImage("static_background_earth.jpg", Constants.WORLD_SIZE_X),
     BACKGROUND_MARS: new ResWorldImage("static_background_mars.jpg", Constants.WORLD_SIZE_X),
     BACKGROUND_SPACE: new ResWorldImage("static_background_space.png", Constants.WORLD_SIZE_X),
+    BACKGROUND_NEBULA: new ResWorldImage("static_background_nebula.jpg", Constants.WORLD_SIZE_X),
     // Minimap
-    MINIMAP_BACKGROUND_EARTH: new ResUiImage("static_background_earth.jpg", 20),
     MINIMAP_STARGATE: new ResUiImage("stargate_closed.png", 1),
     MINIMAP_PLAYER: new ResUiImage("minimap_player.jpg", 0.3),
     MINIMAP_HOSTILE: new ResUiImage("minimap_hostile.jpg", 0.3),

@@ -38,17 +38,19 @@ class Shop extends Component {
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.state.items.map(item => {
                         return (
-                            <tr key={item.id}>
+                            <tr key={item.id} className="shop-item">
                                 <th scope="row"><img src={item.icon} className="shop-item-icon" alt={item.name} /></th>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td>{item.price}</td>
+                                <td>{JSON.parse(item.specifications).type}</td>
                                 <td><button className="btn btn-warning" onClick={() => this.buy(item)}>Buy</button></td>
                             </tr>
                         );

@@ -1,6 +1,7 @@
 module.exports = {
     getProfileInfo: require('./getProfileInfo'),
-    getUsers: require('./getUsers'),
+    listUsers: require('./listUsers'),
+    getMoneyLeaderboard: require('./getMoneyLeaderboard'),
     changeOnlineStatus: require('./changeOnlineStatus'),
     changePos: require('./changePos'),
     resetAllOnlineStatus: require('./resetAllOnlineStatus')
