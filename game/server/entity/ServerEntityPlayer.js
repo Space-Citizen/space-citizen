@@ -31,13 +31,13 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
     // Change user's position
     api.setUserPos(
-      player.user_id, player.world.getWorldName(), player.s_pos
+      this.user_id, this.world.getWorldName(), this.s_pos
     ).catch(error => {
       console.log(error)
     });
     // Change user's status to offline
     api.changeUserOnlineStatus(
-      player.user_id, 0
+      this.user_id, 0
     ).catch(error => {
       console.log(error)
     });
