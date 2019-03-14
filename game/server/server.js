@@ -37,7 +37,7 @@ class Client {
     var user_info = {
       id: ip,
       username: "tester",
-      ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
+      ship_type: ip.endsWith("192.168.1.25") ? "O'Neill" : "Daedalus",
       map: "earth",
       map_coordinate_x: Constants.WORLD_SIZE_X / 2,
       map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
@@ -105,6 +105,7 @@ class Server {
 
     this.addWorld(new World.WorldEarth(this));
     this.addWorld(new World.WorldMars(this));
+    this.addWorld(new World.WorldNebula(this));
     io.on('connection', this.eventConnection.bind(this));
   }
 

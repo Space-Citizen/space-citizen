@@ -6,7 +6,11 @@ const { requireUserToken, requireServerToken } = require("../routesRestrictions/
 //Get information about a user according to it's ID or username
 router.get('/info/:id', requireUserToken(UserController.getProfileInfo));
 
-router.get('/', UserController.getUsers);
+// Get a list of all users
+router.get('/list', UserController.listUsers);
+
+// Get a list of all users sorted by their amount of money
+router.get('/money_leaderboard', UserController.getMoneyLeaderboard);
 
 //// Allowed by the game server only
 
