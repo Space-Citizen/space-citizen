@@ -9,7 +9,7 @@ class ServerONeill extends ServerBaseShip {
     }
 
     getType() {
-        return "ONeill";
+        return "O'Neill";
     }
 }
 

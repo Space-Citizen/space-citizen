@@ -18,8 +18,9 @@ function createEntity(server_entity, game) {
 function createShip(ship_type) {
     console.log(ship_type);
     var ShipClasses = {
-        "BC304": BC304,
-        "ONeill": ONeill,
+        "Daedalus": Daedalus,
+        "O'Neill": ONeill,
+        "F-302": F302,
         "Hatak": Hatak,
     }
     var res = new (ShipClasses[ship_type])();
