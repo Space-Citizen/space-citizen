@@ -4,7 +4,7 @@ var BaseWorld = require('./BaseWorld');
 
 class WorldMars extends BaseWorld {
     onInit() {
-        this.max_hataks = 50;
+        this.max_hataks = 10;
         new Entity.ServerEntityBackground(this, "background", "MARS");
 
         // Stargate to earth, from bottom left (mars) to top left (earth)

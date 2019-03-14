@@ -15,7 +15,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.token = token;
     this.user_id = user_id;
     this.c_faction = faction;
-    this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
     this.onInit();
   }
@@ -28,6 +27,19 @@ class ServerEntityPlayer extends BaseServerEntityShip {
   delete() {
     super.delete();
     this.removeListeners();
+
+    // Change user's position
+    api.setUserPos(
+      player.user_id, player.world.getWorldName(), player.s_pos
+    ).catch(error => {
+      console.log(error)
+    });
+    // Change user's status to offline
+    api.changeUserOnlineStatus(
+      player.user_id, 0
+    ).catch(error => {
+      console.log(error)
+    });
   }
 
   // shared functions
@@ -60,10 +72,6 @@ class ServerEntityPlayer extends BaseServerEntityShip {
       return;
     }
     func(...args);
-  }
-
-  eventDisconnect() {
-    this.delete();
   }
 
   addListener(event_name, func) {
