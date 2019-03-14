@@ -14,7 +14,7 @@ class Hangar extends Component {
       usedShip: undefined
     };
     // equipments type available on the ships
-    this.shipComponents = ["guns", "shields"];
+    this.shipComponents = ["gun", "shield"];
 
     this.dragAuthorisations = [
       {
