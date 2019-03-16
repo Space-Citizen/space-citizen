@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # check for root usage
 if [[ $EUID -ne 0 ]]; then
