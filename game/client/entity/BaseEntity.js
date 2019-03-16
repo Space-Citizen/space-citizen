@@ -60,7 +60,7 @@ class BaseEntity {
 
   onUpdate(time_elapsed) {
 
-    var ping_ms = this.ping_ms;
+    var ping_ms = this.average_ping_ms;
     if (!ping_ms || ping_ms < 50) {
       // Actually we dont want the entity to teleport when pings gets low
       ping_ms = 50;

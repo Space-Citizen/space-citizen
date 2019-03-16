@@ -7,7 +7,8 @@ class StateGame extends IState {
         this.initWorld();
         this.initUis();
         this.time_sent_ping = null; // time last ping was sent
-        this.ping_ms = null; // calculated ping
+        this.ping_ms = null; // current ping
+        this.average_ping_ms = 1;
         this.self = null;
         this.pos = null;
         this.minimap = this.addUi("minimap", new UiMinimap(this));
@@ -32,7 +33,7 @@ class StateGame extends IState {
             return;
         }
         this.ping_ms = Math.max(Date.now() - this.time_sent_ping, 1);
-
+        this.average_ping_ms = (this.ping_ms + this.average_ping_ms) / 2;
     }
 
     eventConnect() {

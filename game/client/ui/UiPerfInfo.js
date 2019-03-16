@@ -22,7 +22,8 @@ class UiPerfInfo extends BaseUi {
     }
 
     onUpdate(time_elapsed) {
-        this.text.drawAt("ping: " + this.game.ping_ms + " ms", 0, 0);
-        this.text.drawAt("FPS: " + Math.round(1 / time_elapsed), 0, this.text_margin);
+        this.text.drawAt("Ping: " + this.game.ping_ms + " ms", 0, 0);
+        this.text.drawAt("Average ping: " + Math.round(this.game.average_ping_ms) + " ms", 0, this.text_margin);
+        this.text.drawAt("FPS: " + Math.round(1 / time_elapsed), 0, this.text_margin * 2);
     }
 }
