@@ -17,6 +17,7 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     this.c_faction = faction;
     this.addListener(Events.DISCONNECT, this.eventDisconnect.bind(this));
     this.addListener(Events.PLAYER_CALL_FUNCTION, this.eventPlayerCallFunction.bind(this));
+    this.addListener(Events.PLAYER_PING, this.eventPlayerPing.bind(this));
     this.onInit();
   }
 
@@ -63,6 +64,10 @@ class ServerEntityPlayer extends BaseServerEntityShip {
 
   eventDisconnect() {
     this.delete();
+  }
+
+  eventPlayerPing() {
+    this.socket.emit(Events.SERVER_PONG);
   }
 
   eventPlayerCallFunction(func_name, ...args) {

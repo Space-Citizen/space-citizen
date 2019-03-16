@@ -3,7 +3,8 @@ var g_loaded_res_counter = 0;
 
 var ressources = {
     // Fonts
-    TEXT_MEDIUM: new ResText("blue", "18px Arial"),
+    TEXT_MEDIUM: new ResText("blue", "medium Arial"),
+    TEXT_INFO: new ResText("yellow", "small Arial"),
     // Images
     BACKGROUND_EARTH: new ResWorldImage("static_background_earth.jpg", Constants.WORLD_SIZE_X),
     BACKGROUND_MARS: new ResWorldImage("static_background_mars.jpg", Constants.WORLD_SIZE_X),

@@ -6,10 +6,13 @@ class StateGame extends IState {
 
         this.initWorld();
         this.initUis();
+        this.time_sent_ping = null; // time last ping was sent
+        this.ping_ms = null; // calculated ping
         this.self = null;
         this.pos = null;
         this.minimap = this.addUi("minimap", new UiMinimap(this));
         //this.chat = this.addUi("chat", new UiChat(this));
+        this.perf_info = this.addUi("perf_info", new UiPerfInfo(this));
         this.aim = this.addUi("aim", new UiAim(this));
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
@@ -20,8 +23,16 @@ class StateGame extends IState {
         this.socket.on(Events.SERVER_KILL_ENTITY, this.eventKillEntity.bind(this));
         this.socket.on(Events.SERVER_RESET_MAP, this.eventResetMap.bind(this));
         this.socket.on(Events.SERVER_CALL_FUNCTION, this.eventServerCallFunction.bind(this));
+        this.socket.on(Events.SERVER_PONG, this.eventServerPong.bind(this));
     }
 
+    eventServerPong() {
+        if (!this.time_sent_ping) {
+            console.log("eventServerPong: time_sent_ping not set?")
+            return;
+        }
+        this.ping_ms = Date.now() - this.time_sent_ping;
+    }
 
     eventConnect() {
         this.sendEventPlayerAuth();
@@ -82,6 +93,11 @@ class StateGame extends IState {
         this.initWorld();
     }
 
+    sendEventPlayerPing() {
+        this.time_sent_ping = Date.now();
+        this.socket.emit(Events.PLAYER_PING);
+    }
+
     sendEventPlayerAuth() {
         // get the token from the url
         var url_params = {}
@@ -138,6 +154,10 @@ class StateGame extends IState {
     }
 
     onUpdate(time_elapsed) {
+        if (Helper.onInterval(this, "ping", 1)) {
+            this.sendEventPlayerPing();
+        }
+
         if (this.id in this.entities) {
             this.self = this.entities[this.id];
             this.pos.x = this.self.pos.x; // this.self.pos will be changed during the execution of the code below
