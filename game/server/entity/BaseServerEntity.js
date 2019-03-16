@@ -1,6 +1,7 @@
 
 var objects = require("../../common");
 var Events = require('../../common/Events');
+var Helper = require('../../common/Helper');
 
 class BaseServerEntity {
   constructor(world, x, y, id) {
@@ -8,6 +9,10 @@ class BaseServerEntity {
     this.id = id;
     this.s_pos = new objects.Position(x, y);
     this.s_type = this.getType();
+  }
+
+  onInterval(name, time_sec) {
+    return Helper.onInterval(this, name, time_sec);
   }
 
   onInit() {
@@ -31,8 +36,8 @@ class BaseServerEntity {
   }
 
   serverCallFunction(func_name, ...args) {
-    if (!func_name.startsWith("server")) {
-      console.error("serverCallFunction: function name must start with 'server'");
+    if (!func_name.startsWith("s_")) {
+      console.error("serverCallFunction: function name must start with 's_' : " + func_name);
     }
     var that = this;
     this.world.runOnPlayers(function (player) {

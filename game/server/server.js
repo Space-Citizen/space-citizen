@@ -10,6 +10,7 @@ var io = socketIO(server);
 var objects = require('../common');
 var Constants = objects.Constants;
 var Events = require('../common/Events');
+var Helper = require('../common/Helper');
 
 var World = require('./world');
 var Entity = require('./entity');
@@ -34,9 +35,9 @@ class Client {
   spawnTestShip() {
     var ip = this.socket.request.connection.remoteAddress;
     var user_info = {
-      id: 1,
+      id: ip,
       username: "tester",
-      ship_type: ip.endsWith("192.168.1.25") ? "ONeill" : "BC304",
+      ship_type: ip.endsWith("192.168.1.25") ? "O'Neill" : "Daedalus",
       map: "earth",
       map_coordinate_x: Constants.WORLD_SIZE_X / 2,
       map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
@@ -69,21 +70,6 @@ class Client {
   }
 
   eventDisconnect() {
-    var player = this.server.getPlayerById(this.id);
-    if (player != null) {
-      // Tell where player disconnected
-      api.setUserPos(
-        player.user_id, player.world.getWorldName(), player.s_pos
-      ).catch(error => {
-        console.log(error)
-      });
-      // Change user's status to offline
-      api.changeUserOnlineStatus(
-        player.user_id, 0
-      ).catch(error => {
-        console.log(error)
-      });
-    }
     this.server.deleteClient(this);
   }
 }
@@ -104,7 +90,9 @@ class Server {
 
     this.addWorld(new World.WorldEarth(this));
     this.addWorld(new World.WorldMars(this));
-    io.on('connection', this.eventConnection.bind(this));
+    this.addWorld(new World.WorldNebula(this));
+    io.on("connection", this.eventConnection.bind(this));
+
   }
 
   addWorld(world) {

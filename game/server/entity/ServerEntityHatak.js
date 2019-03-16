@@ -15,13 +15,14 @@ class ServerEntityHatak extends BaseServerEntityShip {
         super(world, x, y, id, "Hatak", new ServerHatak());
         this.c_faction = "npc";
         this.onInit();
-        this.time_changed_target = null;
-        this.change_target_time = 3; // seconds
     }
 
-    launchMissile(entity_id) {
-        new ServerEntityMissile(this.world, this.world.getFreeId(), this,
-            this.world.entities[entity_id]);
+    launchMissile(entity) {
+        new ServerEntityMissile(
+            this.world, this.world.getFreeId(),
+            this,
+            entity
+        );
     }
 
     setRandomTarget() {
@@ -34,11 +35,14 @@ class ServerEntityHatak extends BaseServerEntityShip {
 
     onUpdate(time_elapsed) {
         super.onUpdate(time_elapsed);
-        var time = Date.now() / 1000;
-        if (!this.time_changed_target
-            || time - this.time_changed_target > this.change_target_time) {
+        if (this.onInterval("change_target", 3)) {
             this.setRandomTarget();
-            this.time_changed_target = time;
+        }
+        if (this.onInterval("timer_launch_missile", 1.5)) {
+            var target = this.world.getClosestPlayer(this.s_pos, Constants.Y_VIEW_RANGE);
+            if (target) {
+                this.launchMissile(target);
+            }
         }
     }
 

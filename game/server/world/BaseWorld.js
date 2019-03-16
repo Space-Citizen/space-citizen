@@ -11,6 +11,10 @@ class BaseWorld {
         this._id_count = 0;
     }
 
+    onInterval(name, time_sec) {
+        return Helper.onInterval(this, name, time_sec);
+    }
+
     getFreeId() {
         this._id_count += 1;
         return "FID_" + this._id_count;
@@ -99,6 +103,22 @@ class BaseWorld {
                 func(entity);
             }
         });
+    }
+
+    getClosestPlayer(world_pos, max_dist = 0) {
+        var res = null;
+        var closest_dist = null;
+        this.runOnPlayers(function (player) {
+            var dist = Helper.dist(world_pos, player.s_pos);
+            if (res == null || dist < closest_dist) {
+                res = player;
+                closest_dist = dist;
+            }
+        });
+        if (max_dist && closest_dist > max_dist) {
+            return null;
+        }
+        return res;
     }
 
     onUpdate(time_elapsed) {

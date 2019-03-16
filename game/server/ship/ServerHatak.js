@@ -5,7 +5,7 @@ class ServerHatak extends ServerBaseShip {
 
     getSpeed() {
         // m/s
-        return 55;
+        return 50;
     }
 
     getType() {

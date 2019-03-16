@@ -1,5 +1,5 @@
 
-class BC304 extends BaseShip {
+class Daedalus extends BaseShip {
     constructor() {
         super();
         this.image_body = ressources.SPACESHIP_4;

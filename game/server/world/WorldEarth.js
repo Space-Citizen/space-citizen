@@ -6,18 +6,14 @@ var Constants = require('../../common/Constants');
 class WorldEarth extends BaseWorld {
     onInit() {
         new Entity.ServerEntityBackground(this, "background", "EARTH");
-        /*
-        for (var x = 0; x < 100; x += 1) {
-            var sg = new Entity.ServerEntityStargate(this, 50, 5 * x, "sg" + x);
-            sg.openStargate("mars", 0, 0);
-        } */
-        var sg = new Entity.ServerEntityStargate(this, 50, 50, "sg1");
-        sg.openStargate("mars", 0, 0);
 
-        var sg = new Entity.ServerEntityStargate(this, 0, 0, "sg5");
-        var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, 0, "sg2");
-        var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X, Constants.WORLD_SIZE_Y, "sg3");
-        var sg = new Entity.ServerEntityStargate(this, 0, Constants.WORLD_SIZE_Y, "sg4");
+        // Stargate to mars, from top left (earth) to bottom left (mars)
+        var sg = new Entity.ServerEntityStargate(this, 50, 50, "sg-to-mars");
+        sg.openStargate("mars", 70, Constants.WORLD_SIZE_Y - 70);
+
+        // Stargate to nebula, from top right (earth) to bottom left (nebula)
+        var sg = new Entity.ServerEntityStargate(this, Constants.WORLD_SIZE_X - 50, 50, "sg-to-nebula");
+        sg.openStargate("nebula", 70, Constants.WORLD_SIZE_Y - 70);
     }
 
     getWorldName() {
