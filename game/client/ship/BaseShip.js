@@ -22,7 +22,7 @@ class BaseShip {
 
     drawName(pos, name) {
         var info_offset = this.getNameOffset();
-        ressources.TEXT_MEDIUM.drawCenterAt(
+        ressources.TEXT_SHIP_NAME.drawCenterAt(
             name,
             pos.x + info_offset.x,
             pos.y + info_offset.y
