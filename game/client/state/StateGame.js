@@ -31,7 +31,8 @@ class StateGame extends IState {
             console.log("eventServerPong: time_sent_ping not set?")
             return;
         }
-        this.ping_ms = Date.now() - this.time_sent_ping;
+        this.ping_ms = Math.max(Date.now() - this.time_sent_ping, 1);
+
     }
 
     eventConnect() {
