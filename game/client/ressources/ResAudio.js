@@ -20,6 +20,10 @@ class ResAudio {
     }
 
     setVolume(volume) {
+        if (!volume && volume !== 0) {
+            console.log("Invalid volume " + volume);
+            return;
+        }
         this._audio.volume = volume;
     }
 

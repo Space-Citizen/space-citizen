@@ -1,8 +1,7 @@
 class BaseEntity {
 
-  constructor(server_entity, game, pos_smooth = 5) {
+  constructor(server_entity, game) {
     this.game = game;
-    this._pos_smooth = pos_smooth;
     this._audios = [];
     this.onServerUpdate(server_entity);
     this.onInit();
@@ -60,10 +59,23 @@ class BaseEntity {
   }
 
   onUpdate(time_elapsed) {
+
+    var ping_ms = this.average_ping_ms;
+    if (!ping_ms || ping_ms < 50) {
+      // Actually we dont want the entity to teleport when pings gets low
+      ping_ms = 50;
+    }
+    if (ping_ms > 300) {
+      // We also dont want the entity to stop when ping gets too high
+      ping_ms = 300;
+    }
+    var time_elapsed_ms = time_elapsed * 1000;
+    var multiplier = ((1 / ping_ms) * (1 / time_elapsed_ms)) * 1000;
+
     var dir_x = (this.s_pos.x - this.pos.x);
     var dir_y = (this.s_pos.y - this.pos.y);
-    this.pos.x += dir_x * Math.min(this._pos_smooth * time_elapsed, 1);
-    this.pos.y += dir_y * Math.min(this._pos_smooth * time_elapsed, 1);
+    this.pos.x += dir_x * Math.min(multiplier, 1);
+    this.pos.y += dir_y * Math.min(multiplier, 1);
 
     //var bearing_diff = (this.s_bearing - this.bearing);
     // TODO: smooth bearing
