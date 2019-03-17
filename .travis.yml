@@ -11,5 +11,6 @@ before_install:
   - chmod 700 ~/.ssh
   - ssh-keyscan 35.235.82.216 >> ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
+# test
 after_success:
   - ssh -i ./id_rsa server@35.235.82.216 pwd
