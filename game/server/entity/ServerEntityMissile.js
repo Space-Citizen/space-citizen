@@ -7,6 +7,7 @@ class ServerEntityMissile extends BaseServerEntity {
     constructor(world, id, attacker_entity, target_entity) {
         super(world, attacker_entity.s_pos.x, attacker_entity.s_pos.y, id);
         this.s_bearing = 0;
+        this.attacker = attacker_entity;
         this.speed = 100;
         this.blow_distance = 2;
         this.damage = 10;
@@ -23,7 +24,6 @@ class ServerEntityMissile extends BaseServerEntity {
     onUpdate(time_elapsed) {
         var target_entity = this.world.entities[this.target_entity_id];
         if (!target_entity) {
-            console.error("Missile got no entity");
             this.kill();
             return;
         }

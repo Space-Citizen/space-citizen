@@ -6,7 +6,7 @@ module.exports = function (userId, increaseAmount) {
         // get current balance
         getBalance(userId).then((balance) => {
             // calculate new balance
-            const newBalance = balance + increaseAmount;
+            const newBalance = Number(balance) + Number(increaseAmount);
             // update the balance
             updateBalance(userId, newBalance).then(result => {
                 resolve(result);

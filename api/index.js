@@ -31,6 +31,7 @@ global.db = mysql.createPool({
 const AuthRoutes = require('./src/routes/AuthRoutes');
 const FactionRoutes = require('./src/routes/FactionRoutes');
 const ItemRoutes = require('./src/routes/ItemRoutes');
+const LeaderboardRoutes = require('./src/routes/LeaderboardRoutes');
 const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
 const ShipRoutes = require('./src/routes/ShipRoutes');
@@ -40,6 +41,7 @@ const UserRoutes = require('./src/routes/UserRoutes');
 router.use('/auth', AuthRoutes);
 router.use('/factions', FactionRoutes);
 router.use('/items', ItemRoutes);
+router.use('/leaderboard', LeaderboardRoutes);
 router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
 router.use('/ships', ShipRoutes);

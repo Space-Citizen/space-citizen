@@ -2,12 +2,11 @@ form {
   max-width: 330px;
   margin: auto;
   margin-top: 200px;
-  color:white;
+  color: white;
 }
 
-.sign-in-form-container
-{
-  background-color: rgba(80,80,80,0.8);
+.sign-in-form-container {
+  background-color: rgba(80, 80, 80, 0.8);
   border-radius: 5px;
   padding-bottom: 10px;
 }

@@ -21,7 +21,7 @@ class SignIn extends Component {
             <div>
                 <div className="container sign-in-form-container col-5">
                     <form onSubmit={this.handleSubmit}>
-                        <h2>Sign in</h2>
+                        <h2 className="text-center">Sign in</h2>
                         <div className="form-group">
                             <label htmlFor="loginEmail">Email address</label>
                             <input type="email" className="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" />
@@ -30,7 +30,7 @@ class SignIn extends Component {
                             <label htmlFor="loginPassword">Password</label>
                             <input type="password" className="form-control" id="loginPassword" placeholder="Enter password" />
                         </div>
-                        <p>Don't have an account ? <a href="/signup"><u>Click here !</u></a></p>
+                        <p>Don't have an account ? <a href="/signup"><u>Sign Up !</u></a></p>
                         <button type="submit" className="btn btn-primary">Log in</button>
                     </form>
                 </div>

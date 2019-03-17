@@ -9,10 +9,13 @@ router.get('/info/:id', requireUserToken(UserController.getProfileInfo));
 // Get a list of all users
 router.get('/list', UserController.listUsers);
 
-// Get a list of all users sorted by their amount of money
-router.get('/money_leaderboard', UserController.getMoneyLeaderboard);
-
 //// Allowed by the game server only
+
+// Add experience to a player
+router.post('/add_experience', requireServerToken(UserController.addExperience));
+
+// Add money to a player
+router.post('/add_money', requireServerToken(UserController.addMoney));
 
 // Change the online status of a player
 router.post('/change_online_status', requireServerToken(UserController.changeOnlineStatus));

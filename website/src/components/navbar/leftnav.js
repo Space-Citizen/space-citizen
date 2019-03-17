@@ -23,8 +23,8 @@ class Leftnav extends Component {
             this.setState({ usedShip: -1 });
         });
         this.getOnlineStatus();
-        // Start an interval to check if the user is online or not every 5 seconds
-        setInterval(this.getOnlineStatus, 5000);
+        // Start an interval to check if the user is online or not every 2 seconds
+        setInterval(this.getOnlineStatus, 2000);
     }
 
     // Get the user's online status

@@ -1,5 +1,5 @@
-const { httpPost } = require('./request');
-const getServerToken = require('./getServerToken');
+const { httpPost } = require('../request');
+const getServerToken = require('../server_token/getServerToken');
 
 module.exports = function (user_id, map, map_coordinate) {
     const server_token = getServerToken();

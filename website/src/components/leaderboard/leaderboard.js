@@ -13,7 +13,7 @@ class Leaderboard extends Component {
   }
 
   componentDidMount() {
-    get('/api/users/money_leaderboard').then(res => {
+    get('/api/leaderboard/money').then(res => {
       this.setState({
         users: res.data
       });

@@ -1,6 +1,7 @@
 
 var Helper = require("../../common/Helper");
 var BaseServerEntity = require("./BaseServerEntity");
+var api = require('../api');
 
 class BaseServerEntityShip extends BaseServerEntity {
     constructor(world, x, y, id, name, ship) {
@@ -27,9 +28,36 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.s_target = pos;
     }
 
+    // Amount of xp and money given to the player that killed the ship
+    getKillRewards() {
+        // Default value
+        return ({ xp: 50, money: 500 });
+    }
+
+    // Give a reward to the player that killed this entity
+    giveRewards(attacker_entity) {
+        // If attacker has no user_id, leave
+        if (!attacker_entity || !attacker_entity.user_id)
+            return;
+
+        // Get the reward for this kill
+        var rewards = this.getKillRewards();
+
+        // Give experience
+        api.addExperience(attacker_entity.user_id, rewards.xp).catch(error => {
+            console.log("Add exeperience error: ", error);
+        });
+        // Give money
+        api.addMoney(attacker_entity.user_id, rewards.money).catch(error => {
+            console.log("Add money error: ", error);
+        });
+    }
+
     shipHit(attacker_entity, hp) {
         this.s_hp -= hp;
         if (this.s_hp <= 0) {
+            // Give rewards to the user that killed the ship
+            this.giveRewards(attacker_entity);
             this.kill();
         }
     }
