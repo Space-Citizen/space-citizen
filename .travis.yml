@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - node
+before_install:
+  - openssl aes-256-cbc -K $encrypted_efde7f456922_key -iv $encrypted_efde7f456922_iv
+  -in deploy_key.enc -out ./deploy_key -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 ./deploy_key
+  - ssh-add ./deploy_key
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan 35.235.82.216 >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+after_success:
+  - ssh -i ./id_rsa server@35.235.82.216 pwd
