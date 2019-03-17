@@ -80,7 +80,9 @@ class BaseEntity {
     //var bearing_diff = (this.s_bearing - this.bearing);
     // TODO: smooth bearing
     // TODO: _onUpdate ?
-    this._updateAudios();
+    if (Helper.onInterval(this, "updateAudio", 0.5) && 0) {
+      this._updateAudios();
+    }
   }
 
   delete() {
