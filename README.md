@@ -1,4 +1,4 @@
-# Space-Citizen [![Build Status](https://travis-ci.com/Space-Citizen/space-citizen.svg?branch=master)](https://travis-ci.com/Space-Citizen/space-citizen)
+# :rocket: Space-Citizen [![Build Status](https://travis-ci.com/Space-Citizen/space-citizen.svg?branch=master)](https://travis-ci.com/Space-Citizen/space-citizen)
 
 ## Installation
 
