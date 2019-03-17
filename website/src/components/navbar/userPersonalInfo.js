@@ -31,21 +31,21 @@ class UserPersonalInfo extends Component {
                     <p>Player informations</p>
                 </div>
                 <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12 leftnav-user-info">
+                    <div className="col-lg-6 col-md-12 col-sm-12 leftnav-user-info" title="Money">
                         <i className="fas fa-dollar-sign"></i>
                         <span className="leftnav-user-info-box-text" id="user-info-money">{user_info.money}</span>
                     </div>
                     <div className="col-6 col-md-12 col-sm-12 leftnav-user-info">
-                        <div className="float-left">
+                        <div className="float-left" title="Experience">
                             <i className="fas fa-trophy"></i>
-                            <span className="leftnav-user-info-box-text">10</span>
+                            <span className="leftnav-user-info-box-text">{user_info.experience}</span>
                         </div>
                     </div>
-                    <div className="col-6 col-md-12 col-sm-12 leftnav-user-info">
+                    <div className="col-6 col-md-12 col-sm-12 leftnav-user-info" title="Server">
                         <i className="fas fa-globe-americas"></i>
                         <span className="leftnav-user-info-box-text">NA</span>
                     </div>
-                    <div className="col-6 col-md-12 col-sm-12 leftnav-user-info">
+                    <div className="col-6 col-md-12 col-sm-12 leftnav-user-info" title="Faction">
                         <div className="float-left">
                             <i className="fas fa-user-friends"></i>
                             <span className="leftnav-user-info-box-text">{faction_info.name}</span>

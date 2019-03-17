@@ -44,6 +44,10 @@ class ServerEntityPlayer extends BaseServerEntityShip {
     });
   }
 
+  getKillRewards() {
+    return ({ xp: 200, money: 5000 });
+  }
+
   // shared functions
   s_playerMoveTo(world_pos) {
     if (!world_pos || !('x' in world_pos && 'y' in world_pos)) {

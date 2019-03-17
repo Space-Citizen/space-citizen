@@ -79,7 +79,7 @@ class SignUp extends Component {
                         <label htmlFor="signupConfirmPassword">Confirm Password</label>
                         <input type="password" className="form-control" id="signupConfirmPassword" placeholder="Confirm password" />
                     </div>
-                    <p>Already have an account ? <a href="/signin"><u>Click here !</u></a></p>
+                    <p>Already have an account ? <a href="/signin"><u>Sign in !</u></a></p>
                     <button type="submit" className="btn btn-primary">Sign up !</button>
                 </form>
             </div>

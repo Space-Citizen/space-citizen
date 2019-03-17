@@ -1,4 +1,4 @@
-const { httpGet } = require('./request');
+const { httpGet } = require('../request');
 
 module.exports = function (token) {
     return (new Promise(function (resolve, reject) {
