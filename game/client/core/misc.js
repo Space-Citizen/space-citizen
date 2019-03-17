@@ -62,13 +62,9 @@ function drawHealthBar(x, y, size, hp_percent) {
     var x = x - x_size / 2;
     var y = y - y_size / 2;
 
-    context.beginPath();
     context.fillStyle = "grey"
     context.fillRect(x, y, x_size, y_size);
-    context.stroke();
 
-    context.beginPath();
     context.fillStyle = "green"
     context.fillRect(x, y, x_size * hp_percent / 100, y_size);
-    context.stroke();
 }
