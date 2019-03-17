@@ -15,4 +15,4 @@ before_install:
 - ssh-keyscan 35.235.82.216 >> ~/.ssh/known_hosts
 - chmod 644 ~/.ssh/known_hosts
 after_success:
-- ssh -i ./deploy_key server@35.235.82.216 "pwd;echo test >> test"
+- ssh -i ./deploy_key server@35.235.82.216 "cd ~server/space-citizen/deploy/ && sudo -E ./deploy.sh -u && sudo -E ./deploy.sh -ni"
