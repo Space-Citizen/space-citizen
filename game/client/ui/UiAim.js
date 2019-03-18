@@ -35,12 +35,6 @@ class UiAim extends BaseUi {
             }
         });
         this.target = res;
-
-        //
-        if (res != null) {
-            this.game.playerCallFunction("s_launchMissile", res.id);
-        }
-        //
         return res != null; // if target found, returns true
     }
 
@@ -54,7 +48,11 @@ class UiAim extends BaseUi {
     }
 
     onMouseRightClick() {
-        return this.targetEntityAt(this.game.worldPos(mouse));
+        var res = this.targetEntityAt(this.game.worldPos(mouse));
+        if (this.target && Helper.onInterval(this, "fireMissile", 0.5)) {
+            this.game.playerCallFunction("s_launchMissile", this.target.id);
+        }
+        return res;
     }
 
     onUpdate(time_elapsed) {
