@@ -4,7 +4,6 @@ const getServerToken = require('../server_token/getServerToken');
 module.exports = function (user_id, map, map_coordinate) {
     const server_token = getServerToken();
 
-    console.log("set user pos", process.env.SPACE_CITIZEN_API_URL + '/api/users/changepos');
     return (new Promise(function (resolve, reject) {
         httpPost(process.env.SPACE_CITIZEN_API_URL + '/api/users/changepos',
             {
