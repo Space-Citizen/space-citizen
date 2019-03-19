@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mysql = require('mysql');
 const morgan = require('morgan');
 const app = express();
@@ -7,8 +8,8 @@ const router = express.Router();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/public/', express.static('public'));
-app.use('/static/common/', express.static('common'));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/static/common', express.static(path.join(__dirname, 'common')));
 app.use(morgan('dev'));
 //Database
 
