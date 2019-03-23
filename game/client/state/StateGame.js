@@ -11,10 +11,10 @@ class StateGame extends IState {
         this.average_ping_ms = 1;
         this.self = null;
         this.pos = null;
-        this.minimap = this.addUi("minimap", new UiMinimap(this));
-        //this.chat = this.addUi("chat", new UiChat(this));
-        this.perf_info = this.addUi("perf_info", new UiPerfInfo(this));
-        this.aim = this.addUi("aim", new UiAim(this));
+        this.minimap = this.addUi(new UiMinimap(this));
+        //this.chat = this.addUi(new UiChat(this));
+        this.perfinfo = this.addUi(new UiPerfInfo(this));
+        this.aim = this.addUi(new UiAim(this));
 
         this.socket.on(Events.CONNECT, this.eventConnect.bind(this));
         this.socket.on(Events.DISCONNECT, this.eventDisconnect.bind(this));
@@ -121,8 +121,8 @@ class StateGame extends IState {
         this.uis = {};
     }
 
-    addUi(name, ui) {
-        this.uis[name] = ui;
+    addUi(ui) {
+        this.uis[ui.constructor.name] = ui;
         return ui;
     }
 
