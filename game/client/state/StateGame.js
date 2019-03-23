@@ -8,6 +8,8 @@ class StateGame extends IState {
         this.initUis();
         this.time_sent_ping = null; // time last ping was sent
         this.ping_ms = null; // current ping
+        this.ups = null // server update per second
+        this.last_server_update = null;
         this.average_ping_ms = 1;
         this.self = null;
         this.pos = null;
@@ -78,6 +80,9 @@ class StateGame extends IState {
     }
 
     eventUpdateEntities(entities_info) {
+        if (this.last_server_update)
+            this.ups = 1 / ((Date.now() - this.last_server_update) / 1000);
+        this.last_server_update = Date.now();
         //async >> await sleep(1000);
         for (var x in entities_info) {
             var server_entity = entities_info[x];
