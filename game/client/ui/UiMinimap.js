@@ -90,6 +90,7 @@ class UiMinimap extends BaseUi {
         var bottom_right = this.worldPosToMinimap(
             this.game.worldPos(new Position(canvas.width, canvas.height))
         );
+        context.beginPath();
         context.strokeStyle = "white";
         context.rect(
             top_left.x, top_left.y,

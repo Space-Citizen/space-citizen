@@ -13,14 +13,16 @@ class Manager {
 
   onUpdate(time_elapsed) {
 
-    // TODO optimize
-    if (window.innerHeight * Constants.SCREEN_RATIO > window.innerWidth) {
-      // if height > width
-      canvas.width = window.innerWidth;
-      canvas.height = canvas.width / Constants.SCREEN_RATIO;
-    } else {
-      canvas.height = window.innerHeight;
-      canvas.width = canvas.height * Constants.SCREEN_RATIO;
+    if (Helper.onInterval(this, "screen_size", 0.3)) {
+      // TODO optimize
+      if (window.innerHeight * Constants.SCREEN_RATIO > window.innerWidth) {
+        // if height > width
+        canvas.width = window.innerWidth;
+        canvas.height = canvas.width / Constants.SCREEN_RATIO;
+      } else {
+        canvas.height = window.innerHeight;
+        canvas.width = canvas.height * Constants.SCREEN_RATIO;
+      }
     }
 
     canvasClear();

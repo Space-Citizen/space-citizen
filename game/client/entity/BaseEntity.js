@@ -30,16 +30,18 @@ class BaseEntity {
 
   _updateAudios() {
     // update audio volumes
-    var dist = Helper.dist(this.pos, this.game.self.pos);
+    if (Helper.onInterval(this, "updateAudio", 0.2)) {
+      var dist = Helper.dist(this.pos, this.game.self.pos);
 
-    for (var x = 0; x < this._audios.length; x += 1) {
-      var audio = this._audios[x];
-      if (dist > Constants.SOUND_RANGE) {
-        audio.setVolume(0);
-      } else {
-        audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 0.3, 0));
+      for (var x = 0; x < this._audios.length; x += 1) {
+        var audio = this._audios[x];
+        if (dist > Constants.SOUND_RANGE) {
+          audio.setVolume(0);
+        } else {
+          audio.setVolume(Helper.map(dist, 0, Constants.SOUND_RANGE, 0.3, 0));
+        }
+        //console.log("volume: " + audio._audio.volume);
       }
-      //console.log("volume: " + audio._audio.volume);
     }
   }
 
