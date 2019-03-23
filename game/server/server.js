@@ -181,7 +181,7 @@ class Server {
   start() {
     if (!this.running) {
       this.running = true;
-      var game_loop = new objects.GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+      var game_loop = new objects.GameLoop(this.onUpdate.bind(this), Constants.SERVER_FPS);
       game_loop.start();
     }
   }

@@ -13,6 +13,7 @@ module.exports = function (user_id, map, map_coordinate) {
                 user_id: user_id
             },
             server_token).then((response) => {
+                console.log("reponse: ", response.body);
                 if (!response || !response.body) {
                     reject("Response body not found");
                     return;

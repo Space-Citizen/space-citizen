@@ -6,7 +6,8 @@ var __SCREEN_RATIO = (16 / 9);
 var __X_VIEW_RANGE = 300;
 
 var Constants = {
-  FRAMERATE: 30,
+  SERVER_FPS: 30,
+  CLIENT_FPS: 30,
   CHAT_PORT: ':' + __CHAT_PORT,
   SERVER: ':' + __PORT, // used by client (io.connect)
   WORLD_SIZE_X: __WORLD_SIZE * __SCREEN_RATIO,

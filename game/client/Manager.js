@@ -1,7 +1,7 @@
 
 class Manager {
   constructor() {
-    this.game_loop = new GameLoop(this.onUpdate.bind(this), Constants.FRAMERATE);
+    this.game_loop = new GameLoop(this.onUpdate.bind(this), Constants.CLIENT_FPS);
     this.state = new StateLoading();
     this.state.init(this);
   }
