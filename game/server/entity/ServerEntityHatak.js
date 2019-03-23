@@ -38,8 +38,8 @@ class ServerEntityHatak extends BaseServerEntityShip {
         if (this.onInterval("change_target", 3)) {
             this.setRandomTarget();
         }
-        if (this.onInterval("timer_launch_missile", 1.5)) {
-            var target = this.world.getClosestPlayer(this.s_pos, Constants.Y_VIEW_RANGE);
+        if (this.onInterval("timer_launch_missile", 2)) {
+            var target = this.world.getClosestPlayer(this.s_pos, Constants.Y_VIEW_RANGE * 0.8);
             if (target) {
                 this.launchMissile(target);
             }

@@ -12,3 +12,5 @@ SPACE_CITIZEN_DB_PASSWORD="Password to access the database"
 SPACE_CITIZEN_DB_URL="Url of the Database"
 SPACE_CITIZEN_API_URL="Url of the api"
 ```
+
+Try it yourself! https://space-citizen.cf
