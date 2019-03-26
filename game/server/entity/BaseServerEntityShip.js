@@ -10,13 +10,15 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.stop_target_dist = 2; // stop ship at this target dist
         this.c_name = name;
         this.s_target = null;
-        this.s_hp = 100;
+        this.c_max_hp = ship.getMaxHp();
+        this.s_hp = this.c_max_hp;
         this.s_bearing = 0;
         // set ship variables:
         this.c_ship_type = ship.getType();
         this.speed = ship.getSpeed();
         this.inertia_length = ship.getInertiaLength();
     }
+
 
     teleportTo(world, dest_x, dest_y) {
         super.teleportTo(world, dest_x, dest_y);

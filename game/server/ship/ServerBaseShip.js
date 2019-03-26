@@ -1,6 +1,10 @@
 
 class ServerBaseShip {
 
+    getMaxHp() {
+        return 100;
+    }
+
     getSpeed() {
         // m/s
         return 60;
