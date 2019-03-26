@@ -55,7 +55,7 @@ function isOutsideMap(world_pos) {
 }
 
 
-function drawHealthBar(x, y, size, hp_percent) {
+function drawHealthBar(x, y, size, hp_percent, shield_percent) {
     var x_size = convertSizeToScreen(size);
     var y_size = x_size / 30;
 
@@ -63,8 +63,11 @@ function drawHealthBar(x, y, size, hp_percent) {
     var y = y - y_size / 2;
 
     context.fillStyle = "grey"
-    context.fillRect(x, y, x_size, y_size);
+    context.fillRect(x, y, x_size, y_size * 2);
 
     context.fillStyle = "green"
     context.fillRect(x, y, x_size * hp_percent / 100, y_size);
+
+    context.fillStyle = "blue"
+    context.fillRect(x, y + y_size, x_size * shield_percent / 100, y_size);
 }

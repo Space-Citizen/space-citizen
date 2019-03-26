@@ -1,7 +1,7 @@
 
 class BaseShip {
     constructor() {
-
+        this.hp_bar_size = 30;
     }
 
     getBodySize() {
@@ -29,18 +29,20 @@ class BaseShip {
         );
     }
 
-    drawHp(pos, hp_percent) {
+    drawHp(pos, hp_percent, shield_percent) {
         var hp_offset = this.getHpOffset();
         drawHealthBar(
             pos.x + hp_offset.x,
-            pos.y + hp_offset.y, 30,
-            hp_percent
+            pos.y + hp_offset.y,
+            30,
+            hp_percent,
+            shield_percent,
         );
     }
 
-    draw(pos, name, hp_percent, bearing, show_thrusters) {
+    draw(pos, name, hp_percent, shield_percent, bearing, show_thrusters) {
         this.drawShipBody(pos, bearing, show_thrusters);
-        this.drawHp(pos, hp_percent);
+        this.drawHp(pos, hp_percent, shield_percent);
         this.drawName(pos, name);
     }
 
