@@ -4,6 +4,7 @@ import { get } from '../../misc/axios';
 import Leftnav from '../navbar/leftnav';
 import Hangar from './hangar';
 import Shop from './shop';
+import Market from './market';
 import { isConnected } from '../../misc/token';
 import '../css/core.css';
 
@@ -35,6 +36,7 @@ class Core extends Component {
                     <div className="col-10">
                         <Route path="/core/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
                         <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} />} />
+                        <Route path="/core/market" render={(props) => <Market {...props} connectedUser={this.state.connectedUser} />} />
                     </div>
                 </div>
             </div>
