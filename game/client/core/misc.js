@@ -65,9 +65,9 @@ function drawHealthBar(x, y, size, hp_percent, shield_percent) {
     context.fillStyle = "grey"
     context.fillRect(x, y, x_size, y_size * 2);
 
-    context.fillStyle = "green"
-    context.fillRect(x, y, x_size * hp_percent / 100, y_size);
-
     context.fillStyle = "blue"
-    context.fillRect(x, y + y_size, x_size * shield_percent / 100, y_size);
+    context.fillRect(x, y, x_size * shield_percent / 100, y_size);
+
+    context.fillStyle = "green"
+    context.fillRect(x, y + y_size, x_size * hp_percent / 100, y_size);
 }
