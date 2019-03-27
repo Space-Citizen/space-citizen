@@ -4,13 +4,14 @@ var BaseServerEntity = require("./BaseServerEntity");
 var api = require('../api');
 
 class BaseServerEntityShip extends BaseServerEntity {
-    constructor(world, x, y, id, name, ship) {
+    constructor(world, x, y, id, name, ship, items_name) {
         super(world, x, y, id);
         this.ship = ship;
         this.stop_target_dist = 2; // stop ship at this target dist
         this.speed = ship.getSpeed();
         this.inertia_length = ship.getInertiaLength();
         this.shield_regen = 1;
+        this.c_items_name = items_name;
         this.c_name = name;
         this.s_target = null;
         this.c_max_shield = 50;
@@ -18,8 +19,11 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.c_max_hp = ship.getMaxHp();
         this.s_hp = this.c_max_hp;
         this.s_bearing = 0;
-        // set ship variables:
         this.c_ship_type = ship.getType();
+    }
+
+    initItems() {
+
     }
 
 
