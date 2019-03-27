@@ -16,7 +16,11 @@ class BaseEntityShip extends BaseEntity {
         this.bearing = this.s_bearing;
         var screen_pos = this.getScreenPos();
         var hp_percent = this.s_hp / this.c_max_hp * 100;
-        var shield_percent = this.s_shield / this.c_max_shield * 100;
+        var shield_percent;
+        if (this.c_max_shield == 0)
+            shield_percent = 0;
+        else
+            shield_percent = this.s_shield / this.c_max_shield * 100;
 
         if (this.isAlive()) {
             var show_thrusters = this.s_target ? true : false;
