@@ -12,7 +12,7 @@ const api = require('../api');
 
 class ServerEntityHatak extends BaseServerEntityShip {
     constructor(world, x, y, id) {
-        super(world, x, y, id, "Hatak", new ServerHatak());
+        super(world, x, y, id, "Hatak", new ServerHatak(), ["shield_mk1"]);
         this.c_faction = "npc";
         this.onInit();
     }

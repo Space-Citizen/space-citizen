@@ -3,6 +3,11 @@ class ServerBaseItem {
 
     constructor(entity_ship) {
         this.ship = entity_ship;
+        this.onInit();
+    }
+
+    onInit() {
+
     }
 
     getType() {

@@ -42,7 +42,8 @@ class Client {
       map_coordinate_x: Constants.WORLD_SIZE_X / 2,
       map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
       user_id: "tester",
-      token: "abc"
+      token: "abc",
+      items: ["shield_mk1"],
     };
     this.server.spawnPlayer(this.socket, user_info);
   }
@@ -161,7 +162,7 @@ class Server {
     var entity = new Entity.ServerEntityPlayer(
       world,
       pos_x, pos_y,
-      socket, name, ship,
+      socket, name, ship, [],
       user_info.token, user_info.faction, user_info.id
     );
     return entity;

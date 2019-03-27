@@ -1,6 +1,7 @@
 
 var Helper = require("../../common/Helper");
 var BaseServerEntity = require("./BaseServerEntity");
+var item = require("../item")
 var api = require('../api');
 
 class BaseServerEntityShip extends BaseServerEntity {
@@ -10,20 +11,33 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.stop_target_dist = 2; // stop ship at this target dist
         this.speed = ship.getSpeed();
         this.inertia_length = ship.getInertiaLength();
-        this.shield_regen = 1;
+        this.shield_regen = 0;
         this.c_items_name = items_name;
         this.c_name = name;
         this.s_target = null;
-        this.c_max_shield = 50;
+        this.c_max_shield = 0;
         this.s_shield = this.c_max_shield;
         this.c_max_hp = ship.getMaxHp();
         this.s_hp = this.c_max_hp;
         this.s_bearing = 0;
         this.c_ship_type = ship.getType();
+        this.initItems();
     }
 
     initItems() {
-
+        var items = {
+            shield_mk1: item.ServerItemShieldMk1
+        }
+        this.items = [];
+        for (var x in this.c_items_name) {
+            var item_name = this.c_items_name[x];
+            var item_class = items[item_name];
+            if (item_class) {
+                this.items.push(new items[item_name](this));
+            } else {
+                console.log("Ignored item: " + item_name);
+            }
+        }
     }
 
 
