@@ -54,7 +54,6 @@ function isOutsideMap(world_pos) {
     return (false);
 }
 
-
 function drawHealthBar(x, y, size, hp_percent, shield_percent) {
     var x_size = convertSizeToScreen(size);
     var y_size = x_size / 30;
