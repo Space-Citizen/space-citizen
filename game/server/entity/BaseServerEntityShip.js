@@ -59,10 +59,12 @@ class BaseServerEntityShip extends BaseServerEntity {
     }
 
     shipHit(attacker_entity, hp) {
-        if (this.s_shield - hp > 0) {
+        var shield_after_hit = this.s_shield - hp;
+        if (shield_after_hit > 0) {
             this.s_shield -= hp;
         } else {
-            this.s_hp -= hp;
+            this.s_hp -= -shield_after_hit;
+            this.s_shield = 0;
         }
         if (this.s_hp <= 0) {
             // Give rewards to the user that killed the ship
