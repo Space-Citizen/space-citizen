@@ -37,6 +37,7 @@ const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
 const ShipRoutes = require('./src/routes/ShipRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
+//const MarketRoutes = require('./src/routes/MarketRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
@@ -47,6 +48,7 @@ router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
 router.use('/ships', ShipRoutes);
 router.use('/users', UserRoutes);
+//router.use('/market', MarketRoutes);
 
 //Use the router
 app.use('/api', router);
