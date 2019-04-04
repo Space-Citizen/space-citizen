@@ -65,7 +65,8 @@ class BaseEntity {
     if (bearing) {
       var dist = Helper.dist(this.pos, this.s_pos);
       if (dist > 0.1) {
-        Helper.moveInDirection(this.pos, bearing, dist * 5, time_elapsed);
+        var multiplier = Math.min(0.9, time_elapsed * 5);
+        Helper.moveInDirection(this.pos, bearing, dist, multiplier);
       }
     }
 
