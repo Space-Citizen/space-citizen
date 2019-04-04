@@ -73,7 +73,7 @@ class BaseEntity {
     }
     var time_elapsed_ms = time_elapsed * 1000;
     var multiplier = ((1 / ping_ms) * (1 / time_elapsed_ms)) * 1000;
-
+    multiplier /= 2;
     var dir_x = (this.s_pos.x - this.pos.x);
     var dir_y = (this.s_pos.y - this.pos.y);
     this.pos.x += dir_x * Math.min(multiplier, 1);
