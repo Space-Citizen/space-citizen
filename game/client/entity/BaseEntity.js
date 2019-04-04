@@ -64,7 +64,9 @@ class BaseEntity {
     var bearing = Helper.getDirection(this.pos, this.s_pos);
     if (bearing) {
       var dist = Helper.dist(this.pos, this.s_pos);
-      Helper.moveInDirection(this.pos, bearing, dist * 5, time_elapsed);
+      if (dist > 0.1) {
+        Helper.moveInDirection(this.pos, bearing, dist * 5, time_elapsed);
+      }
     }
 
     //var bearing_diff = (this.s_bearing - this.bearing);
