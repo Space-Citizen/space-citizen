@@ -4,6 +4,10 @@ class Helper {
     static moveInDirection(pos, bearing, speed, time_elapsed) {
         var dir_x = Math.cos(bearing) * speed;
         var dir_y = Math.sin(bearing) * speed;
+        if (time_elapsed >= 1) {
+            // we dont want to go further than target
+            time_elapsed = 1;
+        }
         pos.x += dir_x * time_elapsed;
         pos.y += dir_y * time_elapsed;
     }
