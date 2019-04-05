@@ -28,6 +28,16 @@ class BaseEntityShip extends BaseEntity {
                 this.bearing,
                 show_thrusters
             );
+            /*
+            this.ship.draw(
+                this.game.relPos(this.s_pos),
+                this.c_name,
+                hp_percent,
+                shield_percent,
+                this.bearing,
+                show_thrusters
+            );
+            */
 
         } else {
             this.sprite_explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
