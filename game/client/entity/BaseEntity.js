@@ -66,7 +66,7 @@ class BaseEntity {
     if (bearing) {
       var dist = Helper.dist(this.pos, this.s_pos);
       if (dist > 0.1) {
-        var speed = Helper.regul(this, dist, 0.05, 0.5, 0.4);
+        var speed = Helper.regul(this, dist, 0.01, 0.2, 0.7);
         //console.log(speed);
         Helper.moveInDirection(
           this.pos,

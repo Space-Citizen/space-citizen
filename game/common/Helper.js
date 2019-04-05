@@ -1,7 +1,7 @@
 
 class Helper {
 
-    static regul(self, err, kp, kd, ki, kia = 15) {
+    static regul(self, err, kp, kd, ki, kia = 10) {
         // regulation algorithm
         // self, must be an object which will be used to store variables (use 'this')
         // kp, kd and ki are weight variables
