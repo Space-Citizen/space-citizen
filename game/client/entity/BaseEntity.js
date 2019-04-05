@@ -67,7 +67,7 @@ class BaseEntity {
     if (bearing) {
       var dist = Helper.dist(this.pos, this.s_pos);
       if (dist > 0.1) {
-        this.curr_smooth_speed = (this.curr_smooth_speed * 3 + dist) / 4;
+        this.curr_smooth_speed = (this.curr_smooth_speed + dist) / 2;
         Helper.moveInDirection(
           this.pos,
           bearing,
