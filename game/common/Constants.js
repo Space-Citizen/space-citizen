@@ -7,7 +7,7 @@ var __X_VIEW_RANGE = 300;
 
 var Constants = {
   SERVER_FPS: 30,
-  CLIENT_FPS: 30,
+  CLIENT_FPS: 60,
   CHAT_PORT: ':' + __CHAT_PORT,
   SERVER: ':' + __PORT, // used by client (io.connect)
   WORLD_SIZE_X: __WORLD_SIZE * __SCREEN_RATIO,

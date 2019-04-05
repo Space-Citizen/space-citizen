@@ -1,7 +1,7 @@
 
 class Helper {
 
-    static regul(self, err, kp, kd, ki, kia = 10) {
+    static regul(self, err, kp, kd, ki, kia = 15) {
         // regulation algorithm
         // self, must be an object which will be used to store variables (use 'this')
         // kp, kd and ki are weight variables
@@ -14,7 +14,7 @@ class Helper {
             self.__p_err = err; // previous err
         }
         self.__err_average = (self.__err_average * kia + err) / (kia + 1);
-        var res = kp * err + kd * (err - self.__p_err) + ki * self.__err_average;
+        var res = (kp * err) + kd * (err - self.__p_err) + (ki * self.__err_average);
         self.__p_err = err;
         return res;
     }
