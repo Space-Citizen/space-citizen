@@ -1,6 +1,23 @@
 
 class Helper {
 
+    static regul(self, err, kp, kd, ki) {
+        // regulation algorithm
+        // self, must be an object which will be used to store variables (use 'this')
+        // kp, kd and ki are weight variables
+        // kp short time variation
+        // kd medium time variation
+        // ki long time variation
+        if (!self.__p_err) {
+            self.__err_average = err; // average err
+            self.__p_err = err; // previous err
+        }
+        self.__err_average = (self.__err_average + err) / 2;
+        var res = kp * err + kd * (err - self.__p_err) + ki * self.__err_average;
+        self.__p_err = err;
+        return res;
+    }
+
     static moveInDirection(pos, bearing, speed, time_elapsed) {
         var dir_x = Math.cos(bearing) * speed;
         var dir_y = Math.sin(bearing) * speed;
