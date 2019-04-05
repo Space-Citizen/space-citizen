@@ -9,7 +9,7 @@ class BaseEntity {
     this.type = this.s_type;
     this.game.addEntity(this);
     this.killed = false; // var set in listener >> StateGame
-    this.smooth_multiplier = 9;
+    this.smooth_multiplier = 8;
   }
 
   isAlive() {
@@ -66,7 +66,7 @@ class BaseEntity {
     if (bearing) {
       var dist = Helper.dist(this.pos, this.s_pos);
       if (dist > 0.1) {
-        var speed = Helper.regul(this, dist, 0.01, 0.2, 0.7);
+        var speed = Helper.regul(this, dist, 0.0, 0.1, 0.8);
         //console.log(speed);
         Helper.moveInDirection(
           this.pos,
