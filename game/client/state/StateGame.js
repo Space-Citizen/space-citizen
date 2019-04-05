@@ -80,13 +80,13 @@ class StateGame extends IState {
     }
 
     eventUpdateEntities(entities_info) {
+        var now = Date.now();
         if (this.last_server_update) {
-            var dt = Date.now() - this.last_server_update;
+            var dt = now - this.last_server_update;
             dt = Math.max(dt, 1); // we dont want to see 'infinite' UPS
             this.ups = 1 / (dt / 1000);
         }
-
-        this.last_server_update = Date.now();
+        this.last_server_update = now;
         //async >> await sleep(1000);
         for (var x in entities_info) {
             var server_entity = entities_info[x];
