@@ -12,7 +12,7 @@ class Helper {
             self.__err_average = err; // average err
             self.__p_err = err; // previous err
         }
-        self.__err_average = (self.__err_average + err) / 2;
+        self.__err_average = (self.__err_average * 10 + err) / 11;
         var res = kp * err + kd * (err - self.__p_err) + ki * self.__err_average;
         self.__p_err = err;
         return res;
