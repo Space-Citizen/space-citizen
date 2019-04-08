@@ -9,6 +9,21 @@ class BaseServerEntity {
     this.id = id;
     this.s_pos = new objects.Position(x, y);
     this.s_type = this.getType();
+    this.childs = [];
+    this.parent = null;
+  }
+
+  runOnChilds(func) {
+    for (var x in this.childs) {
+      var child = this.childs[x];
+      if (child)
+        func(child);
+    }
+  }
+
+  addChild(entity) {
+    this.childs.push(entity);
+    entity.parent = this;
   }
 
   onInterval(name, time_sec) {
@@ -32,6 +47,9 @@ class BaseServerEntity {
     this.world = world;
     this.s_pos.x = dest_x;
     this.s_pos.y = dest_y;
+    this.runOnChilds(function (child) {
+      child.teleportTo(world, child.s_pos.x, child.s_pos.y);
+    });
     this.world.addEntity(this);
   }
 
@@ -50,10 +68,16 @@ class BaseServerEntity {
   }
 
   delete() {
+    this.runOnChilds(function (child) {
+      child.delete();
+    });
     this.world.deleteEntity(this);
   }
 
   kill() {
+    this.runOnChilds(function (child) {
+      child.kill();
+    });
     this.world.killEntity(this);
   }
 
