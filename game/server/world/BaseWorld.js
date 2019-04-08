@@ -9,6 +9,7 @@ class BaseWorld {
         this.entities = {};
         this.onInit();
         this._id_count = 0;
+        this._id_prefix = 0;
     }
 
     onInterval(name, time_sec) {
@@ -16,8 +17,12 @@ class BaseWorld {
     }
 
     getFreeId() {
+        if (this._id_count >= Number.MAX_SAFE_INTEGER - 1) {
+            this._id_count = 0;
+            this._id_prefix += 1;
+        }
         this._id_count += 1;
-        return "FID_" + this._id_count;
+        return "FID_" + this._id_prefix + '_' + this._id_count;
     }
 
     onInit() {

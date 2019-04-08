@@ -45,6 +45,10 @@ class BaseServerEntity {
     });
   }
 
+  isItem() {
+    return false;
+  }
+
   delete() {
     this.world.deleteEntity(this);
   }
