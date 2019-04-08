@@ -1,9 +1,8 @@
 
 var Helper = require("../../common/Helper");
 var BaseServerEntity = require("./BaseServerEntity");
-var item = require("./item");
+var Item = require("./item");
 var api = require('../api');
-
 
 class BaseServerEntityShip extends BaseServerEntity {
     constructor(world, x, y, id, name, ship, items_name) {
@@ -29,14 +28,14 @@ class BaseServerEntityShip extends BaseServerEntity {
 
     initItems() {
         var classes = {
-            shield_mk1: item.ServerItemShieldMk1
+            shield_mk1: Item.ServerItemShieldMk1
         }
         this.items = [];
         for (var x in this.items_name) {
             var item_name = this.items_name[x];
             if (item_name in classes) {
                 var item = new classes[item_name](this);
-                items.push(item);
+                this.items.push(item);
             }
         }
     }
