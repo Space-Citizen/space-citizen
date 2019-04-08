@@ -1,11 +1,14 @@
 
 var Helper = require("../../common/Helper");
 var BaseServerEntity = require("./BaseServerEntity");
+var item = require("./item");
 var api = require('../api');
 
+
 class BaseServerEntityShip extends BaseServerEntity {
-    constructor(world, x, y, id, name, ship) {
+    constructor(world, x, y, id, name, ship, items_name) {
         super(world, x, y, id);
+        this.items_name = items_name;
         this.ship = ship;
         this.stop_target_dist = 2; // stop ship at this target dist
         this.speed = ship.getSpeed();
@@ -20,6 +23,22 @@ class BaseServerEntityShip extends BaseServerEntity {
         this.s_bearing = 0;
         // set ship variables:
         this.c_ship_type = ship.getType();
+        this.items = null;
+        this.initItems();
+    }
+
+    initItems() {
+        var classes = {
+            shield_mk1: item.ServerItemShieldMk1
+        }
+        this.items = [];
+        for (var x in this.items_name) {
+            var item_name = this.items_name[x];
+            if (item_name in classes) {
+                var item = new classes[item_name](this);
+                items.push(item);
+            }
+        }
     }
 
 

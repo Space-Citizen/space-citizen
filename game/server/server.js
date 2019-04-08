@@ -152,6 +152,11 @@ class Server {
     var name = user_info.username;
     var pos_x = user_info.map_coordinate_x;
     var pos_y = user_info.map_coordinate_y;
+    var items_name = user_info.items;
+    if (!items_name) {
+      items_name = [];
+      console.log("No items found for player: " + name);
+    }
     const NewShip = Ship[user_info.ship_type];
     if (!NewShip) {
       console.log("This ship type does not exist: " + user_info.ship_type);
@@ -161,7 +166,7 @@ class Server {
     var entity = new Entity.ServerEntityPlayer(
       world,
       pos_x, pos_y,
-      socket, name, ship,
+      socket, name, ship, items_name,
       user_info.token, user_info.faction, user_info.id
     );
     return entity;
