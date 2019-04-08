@@ -9,6 +9,7 @@ class BaseEntity {
     this.type = this.s_type;
     this.game.addEntity(this);
     this.killed = false; // var set in listener >> StateGame
+    this.smooth_multiplier = 8;
   }
 
   isAlive() {
@@ -61,28 +62,25 @@ class BaseEntity {
   }
 
   onUpdate(time_elapsed) {
-
-    var ping_ms = this.average_ping_ms;
-    if (!ping_ms || ping_ms < 50) {
-      // Actually we dont want the entity to teleport when pings gets low
-      ping_ms = 50;
+    var bearing = Helper.getDirection(this.pos, this.s_pos);
+    if (bearing) {
+      var dist = Helper.dist(this.pos, this.s_pos);
+      if (dist > 0.1) {
+        var speed = Helper.regul(this, dist, 0.0, 0.1, 0.8);
+        //console.log(speed);
+        Helper.moveInDirection(
+          this.pos,
+          bearing,
+          speed,
+          time_elapsed * this.smooth_multiplier
+        );
+      }
     }
-    if (ping_ms > 300) {
-      // We also dont want the entity to stop when ping gets too high
-      ping_ms = 300;
-    }
-    var time_elapsed_ms = time_elapsed * 1000;
-    var multiplier = ((1 / ping_ms) * (1 / time_elapsed_ms)) * 1000;
-
-    var dir_x = (this.s_pos.x - this.pos.x);
-    var dir_y = (this.s_pos.y - this.pos.y);
-    this.pos.x += dir_x * Math.min(multiplier, 1);
-    this.pos.y += dir_y * Math.min(multiplier, 1);
 
     //var bearing_diff = (this.s_bearing - this.bearing);
     // TODO: smooth bearing
     // TODO: _onUpdate ?
-    if (Helper.onInterval(this, "updateAudio", 0.1) && 0) {
+    if (Helper.onInterval(this, "updateAudio", 0.1)) {
       this._updateAudios();
     }
   }

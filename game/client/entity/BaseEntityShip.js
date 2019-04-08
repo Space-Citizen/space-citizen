@@ -32,7 +32,6 @@ class BaseEntityShip extends BaseEntity {
                 this.bearing,
                 show_thrusters
             );
-
         } else {
             this.sprite_explosion.drawCenterAt(screen_pos.x, screen_pos.y, this.bearing);
             if (this.sprite_explosion.isFinished()) {

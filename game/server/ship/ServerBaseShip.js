@@ -7,7 +7,7 @@ class ServerBaseShip {
 
     getSpeed() {
         // m/s
-        return 60;
+        return 50;
     }
 
     getInertiaLength() {
