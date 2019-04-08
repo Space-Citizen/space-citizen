@@ -10,6 +10,7 @@ function createEntity(server_entity, game) {
         "background": EntityBackground,
         "missile": EntityMissile,
         "hatak": EntityHatak,
+        "shield_mk1": ItemShieldMk1
     }
     var res = new EntityClasses[server_entity.s_type](server_entity, game);
     return res;

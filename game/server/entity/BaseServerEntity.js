@@ -24,6 +24,7 @@ class BaseServerEntity {
   addChild(entity) {
     this.childs.push(entity);
     entity.parent = this;
+    entity.s_parent_id = this.id;
   }
 
   onInterval(name, time_sec) {

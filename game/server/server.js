@@ -42,6 +42,7 @@ class Client {
       map_coordinate_x: Constants.WORLD_SIZE_X / 2,
       map_coordinate_y: Constants.WORLD_SIZE_Y / 2,
       user_id: "tester",
+      items: ["shield_mk1"],
       token: "abc"
     };
     this.server.spawnPlayer(this.socket, user_info);
