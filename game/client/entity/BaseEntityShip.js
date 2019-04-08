@@ -4,6 +4,23 @@ class BaseEntityShip extends BaseEntity {
         this.hit_circle = this.ship.getBodySize() / 2;
         this.sprite_explosion = ressources.EXPLOSION_2.clone();
         this.sound_explosion = this.getAudio(ressources.SOUND_EXPLOSION_1);
+        this.initItems()
+    }
+
+    initItems() {
+        var items = {
+            shield_mk1: ItemShieldMk1
+        }
+        this.items = [];
+        for (var x in this.c_items_name) {
+            var item_name = this.c_items_name[x];
+            var item_class = items[item_name];
+            if (item_class) {
+                this.items.push(new items[item_name](this));
+            } else {
+                console.log("Ignored item: " + item_name);
+            }
+        }
     }
 
     getScreenPos() {

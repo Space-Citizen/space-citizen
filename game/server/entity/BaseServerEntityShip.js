@@ -40,7 +40,6 @@ class BaseServerEntityShip extends BaseServerEntity {
         }
     }
 
-
     teleportTo(world, dest_x, dest_y) {
         super.teleportTo(world, dest_x, dest_y);
         this.s_target = null;
