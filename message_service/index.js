@@ -13,7 +13,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('message:authenticate', function (data) {
         request.get({
-            url: process.env.SPACE_CITIZEN_API_URL + '/api/me/info',
+            url: process.env.SPACE_CITIZEN_API_URL + '/api/users/private_info',
             headers: { "x-access-token": data.token }
         }, function (error, response) {
             var user_info = undefined;

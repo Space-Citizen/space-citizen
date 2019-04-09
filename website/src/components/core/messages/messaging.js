@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import { Link } from "react-router-dom";
-import { getToken } from '../../misc/token';
-import { get, post } from '../../misc/axios';
-import { createNotification } from '../../misc/notification';
-import '../css/messages.css';
+import { getToken } from '../../../misc/token';
+import { get, post } from '../../../misc/axios';
+import { createNotification } from '../../../misc/notification';
+import '../../css/messages.css';
 
 class Messaging extends Component {
     constructor() {
@@ -71,7 +71,7 @@ class Messaging extends Component {
         var currentContactId = Number(this.getCurrentContactId());
 
         if (currentContactId >= 0 && ((contact && contact.id !== currentContactId) || (!contact))) {
-            get('/api/users/info/' + this.getCurrentContactId()).then(response => {
+            get('/api/users/public_info/' + this.getCurrentContactId()).then(response => {
                 this.setState({ contact: response.data });
             });
             get('/api/messages/get_messages_from/' + this.getCurrentContactId()).then(response => {
@@ -120,8 +120,8 @@ class Messaging extends Component {
             return (<div className="text-center"><i>Select a contact</i></div>);
         return (
             <div className="row">
-                <img className="center-block col-10 offset-1" src={'/public/profile_pictures/' + contact.profile_picture} alt="avatar" />
-                <Link className="text-center col-10 offset-1" to={'/profile/' + contact.id}>{contact.username}</Link>
+                <img className="center-block col-12" src={'/public/profile_pictures/' + contact.profile_picture} alt="avatar" />
+                <Link className="text-center col-1 offset-1" to={'/profile/' + contact.id}>{contact.username}</Link>
             </div>
         );
     }
@@ -133,7 +133,7 @@ class Messaging extends Component {
             return;
 
         return (contactList.map(contact => {
-            return (<Link className="text-center col-6" to={'/messages/' + contact.id} key={contact.id}>
+            return (<Link className="text-center col-6" to={'/core/messages/' + contact.id} key={contact.id}>
                 <div className={"col-12 messages-contact" + (contact.id === Number(this.getCurrentContactId()) ? "-selected" : "")}>
                     <img className="col-6" src={'/public/profile_pictures/' + contact.profile_picture} alt="avatar" />
                     <span>{contact.username}</span>

@@ -3,8 +3,11 @@ const router = express.Router();
 const UserController = require('../controllers/UserControllers/');
 const { requireUserToken, requireServerToken } = require("../routesRestrictions/");
 
-//Get information about a user according to it's ID or username
-router.get('/info/:id', requireUserToken(UserController.getProfileInfo));
+//Get information about a user according to it's id
+router.get('/public_info/:id', requireUserToken(UserController.getPublicInfo));
+
+//Get information about the connected user
+router.get('/private_info', requireUserToken(UserController.getPrivateInfo));
 
 // Get a list of all users
 router.get('/list', UserController.listUsers);

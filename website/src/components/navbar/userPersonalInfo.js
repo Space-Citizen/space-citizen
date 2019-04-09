@@ -12,7 +12,7 @@ class UserPersonalInfo extends Component {
     }
 
     componentDidMount() {
-        get('/api/me/info').then(info => {
+        get('/api/users/private_info').then(info => {
             this.setState({ user_info: info.data });
             get('/api/factions/info/' + info.data.faction).then(response => {
                 this.setState({ faction_info: response.data });
@@ -47,7 +47,7 @@ class UserPersonalInfo extends Component {
                     </div>
                     <div className="col-6 col-md-12 col-sm-12 leftnav-user-info" title="Faction">
                         <div className="float-left">
-                            <i className="fas fa-user-friends"></i>
+                            <i className="fas fa-users"></i>
                             <span className="leftnav-user-info-box-text">{faction_info.name}</span>
                         </div>
                     </div>
