@@ -1,6 +1,14 @@
 
 class Helper {
 
+    static intEncode(x) {
+        return x.toString(36);
+    }
+
+    static intDecode(str) {
+        return parseInt(str, 36);
+    }
+
     static regul(self, err, kp, kd, ki, kia = 10) {
         // regulation algorithm
         // self, must be an object which will be used to store variables (use 'this')
