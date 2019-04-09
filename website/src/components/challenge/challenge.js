@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 
 class Challenge extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      items: []
-    };
-  }
-
   render() {
     return (
       <div className="container mt-5">
