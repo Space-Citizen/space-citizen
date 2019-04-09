@@ -1,8 +1,5 @@
 
 class BaseItem extends BaseEntity {
-  onInit() {
-
-  }
 
   getHitCircle() {
     return 0;
