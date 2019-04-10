@@ -60,10 +60,6 @@ class Profile extends Component {
                 <span className="profile-user-info-levels-right">{profile_info.level + 1}</span>
               </div>
               <div className="col mt-3">
-                <b>Time played</b>
-                <p>2h</p>
-              </div>
-              <div className="col mt-3">
                 <b>Kills</b>
                 <p>7</p>
               </div>
