@@ -9,4 +9,6 @@ router.post('/addfriend/:userId', requireUserToken(FriendsController.addFriend))
 
 router.post('/removefriend/:userId', requireUserToken(FriendsController.removeFriend));
 
+router.get('/getfriends/:userId', FriendsController.getFriends);
+
 module.exports = router;

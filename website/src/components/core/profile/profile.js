@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { get } from '../../../misc/axios';
 import Loading from '../../misc/loading';
 import UserCard from '../profile/userCard';
@@ -10,6 +11,7 @@ class Profile extends Component {
     super();
     this.state = {
       profile_info: undefined,
+      friends: undefined
     };
     this.is_my_profile = undefined;
   }
@@ -18,18 +20,49 @@ class Profile extends Component {
     if (this.props.connectedUser) {
       this.setState({ profile_info: this.props.connectedUser });
       this.is_my_profile = true;
+      get('/api/friends/getfriends/' + this.props.connectedUser.id).then(response => {
+        response.data.map(user => {
+          return get('/api/users/public_info/' + user.subscribed_to).then(res => {
+            var tmp = [];
+            if (this.state.friends) tmp = this.state.friends;
+            tmp.push(res.data);
+            this.setState({ friends: tmp });
+          });
+        });
+      });
       return;
     }
     this.is_my_profile = false;
     get("/api/users/public_info/" + this.props.match.params.userId).then(response => {
       this.setState({ profile_info: response.data });
     });
+
+
+  }
+
+  displayFriends() {
+    if (!this.state.friends) return;
+    return (
+      this.state.friends.map((user, index) => {
+        return (
+          <tr key={user.id}>
+            <th scope="raw">#{index + 1}</th>
+            <td>
+              <Link to={"/profile/" + user.id} >
+                <img src={'/public/profile_pictures/' + user.profile_picture} className="img-thumbnail h-25 mr-2" alt="profile" /> {user.username}
+              </Link>
+            </td>
+            <td>{user.level}</td>
+          </tr>
+        );
+      })
+    );
   }
 
   render() {
-    const { profile_info } = this.state;
+    const { profile_info, friends } = this.state;
     const { is_my_profile } = this;
-
+    console.log(friends);
     if (!profile_info || is_my_profile === undefined) {
       return (<Loading />);
     }
@@ -73,6 +106,23 @@ class Profile extends Component {
                 <p>Experience:</p>
                 <p>Wealth:</p>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <h2>Friends</h2>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.displayFriends()}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
