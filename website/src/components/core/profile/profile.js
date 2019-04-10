@@ -70,7 +70,7 @@ class Profile extends Component {
             </div>
             <div className="col-6">
               <div className="profile-user-info-title mb-3 text-center">
-                <i class="fas fa-chart-bar mr-1"></i>
+                <i className="fas fa-chart-bar mr-1"></i>
                 <span>Leaderboard</span>
               </div>
               <div className="row">
