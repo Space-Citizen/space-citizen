@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { get } from '../../misc/axios';
-import '../css/leaderboard.css';
+import { get } from '../../../misc/axios';
+import '../../css/leaderboard.css';
 
 class Leaderboard extends Component {
 

@@ -17,7 +17,8 @@ global.db = mysql.createPool({
     host: process.env.SPACE_CITIZEN_DB_URL,
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
-    database: 'spacecitizen'
+    database: 'spacecitizen',
+    multipleStatements: true
 });
 
 // db.connect(function (err) {

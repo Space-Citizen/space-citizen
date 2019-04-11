@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import { get } from '../../../misc/axios';
 import Loading from '../../misc/loading';
 import UserCard from '../profile/userCard';
@@ -10,6 +11,7 @@ class Profile extends Component {
     super();
     this.state = {
       profile_info: undefined,
+      user_ranks: undefined
     };
     this.is_my_profile = undefined;
   }
@@ -17,20 +19,28 @@ class Profile extends Component {
   componentDidMount() {
     if (this.props.connectedUser) {
       this.setState({ profile_info: this.props.connectedUser });
+      this.getPlayerRanks(this.props.connectedUser.id);
       this.is_my_profile = true;
       return;
     }
     this.is_my_profile = false;
     get("/api/users/public_info/" + this.props.match.params.userId).then(response => {
+      this.getPlayerRanks(response.data.id);
       this.setState({ profile_info: response.data });
     });
   }
 
+  getPlayerRanks(userId) {
+    get("/api/leaderboard/ranks/" + userId).then(response => {
+      this.setState({ ranks: response.data });
+    });
+  }
+
   render() {
-    const { profile_info } = this.state;
+    const { profile_info, ranks } = this.state;
     const { is_my_profile } = this;
 
-    if (!profile_info || is_my_profile === undefined) {
+    if (!profile_info || is_my_profile === undefined || !ranks) {
       return (<Loading />);
     }
     // used start the progress bar at the beginning instead of the middle
@@ -59,23 +69,27 @@ class Profile extends Component {
                 </div>
                 <span className="profile-user-info-levels-right">{profile_info.level + 1}</span>
               </div>
-              <div className="col mt-3">
-                <b>Time played</b>
-                <p>2h</p>
-              </div>
-              <div className="col mt-3">
-                <b>Kills</b>
-                <p>7</p>
-              </div>
             </div>
-            <div className="col-6">
-              <div className="profile-user-info-title mb-3 text-center">
-                <i class="fas fa-chart-bar mr-1"></i>
-                <span>Leaderboard</span>
+            <div className="col-6 row">
+              <div className="col-6">
+                <div className="profile-user-info-title mb-3 text-center">
+                  <i className="fas fa-trophy mr-1"></i>
+                  <Link to="/core/leaderboard" className="text-white">Leaderboard</Link>
+                </div>
+                <div className="text-center">
+                  <p><b>Experience</b>: {ranks.experience} / {ranks.totalPlayers}</p>
+                  <p><b>Wealth</b>: {ranks.wealth} / {ranks.totalPlayers}</p>
+                </div>
               </div>
-              <div className="row">
-                <p>Experience:</p>
-                <p>Wealth:</p>
+              <div className="col-6">
+                <div className="profile-user-info-title mb-3 text-center">
+                  <i className="fas fa-chart-bar mr-1"></i>
+                  <span>Statistics</span>
+                </div>
+                <div className="text-center">
+                  <p><b>Time played</b>: 2h</p>
+                  <p><b>Players killed</b>: 7</p>
+                </div>
               </div>
             </div>
           </div>
