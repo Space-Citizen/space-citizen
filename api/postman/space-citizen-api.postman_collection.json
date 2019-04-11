@@ -342,7 +342,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{host}}/me/info",
+									"raw": "{{host}}/users/private_info",
 									"host": [
 										"{{host}}"
 									],
@@ -747,7 +747,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{host}}/users/info/{{otherUserId}}",
+									"raw": "{{host}}/users/public_info/{{otherUserId}}",
 									"host": [
 										"{{host}}"
 									],

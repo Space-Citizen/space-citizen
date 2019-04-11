@@ -1,14 +1,44 @@
 .profile-container {
-    background-color: rgb(240, 240, 240);
+    background-color: rgba(60, 60, 60, 0.8);
     height: 100vh;
+    margin: 0;
+    color: white;
 }
 
 .profile-user-card {
     border-right: 2px solid;
 }
 
-/* User card */
+.profile-user-info {
+    height: 200px;
+    padding: 0;
+}
 
-.user-card-game-info-title {
+/* User infos */
+
+.profile-user-info-title {
+    font-size: 20px;
     font-weight: bold;
+}
+
+.profile-user-info-experience {
+    color: black;
+    font-weight: bold;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+}
+
+.profile-user-info-levels-left {
+    color: black;
+    font-weight: bold;
+    position: absolute;
+    padding-left: 1em;
+}
+
+.profile-user-info-levels-right {
+    color: black;
+    font-weight: bold;
+    position: absolute;
+    right: 2em;
 }

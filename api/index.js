@@ -17,16 +17,9 @@ global.db = mysql.createPool({
     host: process.env.SPACE_CITIZEN_DB_URL,
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
-    database: 'spacecitizen'
+    database: 'spacecitizen',
+    multipleStatements: true
 });
-
-// db.connect(function (err) {
-//     if (err) {
-//         console.error('error connecting: ' + err.stack);
-//         return;
-//     }
-//     console.log("Connected to database");
-// });
 
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
@@ -37,6 +30,7 @@ const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
 const ShipRoutes = require('./src/routes/ShipRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
+const FriendsRoutes = require('./src/routes/FriendsRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
@@ -47,6 +41,7 @@ router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
 router.use('/ships', ShipRoutes);
 router.use('/users', UserRoutes);
+router.use('/friends', FriendsRoutes);
 
 //Use the router
 app.use('/api', router);

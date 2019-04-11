@@ -6,18 +6,7 @@
 
 /* Take off animations */
 
-@keyframes play-button-blink {
-    0% {
-        border-color: #1df500;
-    }
-    50% {
-        border-color: #0787ff;
-    }
-    100% {
-        border-color: #1df500;
-    }
-}
-
+/* 
 @keyframes play-button-disabled {
     0% {
         border-color: #000000;
@@ -57,7 +46,7 @@
     border-width: 3px;
     border-style: solid;
     animation: play-button-disabled 3s ease alternate infinite;
-}
+} */
 
 /* Leftnav buttons */
 

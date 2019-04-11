@@ -5,3 +5,52 @@
 .navbar-profile-btn-text {
     padding-left: 1em;
 }
+
+.navbar-launch {
+    background-color: rgb(25, 196, 25);
+    top: 0;
+    left: 45%;
+    width: 200px;
+    bottom: 0;
+    position: absolute;
+    transition: all 250ms;
+    z-index: 999;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.navbar-launch:hover {
+    -webkit-box-shadow: 8px 10px 33px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 8px 10px 33px -8px rgba(0, 0, 0, 0.75);
+    box-shadow: 8px 10px 33px -8px rgba(0, 0, 0, 0.75);
+}
+
+.navbar-launch-text:hover {
+    cursor: pointer;
+}
+
+.navbar-launch-text {
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar-launch-text-disabled {
+    color: grey;
+    font-weight: bold;
+    font-size: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar-launch:hover a {
+    text-decoration: none;
+    color: white;
+}

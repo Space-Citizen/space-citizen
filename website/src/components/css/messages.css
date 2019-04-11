@@ -68,7 +68,7 @@
 .input_msg_write input {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
-    color: #4c4c4c;
+    color: white;
     font-size: 15px;
     min-height: 48px;
 }
@@ -93,7 +93,7 @@
 }
 
 .messaging {
-    background-color: rgb(230, 230, 230);
+    background-color: rgba(60, 60, 60, 0.8);
 }
 
 .msg_history {
@@ -133,7 +133,7 @@
 }
 
 .messages-contact-list-container {
-    background-color: white;
+    background-color: rgba(150, 150, 150, 1);
 }
 
 .messages-contact-selected {

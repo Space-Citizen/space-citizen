@@ -5,27 +5,38 @@ import Leftnav from '../navbar/leftnav';
 import Hangar from './hangar';
 import Shop from './shop';
 import { isConnected } from '../../misc/token';
+import Profile from './profile/profile';
+import Loading from '../misc/loading';
+import CoreHome from './coreHome';
+import Messages from './messages/messaging';
+import Leaderboard from './leaderboard/leaderboard';
 import '../css/core.css';
 
 class Core extends Component {
     constructor() {
         super();
         this.state = {
-            connectedUser: []
+            connectedUser: undefined
         };
     };
 
     componentDidMount() {
-        get('/api/me/info').then(response => {
+        get('/api/users/private_info').then(response => {
             this.setState({ connectedUser: response.data });
         });
     }
 
     render() {
+        const { connectedUser } = this.state;
         //display a loading screen during the loading of the token
         if (!isConnected()) {
             return <Redirect to='/signIn' />
         }
+        // display a loading message while getting the user's informations
+        if (!connectedUser) {
+            return (<Loading />);
+        }
+
         return (
             <div className="core-container">
                 <div className="row">
@@ -33,8 +44,12 @@ class Core extends Component {
                         <Leftnav />
                     </div>
                     <div className="col-10">
-                        <Route path="/core/hangar" render={(props) => <Hangar {...props} connectedUser={this.state.connectedUser} />} />
-                        <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={this.state.connectedUser} />} />
+                        <Route exact path="/core/" render={(props) => <CoreHome {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/hangar" render={(props) => <Hangar {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/profile" render={(props) => <Profile {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/leaderboard" render={(props) => <Leaderboard {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/messages/:contactId?" component={Messages} />
                     </div>
                 </div>
             </div>

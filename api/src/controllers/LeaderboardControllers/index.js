@@ -1,3 +1,5 @@
 module.exports = {
-    getMoneyLeaderboard: require('./getMoneyLeaderboard')
+    getMoneyLeaderboard: require('./getMoneyLeaderboard'),
+    getExperienceLeaderboard: require('./getExperienceLeaderboard'),
+    getPlayerRanks: require('./getPlayerRanks')
 };

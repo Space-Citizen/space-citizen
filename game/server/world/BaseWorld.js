@@ -9,6 +9,7 @@ class BaseWorld {
         this.entities = {};
         this.onInit();
         this._id_count = 0;
+        this._id_prefix = 0;
     }
 
     onInterval(name, time_sec) {
@@ -16,9 +17,17 @@ class BaseWorld {
     }
 
     getFreeId() {
+        if (this._id_count >= Number.MAX_SAFE_INTEGER - 1) {
+            this._id_count = 0;
+            this._id_prefix += 1;
+        }
         this._id_count += 1;
-        return "FID_" + this._id_count;
+        var prefix = Helper.intEncode(this._id_prefix);
+        var suffix = Helper.intEncode(this._id_count);
+        var res = "I" + prefix + '_' + suffix;
+        return res;
     }
+
 
     onInit() {
         throw new Error("Method 'onInit()' must be implemented.");

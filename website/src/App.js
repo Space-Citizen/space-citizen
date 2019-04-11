@@ -7,13 +7,11 @@ import SignUp from './components/auth/signup';
 import Core from './components/core/core';
 import Navbar from './components/navbar/navbar';
 import NavbarLoggedOut from './components/navbar/navbarLoggedOut';
-import Messages from './components/messages/messaging';
-import Profile from './components/profile/profile';
+import Profile from './components/core/profile/profile';
 import Changelog from './components/changelog/changelog';
 import { NotificationContainer } from 'react-notifications';
 import { isConnected } from './misc/token';
 import 'react-notifications/lib/notifications.css';
-import Leaderboard from './components/leaderboard/leaderboard';
 
 const NoMatch = () => <div><h1 style={{ color: "white" }}>No page. 404</h1></div>;
 
@@ -27,8 +25,6 @@ const App = () => {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/changelog" component={Changelog} />
-        <Route exact path="/leaderboard" component={Leaderboard} />
-        <Route path="/messages/:contactId?" component={Messages} />
         <Route path="/core" component={Core} />
         <Route path="/profile/:userId" component={Profile} />
         <Route component={NoMatch} />
