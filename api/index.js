@@ -21,14 +21,6 @@ global.db = mysql.createPool({
     multipleStatements: true
 });
 
-// db.connect(function (err) {
-//     if (err) {
-//         console.error('error connecting: ' + err.stack);
-//         return;
-//     }
-//     console.log("Connected to database");
-// });
-
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');
 const FactionRoutes = require('./src/routes/FactionRoutes');
@@ -38,6 +30,7 @@ const MeRoutes = require('./src/routes/MeRoutes');
 const MessageRoutes = require('./src/routes/MessageRoutes');
 const ShipRoutes = require('./src/routes/ShipRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
+const FriendsRoutes = require('./src/routes/FriendsRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
@@ -48,6 +41,7 @@ router.use('/me', MeRoutes);
 router.use('/messages', MessageRoutes);
 router.use('/ships', ShipRoutes);
 router.use('/users', UserRoutes);
+router.use('/friends', FriendsRoutes);
 
 //Use the router
 app.use('/api', router);

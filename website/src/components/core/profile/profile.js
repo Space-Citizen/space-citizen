@@ -11,7 +11,8 @@ class Profile extends Component {
     super();
     this.state = {
       profile_info: undefined,
-      user_ranks: undefined
+      user_ranks: undefined,
+      friends: undefined
     };
     this.is_my_profile = undefined;
   }
@@ -21,6 +22,16 @@ class Profile extends Component {
       this.setState({ profile_info: this.props.connectedUser });
       this.getPlayerRanks(this.props.connectedUser.id);
       this.is_my_profile = true;
+      get('/api/friends/getfriends/' + this.props.connectedUser.id).then(response => {
+        response.data.map(user => {
+          return get('/api/users/public_info/' + user.subscribed_to).then(res => {
+            var tmp = [];
+            if (this.state.friends) tmp = this.state.friends;
+            tmp.push(res.data);
+            this.setState({ friends: tmp });
+          });
+        });
+      });
       return;
     }
     this.is_my_profile = false;
@@ -28,6 +39,27 @@ class Profile extends Component {
       this.getPlayerRanks(response.data.id);
       this.setState({ profile_info: response.data });
     });
+
+
+  }
+
+  displayFriends() {
+    if (!this.state.friends) return;
+    return (
+      this.state.friends.map((user, index) => {
+        return (
+          <tr key={user.id}>
+            <th scope="raw">#{index + 1}</th>
+            <td>
+              <Link to={"/profile/" + user.id} >
+                <img src={'/public/profile_pictures/' + user.profile_picture} className="img-thumbnail h-25 mr-2" alt="profile" /> {user.username}
+              </Link>
+            </td>
+            <td>{user.level}</td>
+          </tr>
+        );
+      })
+    );
   }
 
   getPlayerRanks(userId) {
@@ -91,6 +123,23 @@ class Profile extends Component {
                   <p><b>Players killed</b>: 7</p>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <h2>Friend list</h2>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.displayFriends()}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
