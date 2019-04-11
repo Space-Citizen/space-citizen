@@ -7,7 +7,7 @@ class CoreHome extends Component {
   render() {
     return (
       <div className="container">
-        <Challenge />
+        <Challenge connectedUser={this.props.connectedUser}/>
         <ChangeLog />
         <LeaderBoard />
       </div>

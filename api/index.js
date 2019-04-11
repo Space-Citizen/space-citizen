@@ -32,6 +32,7 @@ const ShipRoutes = require('./src/routes/ShipRoutes');
 const UserRoutes = require('./src/routes/UserRoutes');
 const FriendsRoutes = require('./src/routes/FriendsRoutes');
 const MarketRoutes = require('./src/routes/MarketRoutes');
+const ChallengeRoutes = require('./src/routes/ChallengeRoutes');
 
 //Load the routes
 router.use('/auth', AuthRoutes);
@@ -44,6 +45,7 @@ router.use('/ships', ShipRoutes);
 router.use('/users', UserRoutes);
 router.use('/friends', FriendsRoutes);
 router.use('/marketplace', MarketRoutes);
+router.use('/challenge', ChallengeRoutes);
 
 //Use the router
 app.use('/api', router);
