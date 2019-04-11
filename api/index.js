@@ -17,16 +17,9 @@ global.db = mysql.createPool({
     host: process.env.SPACE_CITIZEN_DB_URL,
     user: process.env.SPACE_CITIZEN_DB_USERNAME,
     password: process.env.SPACE_CITIZEN_DB_PASSWORD,
-    database: 'spacecitizen'
+    database: 'spacecitizen',
+    multipleStatements: true
 });
-
-// db.connect(function (err) {
-//     if (err) {
-//         console.error('error connecting: ' + err.stack);
-//         return;
-//     }
-//     console.log("Connected to database");
-// });
 
 //Get routes
 const AuthRoutes = require('./src/routes/AuthRoutes');

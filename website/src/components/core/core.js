@@ -10,6 +10,7 @@ import Loading from '../misc/loading';
 import CoreHome from './coreHome';
 import Messages from './messages/messaging';
 import Marketplace from '../../components/marketplace/marketplace';
+import Leaderboard from './leaderboard/leaderboard';
 import '../css/core.css';
 
 class Core extends Component {
@@ -49,6 +50,7 @@ class Core extends Component {
                         <Route path="/core/shop" render={(props) => <Shop {...props} connectedUser={connectedUser} />} />
                         <Route path="/core/profile" render={(props) => <Profile {...props} connectedUser={connectedUser} />} />
                         <Route path="/core/marketplace" render={(props) => <Marketplace {...props} connectedUser={connectedUser} />} />
+                        <Route path="/core/leaderboard" render={(props) => <Leaderboard {...props} connectedUser={connectedUser} />} />
                         <Route path="/core/messages/:contactId?" component={Messages} />
                     </div>
                 </div>
