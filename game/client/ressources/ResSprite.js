@@ -47,7 +47,7 @@ class ResSprite extends ResWorldImage {
         if (this._finished) {
             return;
         }
-        if (Helper.onInterval(this, "changeFrame", this._frame_interval)) {
+        if (Helper.onInterval(this, "frameInterval", this._frame_interval)) {
             if (this._loop) {
                 this._frame = (this._frame + 1) % this._total_frames;
             } else {
