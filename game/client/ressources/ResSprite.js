@@ -9,6 +9,7 @@ class ResSprite extends ResWorldImage {
         }
         this._total_frames = this._frame_count.x * this._frame_count.y;
         this._frame_size = null;
+        this._frame_interval = 1 / 30;
     }
 
     onLoad() {
@@ -46,16 +47,17 @@ class ResSprite extends ResWorldImage {
         if (this._finished) {
             return;
         }
-        if (this._loop) {
-            this._frame = (this._frame + 1) % this._total_frames;
-        } else {
-            this._frame += 1;
-            if (this._frame > this._total_frames) {
-                this._finished = true;
-                return;
+        if (Helper.onInterval(this, "changeFrame", this._frame_interval)) {
+            if (this._loop) {
+                this._frame = (this._frame + 1) % this._total_frames;
+            } else {
+                this._frame += 1;
+                if (this._frame > this._total_frames) {
+                    this._finished = true;
+                    return;
+                }
             }
         }
-
         super.drawAt(x, y, rotation, x_offset, y_offset,
             this.getSpritePos().x, this.getSpritePos().y);
     }
